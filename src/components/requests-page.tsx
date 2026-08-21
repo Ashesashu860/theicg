@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   collection,
+  deleteDoc,
+  doc,
   onSnapshot,
   orderBy,
   query,
@@ -77,7 +79,40 @@ export function RequestsPage() {
   const [requests, setRequests] = useState<ContactRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const [replyTarget, setReplyTarget] = useState<ContactRequest | null>(null);
+
+  async function handleDelete(item: ContactRequest) {
+    if (
+      !window.confirm(
+        `Delete request from ${item.name || "this prospect"}? This cannot be undone.`,
+      )
+    ) {
+      return;
+    }
+
+    if (!isFirebaseConfigured()) {
+      setError("Firebase is not configured.");
+      return;
+    }
+
+    setDeletingId(item.id);
+    setError("");
+
+    try {
+      await deleteDoc(
+        doc(getFirebaseDb(), CONTACT_REQUESTS_COLLECTION, item.id),
+      );
+    } catch (deleteError) {
+      const message =
+        deleteError instanceof Error
+          ? deleteError.message
+          : "Unable to delete this request. Please try again.";
+      setError(message);
+    } finally {
+      setDeletingId(null);
+    }
+  }
 
   useEffect(() => {
     if (authLoading) {
@@ -309,6 +344,14 @@ export function RequestsPage() {
                           Reply
                         </span>
                       )}
+                      <button
+                        type="button"
+                        disabled={deletingId === item.id}
+                        onClick={() => void handleDelete(item)}
+                        className="border border-error px-4 py-2 font-sans text-label-md uppercase text-error transition-colors hover:bg-error-container hover:text-on-error-container disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        {deletingId === item.id ? "Deleting…" : "Delete"}
+                      </button>
                     </div>
                   </div>
                 ))}
