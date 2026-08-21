@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { SiteFooter } from "@/components/site-footer";
 import {
   getAuthErrorMessage,
   signInWithGoogle,
@@ -81,34 +82,9 @@ export function LoginPage() {
         </div>
       </main>
 
-      <footer className="relative z-10 mt-auto w-full border-t border-primary-container bg-primary py-margin-desktop">
-        <div className="mx-auto grid max-w-container-max grid-cols-1 items-center gap-gutter px-margin-mobile md:grid-cols-12 md:px-margin-desktop">
-          <div className="mb-8 md:col-span-4 md:mb-0">
-            <div className="mb-2 font-serif text-headline-md text-off-white">
-              ICG
-            </div>
-            <p className="font-sans text-body-md text-off-white/70">
-              © {new Date().getFullYear()} ICG – IITans Consulting Group. Great
-              minds. Better perspectives. Smarter decisions.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-6 md:col-span-8 md:justify-end">
-            {[
-              "Privacy Policy",
-              "Terms of Service",
-              "Compliance",
-              "Global Offices",
-            ].map((item) => (
-              <span
-                key={item}
-                className="font-sans text-body-md text-off-white/70"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
-        </div>
-      </footer>
+      <div className="relative z-10 mt-auto w-full">
+        <SiteFooter />
+      </div>
     </div>
   );
 }

@@ -283,7 +283,7 @@ export function HomePage() {
         </section>
       </main>
 
-      <SiteFooter variant="home" />
+      <SiteFooter />
     </>
   );
 }
