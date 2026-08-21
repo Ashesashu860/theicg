@@ -34,6 +34,22 @@ export function SiteFooter() {
             </li>
             <li>
               <Link
+                href="/purpose"
+                className="font-sans text-body-md text-on-primary-container opacity-80 transition-all hover:text-secondary-fixed hover:opacity-100"
+              >
+                Purpose
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/impact"
+                className="font-sans text-body-md text-on-primary-container opacity-80 transition-all hover:text-secondary-fixed hover:opacity-100"
+              >
+                Impact
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/careers"
                 className="font-sans text-body-md text-on-primary-container opacity-80 transition-all hover:text-secondary-fixed hover:opacity-100"
               >

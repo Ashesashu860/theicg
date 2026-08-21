@@ -159,6 +159,81 @@ export function LightbulbIcon({ className }: IconProps) {
   );
 }
 
+export function RocketLaunchIcon({ className }: IconProps) {
+  return (
+    <svg
+      className={className}
+      width="32"
+      height="32"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M9.19 6.35c-2.04 2.29-3.44 5.58-3.94 8.65L2 10.69l6.19-6.18.01 1.84zm2.24-.76c.76-.27 1.97-.69 3.45-1.07-.46 1.63-.93 3.94-1.07 5.93-1.53-1.33-2.83-2.78-2.38-4.86zm5.97-1.72c-.89-.49-2.07.06-3.91.87 1.14 1.72 2.1 3.59 2.51 5.28 1.79-.53 3.37-.7 4.12.08.38.39.64.97.64 1.7 0 1.46-.99 3.04-2.56 4.05.08 1.14-.02 2.36-.26 3.58-.32 1.61-.87 3.28-1.66 4.98-1.02-.54-1.96-1.05-2.84-1.56.51-1.22.86-2.39 1.07-3.47.28-1.43.34-2.71.23-3.74-.92.22-1.93.26-3.07.07.47-1.5 1.07-2.93 1.77-4.2 1.11.18 2.22.12 3.22-.17-.05-.95-.17-1.86-.35-2.71-.77.33-1.52.7-2.24 1.1-.51-1.07-.86-2.07-1.04-2.99 1.55-.58 2.95-.72 4.06-.12.57.31 1.03.79 1.31 1.4zM9.08 14.15c.41 1.22 1.01 2.34 1.76 3.31-.93.35-1.93.54-2.97.54-.35 0-.7-.02-1.04-.06.56-1.24 1.3-2.49 2.25-3.79z" />
+    </svg>
+  );
+}
+
+export function GavelIcon({ className }: IconProps) {
+  return (
+    <svg
+      className={className}
+      width="32"
+      height="32"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M1 21h12v2H1v-2zM5.24 8.07l2.83-2.83 14.14 14.14-2.83 2.83L5.24 8.07zM12.32 1l5.66 5.66-2.83 2.83-5.66-5.66L12.32 1zM3.83 9.48l5.66 5.66-2.83 2.83L1 12.31l2.83-2.83z" />
+    </svg>
+  );
+}
+
+export function PsychologyIcon({ className }: IconProps) {
+  return (
+    <svg
+      className={className}
+      width="32"
+      height="32"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M13 8.57c-.79 0-1.43.64-1.43 1.43s.64 1.43 1.43 1.43 1.43-.64 1.43-1.43-.64-1.43-1.43-1.43zM13.14 3C9.49 3 6.39 5.33 5.42 8.57c.48-.09.97-.14 1.48-.14 1.48 0 2.89.42 4.07 1.15.5-1.22 1.7-2.08 3.1-2.08 1.85 0 3.35 1.5 3.35 3.35 0 .66-.2 1.28-.54 1.8 1.18.54 2.16 1.48 2.73 2.66.25-.7.39-1.45.39-2.24C19.86 6.87 16.84 3 13.14 3zM16.5 16.5c0-1.93-1.57-3.5-3.5-3.5s-3.5 1.57-3.5 3.5V18h1.5v2.5h4V18H16.5v-1.5zm-7.07-1.93c-.78-.47-1.68-.74-2.64-.74-1.08 0-2.08.34-2.9.91C2.7 15.66 2 16.97 2 18.5V20h5.5v-2.5h1.93v-2.93z" />
+    </svg>
+  );
+}
+
+export function FormatQuoteIcon({ className }: IconProps) {
+  return (
+    <svg
+      className={className}
+      width="48"
+      height="48"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
+    </svg>
+  );
+}
+
+export function CheckIcon({ className }: IconProps) {
+  return (
+    <svg
+      className={className}
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+    </svg>
+  );
+}
+
 export function MemoryIcon({ className }: IconProps) {
   return (
     <svg
@@ -334,6 +409,21 @@ export function ChevronRightIcon({ className }: IconProps) {
   return (
     <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z" />
+    </svg>
+  );
+}
+
+export function ExpandMoreIcon({ className }: IconProps) {
+  return (
+    <svg
+      className={className}
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z" />
     </svg>
   );
 }

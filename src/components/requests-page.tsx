@@ -292,12 +292,12 @@ export function RequestsPage() {
                         {item.status}
                       </span>
                     </div>
-                    <div className="flex justify-start gap-2 transition-opacity md:col-span-2 md:justify-end md:opacity-0 md:group-hover:opacity-100">
+                    <div className="flex justify-start gap-2 md:col-span-2 md:justify-end">
                       {item.email ? (
                         <button
                           type="button"
                           onClick={() => setReplyTarget(item)}
-                          className="border border-primary px-4 py-2 font-sans text-label-md uppercase text-primary transition-colors hover:bg-primary hover:text-on-primary"
+                          className="border border-primary bg-primary px-4 py-2 font-sans text-label-md uppercase text-on-primary transition-colors hover:bg-primary-container"
                         >
                           Reply
                         </button>

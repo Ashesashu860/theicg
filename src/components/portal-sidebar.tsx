@@ -8,7 +8,6 @@ import { UserAvatar } from "@/components/user-avatar";
 import { signOutUser } from "@/lib/auth-client";
 import {
   AccountCircleIcon,
-  AddIcon,
   AnalyticsIcon,
   AssignmentIcon,
   CloseIcon,
@@ -118,13 +117,6 @@ export function PortalSidebar() {
             </p>
           </div>
         </div>
-        <button
-          type="button"
-          className="mb-3 flex w-full items-center justify-center gap-2 border-b-4 border-transparent bg-primary px-4 py-3 font-sans text-label-md uppercase tracking-widest text-on-primary transition-all hover:border-secondary-fixed"
-        >
-          <AddIcon />
-          New Analysis
-        </button>
         <button
           type="button"
           onClick={logout}
