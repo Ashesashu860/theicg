@@ -24,7 +24,7 @@ const teams = [
   {
     title: "Consulting",
     description:
-      "Partner with clients to solve their most challenging problems through innovative solutions. Collaborate with global leaders to shape strategy and drive lasting change.",
+      "Partner with clients to solve their most challenging problems through thoughtful consultation and strategic guidance. Collaborate with great minds to shape lasting impact.",
     icon: BusinessCenterIcon,
     span: "md:col-span-6 lg:col-span-8",
     featured: false,
@@ -66,10 +66,11 @@ export function CareersPage() {
                 Beyond Is Where We Begin
               </h1>
               <p className="mb-8 max-w-2xl font-sans text-body-lg text-on-surface-variant">
-                At THE ICG, you&apos;ll work with leaders across industries to
-                tackle their toughest problems and shape lasting impact. We
-                invest in your growth, wellbeing, and future—empowering you to
-                thrive as your whole self and define success on your own terms.
+                At ICG – IITans Consulting Group, you&apos;ll join great minds
+                delivering expert consultation, strategic guidance, and
+                practical solutions. We invest in your growth, wellbeing, and
+                future—empowering you to thrive and help clients make smarter
+                decisions with confidence.
               </p>
               <Link
                 href="#roles"

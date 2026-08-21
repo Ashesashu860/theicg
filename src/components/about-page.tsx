@@ -23,12 +23,13 @@ export function AboutPage() {
           <section className="grid grid-cols-1 items-center gap-8 border-b border-outline-variant py-24 md:grid-cols-12 md:py-32">
             <div className="animate-fade-up md:col-span-7">
               <h1 className="mb-6 font-serif text-[40px] font-bold leading-[1.1] tracking-[-0.02em] text-primary md:text-display-lg">
-                Pioneering the Future of Strategy
+                Great Minds. Best Consultations.
               </h1>
               <p className="max-w-2xl font-sans text-body-lg text-on-surface-variant">
-                THE ICG bridges the gap between ambition and outcomes. We team
-                with organizations globally to deliver transformative impact,
-                leading this new era through strategic clarity and applied AI.
+                ICG is a consulting group built on the power of knowledge,
+                collaboration, and strategic thinking. We connect expertise with
+                opportunity to help our clients make smarter decisions and move
+                forward with confidence.
               </p>
             </div>
             <div
@@ -37,7 +38,7 @@ export function AboutPage() {
             >
               <Image
                 src="/images/about-mark.jpg"
-                alt="THE ICG logo"
+                alt="ICG logo"
                 width={384}
                 height={384}
                 className="h-64 w-64 object-cover md:h-96 md:w-96"
@@ -55,34 +56,34 @@ export function AboutPage() {
               </div>
               <div className="md:col-span-8">
                 <h3 className="mb-6 font-serif text-headline-md text-primary-container">
-                  Where Strategic Clarity Meets Applied AI
+                  Where Knowledge Meets Strategy
                 </h3>
                 <p className="mb-8 font-sans text-body-lg text-on-surface-variant">
-                  We navigate an era of unprecedented change and disruption. To
-                  lead, companies need a partner that can bridge the gap between
-                  ambition and outcomes. We bring strategic clarity, rooted in
-                  deep domain knowledge, combined with applied AI, shaped by our
-                  practitioners, to deliver transformative impact at scale.
+                  At ICG – IITans Consulting Group, we believe great decisions
+                  are powered by great minds. Our team combines knowledge,
+                  experience, analytical thinking, and innovative perspectives
+                  to provide thoughtful consultations and practical solutions
+                  tailored to your needs.
                 </p>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                   <div className="border border-outline-variant bg-surface-container-lowest p-6 transition-colors duration-300 hover:border-primary-container">
                     <LightbulbIcon className="mb-4 text-secondary" />
                     <h4 className="mb-2 font-sans text-label-md uppercase tracking-widest">
-                      Strategic Clarity
+                      Strategic Thinking
                     </h4>
                     <p className="font-sans text-body-md text-on-surface-variant">
-                      Ensuring leaders make the right choices in complex
-                      environments.
+                      Helping leaders cut through complexity and choose clearer,
+                      more confident paths forward.
                     </p>
                   </div>
                   <div className="border border-outline-variant bg-surface-container-lowest p-6 transition-colors duration-300 hover:border-primary-container">
                     <MemoryIcon className="mb-4 text-secondary" />
                     <h4 className="mb-2 font-sans text-label-md uppercase tracking-widest">
-                      Applied AI
+                      Collaborative Expertise
                     </h4>
                     <p className="font-sans text-body-md text-on-surface-variant">
-                      Scaling artificial intelligence solutions to create
-                      massive competitive advantage.
+                      Bringing great minds together so insight becomes practical
+                      solutions you can put to work.
                     </p>
                   </div>
                 </div>
@@ -130,19 +131,20 @@ export function AboutPage() {
             </div>
             <div className="order-1 md:order-2 md:col-span-6 md:col-start-7">
               <h2 className="mb-6 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
-                Global Presence
+                How We Work
               </h2>
               <p className="mb-8 font-sans text-body-lg text-on-surface-variant">
-                With a footprint spanning over 100 cities globally, THE ICG
-                brings a truly international perspective to local challenges.
-                Our diverse teams collaborate across borders to deliver insights
-                and solutions that resonate on a global scale.
+                ICG – IITans Consulting Group brings together great minds to
+                deliver expert consultation, strategic guidance, and practical
+                solutions. We partner with individuals and organizations to turn
+                challenges into opportunities—and ideas into meaningful
+                outcomes.
               </p>
               <Link
                 href="/careers"
                 className="inline-flex items-center font-sans text-label-md uppercase tracking-wider text-primary-container transition-colors hover:text-secondary"
               >
-                Explore Our Locations
+                Explore Careers
                 <ArrowForwardIcon className="ml-2" />
               </Link>
             </div>

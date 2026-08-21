@@ -37,7 +37,7 @@ export function LoginPage() {
             href="/"
             className="font-serif text-headline-md font-bold text-primary"
           >
-            THE ICG
+            ICG
           </Link>
         </div>
       </header>
@@ -61,7 +61,7 @@ export function LoginPage() {
                 Consultant Portal
               </h1>
               <p className="font-sans text-body-md text-on-surface-variant">
-                Sign in to access strategic resources.
+                Sign in to access ICG consulting resources.
               </p>
             </div>
 
@@ -97,11 +97,11 @@ export function LoginPage() {
         <div className="mx-auto grid max-w-container-max grid-cols-1 items-center gap-gutter px-margin-mobile md:grid-cols-12 md:px-margin-desktop">
           <div className="mb-8 md:col-span-4 md:mb-0">
             <div className="mb-2 font-serif text-headline-md text-off-white">
-              THE ICG
+              ICG
             </div>
             <p className="font-sans text-body-md text-off-white/70">
-              © 2024 THE ICG. All rights reserved. Visionary Infrastructure.
-              Global Strategy.
+              © {new Date().getFullYear()} ICG – IITans Consulting Group. Great
+              minds. Better perspectives. Smarter decisions.
             </p>
           </div>
           <div className="flex flex-wrap gap-6 md:col-span-8 md:justify-end">

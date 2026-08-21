@@ -11,14 +11,14 @@ export function SiteFooter({ variant = "simple" }: SiteFooterProps) {
         <div className="mx-auto grid max-w-container-max grid-cols-1 gap-gutter px-margin-mobile py-20 md:grid-cols-4 md:px-margin-desktop">
           <div className="mb-8 md:mb-0">
             <div className="mb-4 font-serif text-headline-lg text-pure-white">
-              THE ICG
+              ICG
             </div>
             <p className="mb-6 max-w-xs font-sans text-body-md text-on-primary-container">
-              Pioneering the future of strategy for the world&apos;s most
-              ambitious organizations.
+              ICG – IITans Consulting Group. Built on knowledge, collaboration,
+              and strategic thinking to help clients make smarter decisions.
             </p>
             <div className="text-sm text-on-primary-container">
-              © 2024 THE ICG.
+              © {new Date().getFullYear()} ICG.
               <br />
               All rights reserved.
             </div>
@@ -78,7 +78,7 @@ export function SiteFooter({ variant = "simple" }: SiteFooterProps) {
               Tagline
             </h4>
             <p className="font-sans text-body-md text-on-primary-container opacity-80">
-              Strategic Clarity. Applied Intelligence.
+              Great minds. Better perspectives. Smarter decisions.
             </p>
           </div>
         </div>
@@ -91,15 +91,16 @@ export function SiteFooter({ variant = "simple" }: SiteFooterProps) {
       <div className="mx-auto grid max-w-container-max grid-cols-1 gap-gutter px-margin-mobile md:grid-cols-4 md:px-margin-desktop">
         <div className="mb-8 md:col-span-4">
           <h3 className="mb-2 font-serif text-headline-md text-pure-white">
-            THE ICG
+            ICG
           </h3>
           <p className="font-sans text-label-md uppercase tracking-wider text-on-primary-fixed-variant">
-            Strategic Clarity. Applied Intelligence.
+            IITans Consulting Group
           </p>
         </div>
         <div className="md:col-span-2">
           <p className="mb-6 font-sans text-body-md text-on-primary-container">
-            © 2024 THE ICG. Strategic Clarity. Applied Intelligence.
+            © {new Date().getFullYear()} ICG. Great minds. Better perspectives.
+            Smarter decisions.
           </p>
         </div>
         <div className="flex flex-wrap gap-x-8 gap-y-4 md:col-span-2 md:justify-end">

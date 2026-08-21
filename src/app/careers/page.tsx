@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { CareersPage } from "@/components/careers-page";
 
 export const metadata: Metadata = {
-  title: "Careers | THE ICG",
+  title: "Careers | ICG: IITans Consulting Group",
   description:
-    "Work with leaders across industries at THE ICG. Explore openings, culture, and early career paths.",
+    "Join ICG – IITans Consulting Group. Work with great minds to deliver expert consultation, strategic guidance, and practical solutions.",
 };
 
 export default function Careers() {

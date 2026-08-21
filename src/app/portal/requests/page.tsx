@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { RequestsPage } from "@/components/requests-page";
 
 export const metadata: Metadata = {
-  title: "Client Requests | THE ICG Consultant Portal",
+  title: "Client Requests | ICG Consultant Portal",
   description: "Review and triage inbound strategic inquiries.",
 };
 

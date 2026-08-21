@@ -3,8 +3,8 @@ import { Suspense } from "react";
 import { LoginPage } from "@/components/login-page";
 
 export const metadata: Metadata = {
-  title: "Login | THE ICG Consultant Portal",
-  description: "Sign in to the THE ICG consultant portal.",
+  title: "Login | ICG Consultant Portal",
+  description: "Sign in to the ICG consultant portal.",
 };
 
 export default function Login() {

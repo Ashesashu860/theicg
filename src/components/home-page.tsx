@@ -13,67 +13,67 @@ import { SiteHeader } from "./site-header";
 
 const insights = [
   {
-    category: "Technology",
-    title: "The AI Imperative: Redefining Competitive Advantage",
+    category: "Strategy",
+    title: "Better Decisions Start With Better Perspectives",
     excerpt:
-      "How early adopters are moving beyond pilots to enterprise-wide generative AI deployment, creating unassailable moats.",
+      "How combining deep knowledge with collaborative thinking helps leaders cut through complexity and choose a clearer path forward.",
     image: "/images/insight-ai.jpg",
-    alt: "Digital visualization representing artificial intelligence in enterprise business",
+    alt: "Digital visualization representing strategic thinking and analysis",
   },
   {
-    category: "Sustainability",
-    title: "Net-Zero Economics: Value Creation in the Transition",
+    category: "Growth",
+    title: "Turning Challenges Into Practical Opportunity",
     excerpt:
-      "Decarbonization is no longer just compliance; it is the most significant commercial opportunity of the decade.",
+      "Thoughtful consultation that connects expertise with real-world constraints—so ideas become solutions clients can act on.",
     image: "/images/insight-sustain.jpg",
-    alt: "Sustainable modern infrastructure with glass, steel, and greenery",
+    alt: "Modern infrastructure representing growth and opportunity",
   },
   {
-    category: "Macroeconomics",
-    title: "Navigating the New Geopolitical Reality",
+    category: "Leadership",
+    title: "Where Knowledge Meets Strategy",
     excerpt:
-      "Supply chain resilience and strategic decoupling strategies for global enterprises in an era of persistent volatility.",
+      "Great minds bring analytical rigor and innovative perspectives together to guide individuals and organizations toward smarter decisions.",
     image: "/images/insight-macro.jpg",
-    alt: "Abstract macroeconomic data visualization with global connections",
+    alt: "Abstract visualization of connected ideas and global perspectives",
   },
 ];
 
 const capabilities = [
   {
-    title: "Corporate Strategy",
+    title: "Strategic Consulting",
     description:
-      "Defining winning aspirations and reallocating capital to build sustainable competitive advantage.",
+      "Clarifying goals, evaluating options, and shaping strategies grounded in knowledge and analytical thinking.",
     icon: AccountTreeIcon,
     featured: false,
   },
   {
-    title: "Operations & Supply Chain",
+    title: "Expert Consultation",
     description:
-      "Optimizing global networks for resilience, cost-efficiency, and responsiveness.",
+      "Bringing experienced perspectives to complex questions so you can move forward with greater confidence.",
     icon: SettingsApplicationsIcon,
     featured: false,
   },
   {
-    title: "Digital Transformation",
+    title: "Practical Solutions",
     description:
-      "Architecting scalable digital cores and embedding analytics to drive core business value.",
+      "Translating insight into actionable recommendations tailored to your context, constraints, and ambitions.",
     icon: TransformIcon,
     featured: false,
   },
   {
-    title: "Growth & Innovation",
+    title: "Collaborative Guidance",
     description:
-      "Identifying adjacent markets and building new disruptive business models.",
+      "Connecting expertise with opportunity through partnership—helping great ideas become meaningful outcomes.",
     icon: TrendingUpIcon,
     featured: true,
   },
 ];
 
 const stats = [
-  { value: "50+", label: "Global Offices" },
-  { value: "90%", label: "Fortune 100 Clients" },
-  { value: "$2T+", label: "Client Value Created" },
-  { value: "10k", label: "Industry Experts" },
+  { value: "50+", label: "Engagements Guided" },
+  { value: "90%", label: "Client Satisfaction" },
+  { value: "10+", label: "Practice Areas" },
+  { value: "100+", label: "Experts in Network" },
 ];
 
 export function HomePage() {
@@ -94,15 +94,30 @@ export function HomePage() {
             <div className="absolute inset-0 bg-gradient-hero" />
           </div>
           <div className="relative z-10 mx-auto mt-20 max-w-container-max px-margin-mobile text-center md:px-margin-desktop">
+            <p
+              className="animate-fade-up mb-4 font-sans text-label-md uppercase tracking-widest text-secondary-fixed"
+            >
+              The Great Minds. The Best Consultations.
+            </p>
             <h1 className="animate-fade-up mx-auto mb-6 max-w-4xl font-serif text-[32px] font-bold leading-[1.1] tracking-[-0.02em] text-pure-white md:text-display-lg">
-              Pioneering the Future of Strategy
+              Great Minds. Best Consultations.
             </h1>
             <p
-              className="animate-fade-up mx-auto mb-10 max-w-2xl font-sans text-body-lg text-surface-container-highest"
+              className="animate-fade-up mx-auto mb-4 max-w-2xl font-sans text-body-lg text-surface-container-highest"
               style={{ animationDelay: "120ms" }}
             >
-              We partner with visionary leaders to navigate complexity, unlock
-              exponential value, and shape the global economy of tomorrow.
+              Where knowledge meets strategy, and great ideas become meaningful
+              solutions.
+            </p>
+            <p
+              className="animate-fade-up mx-auto mb-10 max-w-2xl font-sans text-body-md text-surface-container-high"
+              style={{ animationDelay: "160ms" }}
+            >
+              At ICG – IITans Consulting Group, we believe great decisions are
+              powered by great minds. Our team combines knowledge, experience,
+              analytical thinking, and innovative perspectives to provide
+              thoughtful consultations and practical solutions tailored to your
+              needs.
             </p>
             <div
               className="animate-fade-up flex justify-center"
@@ -128,7 +143,7 @@ export function HomePage() {
                 Featured Insights
               </h2>
               <p className="font-sans text-body-md text-on-surface-variant">
-                Executive perspectives shaping global industries.
+                Perspectives on knowledge, strategy, and smarter decisions.
               </p>
             </div>
             <Link
@@ -189,8 +204,10 @@ export function HomePage() {
                 Our Capabilities
               </h2>
               <p className="mb-8 font-sans text-body-lg text-on-surface-variant">
-                We bring unparalleled functional expertise to solve the most
-                critical challenges facing modern enterprise leaders.
+                ICG is a consulting group built on the power of knowledge,
+                collaboration, and strategic thinking. We connect expertise with
+                opportunity to help our clients make smarter decisions and move
+                forward with confidence.
               </p>
               <Link
                 href="#capabilities"
@@ -250,7 +267,7 @@ export function HomePage() {
         >
           <div className="mx-auto max-w-container-max px-margin-mobile text-center md:px-margin-desktop">
             <h2 className="mb-16 font-serif text-headline-lg-mobile md:text-headline-lg">
-              Global Impact. Local Expertise.
+              Great Minds. Better Perspectives. Smarter Decisions.
             </h2>
             <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
               {stats.map((stat) => (

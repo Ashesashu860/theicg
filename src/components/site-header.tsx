@@ -21,14 +21,14 @@ export function SiteHeader() {
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/images/logo.png"
-            alt="THE ICG"
+            alt="ICG"
             width={32}
             height={32}
             className="h-8 w-8 object-contain"
             priority
           />
           <span className="hidden font-serif text-headline-md font-bold tracking-tighter text-primary md:block">
-            THE ICG
+            ICG
           </span>
         </Link>
 
