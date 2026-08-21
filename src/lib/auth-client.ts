@@ -6,8 +6,8 @@ import {
   type User,
   type Unsubscribe,
 } from "firebase/auth";
-import { auth } from "@/lib/firebase";
 import { buildAuthCookie, clearAuthCookie } from "@/lib/auth";
+import { getFirebaseAuth, isFirebaseConfigured } from "@/lib/firebase";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -19,18 +19,30 @@ export function syncAuthCookie(user: User | null) {
 }
 
 export async function signInWithGoogle(): Promise<User> {
-  const result = await signInWithPopup(auth, googleProvider);
+  if (!isFirebaseConfigured()) {
+    throw new Error("Firebase is not configured.");
+  }
+  const result = await signInWithPopup(getFirebaseAuth(), googleProvider);
   syncAuthCookie(result.user);
   return result.user;
 }
 
 export async function signOutUser(): Promise<void> {
-  await signOut(auth);
+  if (isFirebaseConfigured()) {
+    await signOut(getFirebaseAuth());
+  }
   syncAuthCookie(null);
 }
 
-export function subscribeToAuth(callback: (user: User | null) => void): Unsubscribe {
-  return onAuthStateChanged(auth, (user) => {
+export function subscribeToAuth(
+  callback: (user: User | null) => void,
+): Unsubscribe {
+  if (!isFirebaseConfigured()) {
+    callback(null);
+    return () => undefined;
+  }
+
+  return onAuthStateChanged(getFirebaseAuth(), (user) => {
     syncAuthCookie(user);
     callback(user);
   });
@@ -50,6 +62,13 @@ export function getAuthErrorMessage(error: unknown): string {
     code === "auth/configuration-not-found"
   ) {
     return "Firebase Authentication is not set up yet. In Firebase Console, open Authentication → Get started, then enable the Google provider.";
+  }
+
+  if (
+    code === "auth/invalid-api-key" ||
+    message.includes("Firebase is not configured")
+  ) {
+    return "Firebase API key is missing or invalid. Set NEXT_PUBLIC_FIREBASE_* in your environment.";
   }
 
   switch (code) {

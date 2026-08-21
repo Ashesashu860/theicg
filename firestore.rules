@@ -2,9 +2,17 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /contactRequests/{id} {
+      // Public contact form submissions
       allow create: if
-        request.resource.data.keys().hasAll(['name','email','phone','role','interest','status','createdAt'])
-        && request.resource.data.status == 'New';
+        request.resource.data.name is string
+        && request.resource.data.email is string
+        && request.resource.data.phone is string
+        && request.resource.data.role is string
+        && request.resource.data.interest is string
+        && request.resource.data.status == 'New'
+        && request.resource.data.keys().hasAny(['createdAt']);
+
+      // Portal consultants (Google Auth)
       allow read, update: if request.auth != null;
       allow delete: if false;
     }

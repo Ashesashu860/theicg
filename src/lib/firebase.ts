@@ -13,21 +13,51 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-function createFirebaseApp(): FirebaseApp {
-  if (getApps().length) {
-    return getApp();
-  }
-  return initializeApp(firebaseConfig);
-}
-
-export const app = createFirebaseApp();
-export const auth: Auth = getAuth(app);
-export const db: Firestore = getFirestore(app);
-
+let appInstance: FirebaseApp | null = null;
+let authInstance: Auth | null = null;
+let dbInstance: Firestore | null = null;
 let analyticsInstance: Analytics | null = null;
 
+export function isFirebaseConfigured(): boolean {
+  return Boolean(
+    firebaseConfig.apiKey &&
+      firebaseConfig.authDomain &&
+      firebaseConfig.projectId &&
+      firebaseConfig.appId,
+  );
+}
+
+function getFirebaseApp(): FirebaseApp {
+  if (!isFirebaseConfigured()) {
+    throw new Error(
+      "Firebase is not configured. Set NEXT_PUBLIC_FIREBASE_* environment variables.",
+    );
+  }
+
+  if (appInstance) {
+    return appInstance;
+  }
+
+  appInstance = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  return appInstance;
+}
+
+export function getFirebaseAuth(): Auth {
+  if (!authInstance) {
+    authInstance = getAuth(getFirebaseApp());
+  }
+  return authInstance;
+}
+
+export function getFirebaseDb(): Firestore {
+  if (!dbInstance) {
+    dbInstance = getFirestore(getFirebaseApp());
+  }
+  return dbInstance;
+}
+
 export async function getFirebaseAnalytics(): Promise<Analytics | null> {
-  if (typeof window === "undefined") {
+  if (typeof window === "undefined" || !isFirebaseConfigured()) {
     return null;
   }
   if (analyticsInstance) {
@@ -37,6 +67,6 @@ export async function getFirebaseAnalytics(): Promise<Analytics | null> {
   if (!supported) {
     return null;
   }
-  analyticsInstance = getAnalytics(app);
+  analyticsInstance = getAnalytics(getFirebaseApp());
   return analyticsInstance;
 }

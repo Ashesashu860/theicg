@@ -7,13 +7,15 @@ import {
   orderBy,
   query,
   Timestamp,
+  type FirestoreError,
 } from "firebase/firestore";
+import { useAuth } from "@/components/auth-provider";
 import {
   CONTACT_REQUESTS_COLLECTION,
   type ContactRequest,
   type RequestStatus,
 } from "@/lib/contact-requests";
-import { db } from "@/lib/firebase";
+import { getFirebaseDb, isFirebaseConfigured } from "@/lib/firebase";
 import {
   ArrowBackIcon,
   ArrowForwardIcon,
@@ -56,15 +58,48 @@ function normalizeStatus(value: unknown): RequestStatus {
   return "New";
 }
 
+function getRequestsErrorMessage(error: FirestoreError): string {
+  switch (error.code) {
+    case "permission-denied":
+      return "Permission denied. Sign in again, and publish Firestore rules that allow authenticated reads on contactRequests.";
+    case "failed-precondition":
+      return "Firestore needs an index for this query. Check the browser console for a create-index link.";
+    case "unavailable":
+      return "Firestore is temporarily unavailable. Please try again.";
+    default:
+      return error.message || "Unable to load client requests. Please try again.";
+  }
+}
+
 export function RequestsPage() {
+  const { user, loading: authLoading } = useAuth();
   const [queryText, setQueryText] = useState("");
   const [requests, setRequests] = useState<ContactRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (authLoading) {
+      return;
+    }
+
+    if (!isFirebaseConfigured()) {
+      setError("Firebase is not configured.");
+      setLoading(false);
+      return;
+    }
+
+    if (!user) {
+      setError("Sign in required to view client requests.");
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
     const requestsQuery = query(
-      collection(db, CONTACT_REQUESTS_COLLECTION),
+      collection(getFirebaseDb(), CONTACT_REQUESTS_COLLECTION),
       orderBy("createdAt", "desc"),
     );
 
@@ -88,14 +123,14 @@ export function RequestsPage() {
         setLoading(false);
         setError("");
       },
-      () => {
-        setError("Unable to load client requests. Please try again.");
+      (snapshotError) => {
+        setError(getRequestsErrorMessage(snapshotError));
         setLoading(false);
       },
     );
 
     return unsubscribe;
-  }, []);
+  }, [user, authLoading]);
 
   const filtered = useMemo(() => {
     const q = queryText.trim().toLowerCase();
@@ -204,17 +239,17 @@ export function RequestsPage() {
             </div>
 
             <div className="divide-y divide-outline-variant">
-              {loading ? (
+              {loading || authLoading ? (
                 <p className="p-6 font-sans text-body-md text-on-surface-variant">
                   Loading inquiries…
                 </p>
               ) : null}
 
-              {!loading && error ? (
+              {!loading && !authLoading && error ? (
                 <p className="p-6 font-sans text-body-md text-error">{error}</p>
               ) : null}
 
-              {!loading && !error && filtered.length === 0 ? (
+              {!loading && !authLoading && !error && filtered.length === 0 ? (
                 <p className="p-6 font-sans text-body-md text-on-surface-variant">
                   No contact requests yet. Submissions from Connect With Us will
                   appear here.
@@ -222,6 +257,7 @@ export function RequestsPage() {
               ) : null}
 
               {!loading &&
+                !authLoading &&
                 !error &&
                 filtered.map((item) => (
                   <div
