@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>THE ICG - Consultant Portal Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#eceef2",
+                        "on-tertiary-fixed": "#390918",
+                        "tertiary-fixed-dim": "#ffb1c0",
+                        "tertiary-fixed": "#ffd9df",
+                        "inverse-surface": "#2e3134",
+                        "surface": "#f8f9fd",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#eff1f5",
+                        "surface-variant": "#e1e2e6",
+                        "on-primary-fixed-variant": "#1f502b",
+                        "tertiary": "#481423",
+                        "on-secondary-fixed-variant": "#0e5300",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "off-white": "#F1EEEA",
+                        "surface-container-high": "#e7e8ec",
+                        "primary": "#002f10",
+                        "secondary": "#156e00",
+                        "on-secondary-container": "#177300",
+                        "on-background": "#191c1f",
+                        "background": "#f8f9fd",
+                        "surface-container-low": "#f2f3f7",
+                        "on-tertiary-fixed-variant": "#6f3442",
+                        "surface-tint": "#386941",
+                        "surface-container-highest": "#e1e2e6",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#b9f0bd",
+                        "on-surface-variant": "#414940",
+                        "secondary-fixed": "#98fa7a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#00210a",
+                        "on-surface": "#191c1f",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#9ed3a3",
+                        "on-tertiary-container": "#df92a1",
+                        "surface-bright": "#f8f9fd",
+                        "on-primary-container": "#80b486",
+                        "outline": "#717970",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#632a38",
+                        "surface-dim": "#d8dade",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#9ed3a3",
+                        "on-secondary-fixed": "#032100",
+                        "secondary-container": "#95f777",
+                        "pure-white": "#FFFFFF",
+                        "outline-variant": "#c1c9be",
+                        "secondary-fixed-dim": "#7ddd61",
+                        "primary-container": "#144622"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "20px",
+                        "base": "8px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["sourceSerif4"],
+                        "label-md": ["hankenGrotesk"],
+                        "display-lg": ["sourceSerif4"],
+                        "headline-lg": ["sourceSerif4"],
+                        "body-lg": ["hankenGrotesk"],
+                        "body-md": ["hankenGrotesk"],
+                        "headline-lg-mobile": ["sourceSerif4"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Hanken Grotesk', sans-serif; }
+        .font-sourceSerif4 { font-family: 'Source Serif 4', serif; }
+        .font-hankenGrotesk { font-family: 'Hanken Grotesk', sans-serif; }
+        
+        /* Focus styles for inputs */
+        input:focus {
+            border-bottom-color: #144622 !important; /* primary-container (BCG Green) */
+            outline: none;
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+<body class="bg-off-white text-on-surface min-h-screen flex flex-col antialiased">
+<!-- Header / TopNavBar (Suppressed for Login per rules, but requested by user. We will show a simplified, non-navigational header for the login flow to maintain brand authority without distractions) -->
+<header class="fixed top-0 w-full z-50 bg-off-white/90 backdrop-blur-md border-b border-outline-variant flat no shadows">
+<div class="flex justify-center md:justify-between items-center w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto h-20">
+<div class="font-sourceSerif4 text-headline-md font-bold text-primary">THE ICG</div>
+<!-- Navigation links suppressed for linear/transactional login page -->
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow flex items-center justify-center pt-20 pb-20 relative">
+<!-- Background Architectural Image/Texture -->
+<div class="absolute inset-0 z-0 opacity-10" data-alt="A highly textured, out-of-focus background image showing the abstract geometric patterns of a modern glass and steel skyscraper facade. The lighting is bright and high-key, creating a pristine, light-mode corporate aesthetic in pure whites and soft grays. The mood is authoritative and structured, perfectly suited for a high-end management consulting firm's portal login." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDIZcYEAO3u_g9Yh_an3moQfv06U3Wupyc5zdKN_pBnrkkha1r540DjBz7t06bBCeOcaSHJfuyrbIQA7iepHsgQ4VZQgWVdFDXikeNHKVUd9urBFSBvuVqrgr9uyloLvH3VL7xhi8tG7eRpQLkweLgIYGy9Mn57Fo0KSoACUwu8OGypLEt9N44LCdmiQDGspVfmZj6H4NIUowvbZgKrWVfVs5lLibaN0Lfajb71raCy9ne2sjzp56Ia')"></div>
+<!-- Login Container -->
+<div class="relative z-10 w-full max-w-md px-margin-mobile md:px-0">
+<div class="bg-pure-white border border-outline-variant p-8 md:p-12 flat no shadows transition-all duration-300 hover:border-outline">
+<div class="mb-10 text-center">
+<h1 class="font-sourceSerif4 text-headline-lg-mobile md:text-headline-md text-primary mb-2">Consultant Portal</h1>
+<p class="font-hankenGrotesk text-body-md text-on-surface-variant">Sign in to access strategic resources.</p>
+</div>
+<form action="#" class="space-y-8" method="POST">
+<!-- Email Input -->
+<div class="relative group">
+<label class="font-hankenGrotesk text-label-md uppercase tracking-widest text-on-surface-variant mb-2 block transition-colors group-focus-within:text-primary-container" for="email">Corporate Email</label>
+<input class="w-full bg-transparent border-0 border-b-2 border-outline-variant px-0 py-2 font-hankenGrotesk text-body-lg text-on-surface transition-colors focus:ring-0 focus:border-primary-container placeholder-outline-variant/50" id="email" name="email" placeholder="j.doe@theicg.com" required="" type="email"/>
+</div>
+<!-- Password Input -->
+<div class="relative group">
+<div class="flex justify-between items-center mb-2">
+<label class="font-hankenGrotesk text-label-md uppercase tracking-widest text-on-surface-variant transition-colors group-focus-within:text-primary-container" for="password">Password</label>
+<a class="font-hankenGrotesk text-label-md text-on-surface-variant hover:text-primary-container transition-colors" href="#">Forgot Password?</a>
+</div>
+<input class="w-full bg-transparent border-0 border-b-2 border-outline-variant px-0 py-2 font-hankenGrotesk text-body-lg text-on-surface transition-colors focus:ring-0 focus:border-primary-container" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+</div>
+<!-- Remember Me -->
+<div class="flex items-center">
+<input class="h-4 w-4 rounded-none border-outline-variant text-primary-container focus:ring-primary-container" id="remember_me" name="remember_me" type="checkbox"/>
+<label class="ml-3 block font-hankenGrotesk text-body-md text-on-surface-variant" for="remember_me">
+                            Keep me signed in
+                        </label>
+</div>
+<!-- Submit Button -->
+<button class="w-full bg-primary-container text-pure-white font-hankenGrotesk text-label-md uppercase tracking-widest py-4 px-6 rounded-none relative overflow-hidden group transition-transform duration-200 hover:scale-[1.02]" type="submit">
+<span class="relative z-10">Sign In</span>
+<!-- Bottom accent on hover -->
+<div class="absolute bottom-0 left-0 w-full h-1 bg-secondary-fixed transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+</button>
+</form>
+<div class="mt-8 text-center">
+<p class="font-hankenGrotesk text-label-md text-on-surface-variant">
+                        Secure Access for Authorized Personnel Only.
+                    </p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-margin-desktop bg-primary border-t border-primary-container flat no shadows mt-auto relative z-10">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto items-center">
+<div class="md:col-span-4 mb-8 md:mb-0">
+<div class="font-sourceSerif4 text-headline-md text-off-white mb-2">THE ICG</div>
+<p class="font-hankenGrotesk text-body-md text-off-white/70">
+                    © 2024 THE ICG. All rights reserved. Visionary Infrastructure. Global Strategy.
+                </p>
+</div>
+<div class="md:col-span-8 flex flex-wrap gap-6 md:justify-end">
+<a class="font-hankenGrotesk text-body-md text-off-white/70 hover:text-off-white transition-colors" href="#">Privacy Policy</a>
+<a class="font-hankenGrotesk text-body-md text-off-white/70 hover:text-off-white transition-colors" href="#">Terms of Service</a>
+<a class="font-hankenGrotesk text-body-md text-off-white/70 hover:text-off-white transition-colors" href="#">Compliance</a>
+<a class="font-hankenGrotesk text-body-md text-off-white/70 hover:text-off-white transition-colors" href="#">Global Offices</a>
+</div>
+</div>
+</footer>
+</body></html>

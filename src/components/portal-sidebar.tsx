@@ -1,0 +1,182 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import { useAuth } from "@/components/auth-provider";
+import { signOutUser } from "@/lib/auth-client";
+import {
+  AccountCircleIcon,
+  AddIcon,
+  AnalyticsIcon,
+  AssignmentIcon,
+  CloseIcon,
+  GroupsIcon,
+  LogoutIcon,
+  MenuIcon,
+} from "./icons";
+
+const navItems = [
+  {
+    href: "/portal/requests",
+    label: "Client Requests",
+    icon: AssignmentIcon,
+  },
+  {
+    href: "#",
+    label: "Project Pipeline",
+    icon: AnalyticsIcon,
+    disabled: true,
+  },
+  {
+    href: "#",
+    label: "Expert Network",
+    icon: GroupsIcon,
+    disabled: true,
+  },
+  {
+    href: "/portal/profile",
+    label: "Profile Settings",
+    icon: AccountCircleIcon,
+  },
+];
+
+export function PortalSidebar() {
+  const pathname = usePathname();
+  const router = useRouter();
+  const { user } = useAuth();
+  const [open, setOpen] = useState(false);
+
+  const displayName = user?.displayName?.trim() || user?.email || "Consultant";
+  const shortName =
+    user?.displayName?.trim()?.split(/\s+/)[0] ||
+    user?.email?.split("@")[0] ||
+    "Consultant";
+
+  async function logout() {
+    await signOutUser();
+    router.replace("/login");
+    router.refresh();
+  }
+
+  const nav = (
+    <>
+      <div className="mb-8 mt-4 border-b border-outline-variant/30 px-6 pb-6">
+        <h1 className="font-serif text-headline-md font-bold text-primary">
+          Consultant Portal
+        </h1>
+        <p className="mt-1 font-sans text-label-md uppercase tracking-widest text-on-surface-variant">
+          Strategic Advisory Division
+        </p>
+      </div>
+
+      <ul className="flex flex-1 flex-col gap-2 px-4">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const active = item.href !== "#" && pathname.startsWith(item.href);
+          const className = active
+            ? "flex translate-x-1 items-center gap-3 border-r-4 border-secondary bg-secondary-container/30 px-4 py-3 font-sans text-label-md font-bold uppercase tracking-widest text-primary transition-transform"
+            : "flex items-center gap-3 px-4 py-3 font-sans text-label-md uppercase tracking-widest text-on-surface-variant transition-colors hover:bg-surface-container-low hover:text-primary";
+
+          if (item.disabled) {
+            return (
+              <li key={item.label}>
+                <span className={`${className} cursor-not-allowed opacity-50`}>
+                  <Icon />
+                  {item.label}
+                </span>
+              </li>
+            );
+          }
+
+          return (
+            <li key={item.label}>
+              <Link
+                href={item.href}
+                className={className}
+                onClick={() => setOpen(false)}
+              >
+                <Icon />
+                {item.label}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+
+      <div className="mt-auto border-t border-outline-variant/30 p-6">
+        <div className="mb-4 flex items-center gap-4">
+          {user?.photoURL ? (
+            <Image
+              src={user.photoURL}
+              alt={displayName}
+              width={40}
+              height={40}
+              className="h-10 w-10 rounded-full border border-outline-variant object-cover"
+              unoptimized
+            />
+          ) : (
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-outline-variant bg-surface-container font-sans text-xs font-semibold text-primary">
+              {shortName.slice(0, 2).toUpperCase()}
+            </div>
+          )}
+          <div className="min-w-0">
+            <p className="truncate font-sans text-label-md text-primary">
+              {displayName}
+            </p>
+            <p className="truncate text-xs text-on-surface-variant">
+              {user?.email || "Portal member"}
+            </p>
+          </div>
+        </div>
+        <button
+          type="button"
+          className="mb-3 flex w-full items-center justify-center gap-2 border-b-4 border-transparent bg-primary px-4 py-3 font-sans text-label-md uppercase tracking-widest text-on-primary transition-all hover:border-secondary-fixed"
+        >
+          <AddIcon />
+          New Analysis
+        </button>
+        <button
+          type="button"
+          onClick={logout}
+          className="flex w-full items-center justify-center gap-2 border border-outline-variant px-4 py-2 font-sans text-label-md uppercase tracking-widest text-on-surface-variant transition-colors hover:border-primary hover:text-primary"
+        >
+          <LogoutIcon />
+          Sign Out
+        </button>
+      </div>
+    </>
+  );
+
+  return (
+    <>
+      <button
+        type="button"
+        className="fixed left-4 top-4 z-50 bg-pure-white p-2 text-primary shadow-sm md:hidden"
+        aria-label={open ? "Close menu" : "Open menu"}
+        onClick={() => setOpen((value) => !value)}
+      >
+        {open ? <CloseIcon /> : <MenuIcon />}
+      </button>
+
+      <aside className="fixed left-0 top-0 z-40 hidden h-screen w-64 flex-col border-r border-outline-variant bg-surface-container-lowest py-2 md:flex">
+        {nav}
+      </aside>
+
+      {open ? (
+        <div className="fixed inset-0 z-40 md:hidden">
+          <button
+            type="button"
+            className="absolute inset-0 bg-primary/40"
+            aria-label="Close menu overlay"
+            onClick={() => setOpen(false)}
+          />
+          <aside className="relative z-10 flex h-full w-72 flex-col bg-surface-container-lowest py-2">
+            {nav}
+          </aside>
+        </div>
+      ) : null}
+    </>
+  );
+}
