@@ -71,6 +71,7 @@ export function getAuthErrorMessage(error: unknown): string {
     return "Firebase API key is missing or invalid. Set NEXT_PUBLIC_FIREBASE_* in your environment.";
   }
 
+
   switch (code) {
     case "auth/popup-closed-by-user":
       return "Sign-in popup was closed before completing.";
