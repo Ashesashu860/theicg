@@ -10,6 +10,7 @@ import {
   type FirestoreError,
 } from "firebase/firestore";
 import { useAuth } from "@/components/auth-provider";
+import { ReplyEmailModal } from "@/components/reply-email-modal";
 import {
   CONTACT_REQUESTS_COLLECTION,
   type ContactRequest,
@@ -21,7 +22,6 @@ import {
   ArrowForwardIcon,
   ChevronRightIcon,
   FilterListIcon,
-  MarkEmailReadIcon,
   SearchIcon,
 } from "./icons";
 
@@ -77,6 +77,7 @@ export function RequestsPage() {
   const [requests, setRequests] = useState<ContactRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [replyTarget, setReplyTarget] = useState<ContactRequest | null>(null);
 
   useEffect(() => {
     if (authLoading) {
@@ -292,19 +293,22 @@ export function RequestsPage() {
                       </span>
                     </div>
                     <div className="flex justify-start gap-2 transition-opacity md:col-span-2 md:justify-end md:opacity-0 md:group-hover:opacity-100">
-                      <button
-                        type="button"
-                        className="border border-transparent p-2 text-on-surface-variant transition-colors hover:border-outline-variant hover:text-primary"
-                        title="Mark as Read"
-                      >
-                        <MarkEmailReadIcon />
-                      </button>
-                      <button
-                        type="button"
-                        className="border border-primary px-4 py-2 font-sans text-label-md uppercase text-primary transition-colors hover:bg-primary hover:text-on-primary"
-                      >
-                        Details
-                      </button>
+                      {item.email ? (
+                        <button
+                          type="button"
+                          onClick={() => setReplyTarget(item)}
+                          className="border border-primary px-4 py-2 font-sans text-label-md uppercase text-primary transition-colors hover:bg-primary hover:text-on-primary"
+                        >
+                          Reply
+                        </button>
+                      ) : (
+                        <span
+                          className="cursor-not-allowed border border-outline-variant px-4 py-2 font-sans text-label-md uppercase text-on-surface-variant opacity-50"
+                          title="No email on this request"
+                        >
+                          Reply
+                        </span>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -333,6 +337,14 @@ export function RequestsPage() {
           </div>
         </div>
       </section>
+
+      {replyTarget ? (
+        <ReplyEmailModal
+          key={replyTarget.id}
+          request={replyTarget}
+          onClose={() => setReplyTarget(null)}
+        />
+      ) : null}
     </>
   );
 }
