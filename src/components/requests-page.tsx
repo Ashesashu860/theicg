@@ -75,12 +75,27 @@ function getRequestsErrorMessage(error: FirestoreError): string {
 
 export function RequestsPage() {
   const { user, loading: authLoading } = useAuth();
+  const configured = isFirebaseConfigured();
+  const uid = user?.uid ?? null;
+  const canSubscribe = configured && !authLoading && uid !== null;
+
   const [queryText, setQueryText] = useState("");
   const [requests, setRequests] = useState<ContactRequest[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [liveError, setLiveError] = useState("");
+  const [actionError, setActionError] = useState("");
+  const [loadedForUid, setLoadedForUid] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [replyTarget, setReplyTarget] = useState<ContactRequest | null>(null);
+  const [now] = useState(() => Date.now());
+
+  const gateError = !configured
+    ? "Firebase is not configured."
+    : !authLoading && !user
+      ? "Sign in required to view client requests."
+      : "";
+  const error = gateError || actionError || liveError;
+  const loading =
+    authLoading || (canSubscribe && loadedForUid !== uid);
 
   async function handleDelete(item: ContactRequest) {
     if (
@@ -91,13 +106,13 @@ export function RequestsPage() {
       return;
     }
 
-    if (!isFirebaseConfigured()) {
-      setError("Firebase is not configured.");
+    if (!configured) {
+      setActionError("Firebase is not configured.");
       return;
     }
 
     setDeletingId(item.id);
-    setError("");
+    setActionError("");
 
     try {
       await deleteDoc(
@@ -108,31 +123,16 @@ export function RequestsPage() {
         deleteError instanceof Error
           ? deleteError.message
           : "Unable to delete this request. Please try again.";
-      setError(message);
+      setActionError(message);
     } finally {
       setDeletingId(null);
     }
   }
 
   useEffect(() => {
-    if (authLoading) {
+    if (!canSubscribe || uid === null) {
       return;
     }
-
-    if (!isFirebaseConfigured()) {
-      setError("Firebase is not configured.");
-      setLoading(false);
-      return;
-    }
-
-    if (!user) {
-      setError("Sign in required to view client requests.");
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    setError("");
 
     const requestsQuery = query(
       collection(getFirebaseDb(), CONTACT_REQUESTS_COLLECTION),
@@ -156,17 +156,17 @@ export function RequestsPage() {
           } satisfies ContactRequest;
         });
         setRequests(next);
-        setLoading(false);
-        setError("");
+        setLoadedForUid(uid);
+        setLiveError("");
       },
       (snapshotError) => {
-        setError(getRequestsErrorMessage(snapshotError));
-        setLoading(false);
+        setLiveError(getRequestsErrorMessage(snapshotError));
+        setLoadedForUid(uid);
       },
     );
 
     return unsubscribe;
-  }, [user, authLoading]);
+  }, [canSubscribe, uid]);
 
   const filtered = useMemo(() => {
     const q = queryText.trim().toLowerCase();
@@ -181,7 +181,7 @@ export function RequestsPage() {
   }, [queryText, requests]);
 
   const summary = useMemo(() => {
-    const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+    const weekAgo = now - 7 * 24 * 60 * 60 * 1000;
     const newCount = requests.filter((item) => item.status === "New").length;
     const reviewedCount = requests.filter(
       (item) => item.status === "Reviewed",
@@ -198,7 +198,7 @@ export function RequestsPage() {
       { label: "Pending Review", value: String(reviewedCount) },
       { label: "Contacted (7 Days)", value: String(contactedRecent) },
     ];
-  }, [requests]);
+  }, [now, requests]);
 
   return (
     <>

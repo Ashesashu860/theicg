@@ -22,12 +22,14 @@ export function SiteHeader() {
   const { user, loading } = useAuth();
   const [open, setOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
+  const [menuPathname, setMenuPathname] = useState(pathname);
   const accountRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  if (pathname !== menuPathname) {
+    setMenuPathname(pathname);
     setOpen(false);
     setAccountOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     if (!accountOpen) return;
