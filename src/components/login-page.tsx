@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import {
@@ -31,17 +30,6 @@ export function LoginPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-off-white text-on-surface antialiased">
-      <header className="fixed top-0 z-50 w-full border-b border-outline-variant bg-off-white/90 backdrop-blur-md">
-        <div className="mx-auto flex h-20 w-full max-w-container-max items-center justify-center px-margin-mobile md:justify-between md:px-margin-desktop">
-          <Link
-            href="/"
-            className="font-serif text-headline-md font-bold text-primary"
-          >
-            ICG
-          </Link>
-        </div>
-      </header>
-
       <main className="relative flex flex-grow items-center justify-center pb-20 pt-20">
         <div className="absolute inset-0 z-0 opacity-10">
           <Image

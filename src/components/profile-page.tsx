@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useAuth } from "@/components/auth-provider";
+import { UserAvatar } from "@/components/user-avatar";
 import {
   CheckCircleIcon,
   LanguageIcon,
@@ -37,13 +37,6 @@ const competencies = [
   },
 ];
 
-function initialsFromName(name: string) {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "IC";
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
-}
-
 export function ProfilePage() {
   const { user, loading } = useAuth();
 
@@ -69,7 +62,6 @@ export function ProfilePage() {
 
   const displayName = user.displayName?.trim() || "Consultant";
   const email = user.email || "No email on file";
-  const photoURL = user.photoURL;
   const provider =
     user.providerData.find((entry) => entry.providerId === "google.com")
       ?.providerId === "google.com"
@@ -83,23 +75,14 @@ export function ProfilePage() {
         <div className="group relative col-span-12 flex flex-col justify-between overflow-hidden border border-outline-variant bg-pure-white p-8 transition-colors duration-300 hover:border-primary md:col-span-5">
           <div className="pointer-events-none absolute inset-0 bg-primary/5 opacity-0 transition-opacity group-hover:opacity-100" />
           <div className="relative z-10 mb-8 flex items-start gap-6">
-            <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full border-2 border-primary bg-surface-container">
-              {photoURL ? (
-                <Image
-                  src={photoURL}
-                  alt={displayName}
-                  width={96}
-                  height={96}
-                  className="h-full w-full object-cover"
-                  priority
-                  unoptimized
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center font-serif text-2xl font-bold text-primary">
-                  {initialsFromName(displayName)}
-                </div>
-              )}
-            </div>
+            <UserAvatar
+              name={user.displayName}
+              email={user.email}
+              photoURL={user.photoURL}
+              size={96}
+              className="border-2 border-primary"
+              priority
+            />
             <div>
               <h2 className="mb-2 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
                 {displayName}

@@ -10,7 +10,6 @@ import {
   MonitoringIcon,
 } from "@/components/icons";
 import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 
 const teams = [
   {
@@ -57,7 +56,6 @@ const culturePoints = [
 export function CareersPage() {
   return (
     <>
-      <SiteHeader />
       <main className="flex min-h-screen flex-col bg-off-white pb-section-lg pt-32">
         <section className="mx-auto mb-section-lg max-w-container-max px-margin-mobile md:px-margin-desktop">
           <div className="grid grid-cols-1 items-center gap-gutter md:grid-cols-12">

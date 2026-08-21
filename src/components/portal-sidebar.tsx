@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "@/components/auth-provider";
+import { UserAvatar } from "@/components/user-avatar";
 import { signOutUser } from "@/lib/auth-client";
 import {
   AccountCircleIcon,
@@ -49,10 +49,6 @@ export function PortalSidebar() {
   const [open, setOpen] = useState(false);
 
   const displayName = user?.displayName?.trim() || user?.email || "Consultant";
-  const shortName =
-    user?.displayName?.trim()?.split(/\s+/)[0] ||
-    user?.email?.split("@")[0] ||
-    "Consultant";
 
   async function logout() {
     await signOutUser();
@@ -107,20 +103,12 @@ export function PortalSidebar() {
 
       <div className="mt-auto border-t border-outline-variant/30 p-6">
         <div className="mb-4 flex items-center gap-4">
-          {user?.photoURL ? (
-            <Image
-              src={user.photoURL}
-              alt={displayName}
-              width={40}
-              height={40}
-              className="h-10 w-10 rounded-full border border-outline-variant object-cover"
-              unoptimized
-            />
-          ) : (
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-outline-variant bg-surface-container font-sans text-xs font-semibold text-primary">
-              {shortName.slice(0, 2).toUpperCase()}
-            </div>
-          )}
+          <UserAvatar
+            name={user?.displayName}
+            email={user?.email}
+            photoURL={user?.photoURL}
+            size={40}
+          />
           <div className="min-w-0">
             <p className="truncate font-sans text-label-md text-primary">
               {displayName}
@@ -153,19 +141,19 @@ export function PortalSidebar() {
     <>
       <button
         type="button"
-        className="fixed left-4 top-4 z-50 bg-pure-white p-2 text-primary shadow-sm md:hidden"
+        className="fixed left-4 top-24 z-40 bg-pure-white p-2 text-primary shadow-sm md:hidden"
         aria-label={open ? "Close menu" : "Open menu"}
         onClick={() => setOpen((value) => !value)}
       >
         {open ? <CloseIcon /> : <MenuIcon />}
       </button>
 
-      <aside className="fixed left-0 top-0 z-40 hidden h-screen w-64 flex-col border-r border-outline-variant bg-surface-container-lowest py-2 md:flex">
+      <aside className="fixed left-0 top-20 z-40 hidden h-[calc(100vh-5rem)] w-64 flex-col border-r border-outline-variant bg-surface-container-lowest py-2 md:flex">
         {nav}
       </aside>
 
       {open ? (
-        <div className="fixed inset-0 z-40 md:hidden">
+        <div className="fixed inset-0 top-20 z-40 md:hidden">
           <button
             type="button"
             className="absolute inset-0 bg-primary/40"

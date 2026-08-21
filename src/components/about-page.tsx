@@ -6,7 +6,6 @@ import {
   MemoryIcon,
 } from "@/components/icons";
 import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 
 const impactStats = [
   { value: "30K+", label: "Global Reach" },
@@ -17,7 +16,6 @@ const impactStats = [
 export function AboutPage() {
   return (
     <>
-      <SiteHeader />
       <main className="bg-off-white pt-24">
         <div className="mx-auto max-w-container-max px-margin-mobile md:px-margin-desktop">
           <section className="grid grid-cols-1 items-center gap-8 border-b border-outline-variant py-24 md:grid-cols-12 md:py-32">

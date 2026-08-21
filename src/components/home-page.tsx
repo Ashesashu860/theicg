@@ -9,7 +9,6 @@ import {
   TrendingUpIcon,
 } from "./icons";
 import { SiteFooter } from "./site-footer";
-import { SiteHeader } from "./site-header";
 
 const insights = [
   {
@@ -79,7 +78,6 @@ const stats = [
 export function HomePage() {
   return (
     <>
-      <SiteHeader />
       <main className="pt-20">
         <section className="relative flex h-[80vh] min-h-[600px] items-center justify-center overflow-hidden bg-inverse-surface">
           <div className="absolute inset-0 z-0">

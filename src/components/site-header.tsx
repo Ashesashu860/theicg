@@ -2,8 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { useAuth } from "@/components/auth-provider";
+import { UserAvatar } from "@/components/user-avatar";
+import { signOutUser } from "@/lib/auth-client";
 import { CloseIcon, MenuIcon } from "./icons";
 
 const navLinks = [
@@ -13,7 +16,106 @@ const navLinks = [
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, loading } = useAuth();
   const [open, setOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const accountRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setOpen(false);
+    setAccountOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!accountOpen) return;
+
+    function onPointerDown(event: MouseEvent) {
+      if (
+        accountRef.current &&
+        !accountRef.current.contains(event.target as Node)
+      ) {
+        setAccountOpen(false);
+      }
+    }
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setAccountOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [accountOpen]);
+
+  async function logout() {
+    setAccountOpen(false);
+    setOpen(false);
+    await signOutUser();
+    router.replace("/login");
+    router.refresh();
+  }
+
+  const displayName = user?.displayName?.trim() || user?.email || "Account";
+
+  const accountMenu = user ? (
+    <div className="relative" ref={accountRef}>
+      <button
+        type="button"
+        className="rounded-full transition-opacity hover:opacity-90"
+        aria-expanded={accountOpen}
+        aria-haspopup="menu"
+        aria-label="Account menu"
+        onClick={() => setAccountOpen((value) => !value)}
+      >
+        <UserAvatar
+          name={user.displayName}
+          email={user.email}
+          photoURL={user.photoURL}
+          size={40}
+        />
+      </button>
+
+      {accountOpen ? (
+        <div
+          role="menu"
+          className="absolute right-0 mt-2 min-w-48 border border-outline-variant bg-surface py-2 shadow-sm"
+        >
+          <div className="border-b border-outline-variant/30 px-4 py-2">
+            <p className="truncate font-sans text-sm font-semibold text-primary">
+              {displayName}
+            </p>
+            {user.email ? (
+              <p className="truncate font-sans text-xs text-on-surface-variant">
+                {user.email}
+              </p>
+            ) : null}
+          </div>
+          <Link
+            href="/portal/profile"
+            role="menuitem"
+            className="block px-4 py-2.5 font-sans text-label-md uppercase tracking-widest text-on-surface-variant transition-colors hover:bg-surface-container-low hover:text-primary"
+            onClick={() => setAccountOpen(false)}
+          >
+            My Profile
+          </Link>
+          <button
+            type="button"
+            role="menuitem"
+            className="block w-full px-4 py-2.5 text-left font-sans text-label-md uppercase tracking-widest text-on-surface-variant transition-colors hover:bg-surface-container-low hover:text-primary"
+            onClick={logout}
+          >
+            Sign out
+          </button>
+        </div>
+      ) : null}
+    </div>
+  ) : null;
 
   return (
     <header className="fixed top-0 z-50 w-full border-b border-outline-variant/30 bg-surface/80 backdrop-blur-md">
@@ -53,12 +155,6 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-4">
           <Link
-            href="/login"
-            className="hidden items-center justify-center border-b-4 border-transparent bg-primary-container px-6 py-2 font-sans text-label-md uppercase tracking-widest text-pure-white transition-all hover:border-secondary-fixed hover:bg-primary md:inline-flex"
-          >
-            Portal Login
-          </Link>
-          <Link
             href="/careers#connect"
             className="hidden items-center justify-center border border-primary px-6 py-2 font-sans text-label-md uppercase tracking-widest text-primary transition-colors hover:bg-primary hover:text-pure-white md:inline-flex"
           >
@@ -74,6 +170,15 @@ export function SiteHeader() {
           >
             {open ? <CloseIcon /> : <MenuIcon />}
           </button>
+          {!loading && !user ? (
+            <Link
+              href="/login"
+              className="inline-flex items-center justify-center border-b-4 border-transparent bg-primary-container px-4 py-2 font-sans text-label-md uppercase tracking-widest text-pure-white transition-all hover:border-secondary-fixed hover:bg-primary md:px-6"
+            >
+              Portal Login
+            </Link>
+          ) : null}
+          {!loading && user ? accountMenu : null}
         </div>
       </div>
 
@@ -100,13 +205,6 @@ export function SiteHeader() {
                 </Link>
               );
             })}
-            <Link
-              href="/login"
-              className="mt-2 inline-flex w-fit items-center justify-center bg-primary-container px-6 py-3 font-sans text-label-md uppercase tracking-widest text-pure-white"
-              onClick={() => setOpen(false)}
-            >
-              Portal Login
-            </Link>
             <Link
               href="/careers#connect"
               className="inline-flex w-fit items-center justify-center border border-primary px-6 py-3 font-sans text-label-md uppercase tracking-widest text-primary"
