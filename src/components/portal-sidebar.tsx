@@ -51,7 +51,7 @@ export function PortalSidebar() {
 
   async function logout() {
     await signOutUser();
-    router.replace("/login");
+    router.replace("/admin");
     router.refresh();
   }
 

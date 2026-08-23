@@ -47,10 +47,10 @@ export function LoginPage() {
           <div className="animate-fade-up border border-outline-variant bg-pure-white p-8 transition-all duration-300 hover:border-outline md:p-12">
             <div className="mb-10 text-center">
               <h1 className="mb-2 font-serif text-headline-lg-mobile text-primary md:text-headline-md">
-                Consultant Portal
+                Admin
               </h1>
               <p className="font-sans text-body-md text-on-surface-variant">
-                Sign in to access ICG consulting resources.
+                Sign in to access the ICG consultant portal.
               </p>
             </div>
 

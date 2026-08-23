@@ -1,16 +1,5 @@
-import type { Metadata } from "next";
-import { Suspense } from "react";
-import { LoginPage } from "@/components/login-page";
-
-export const metadata: Metadata = {
-  title: "Login | ICG Consultant Portal",
-  description: "Sign in to the ICG consultant portal.",
-};
+import { redirect } from "next/navigation";
 
 export default function Login() {
-  return (
-    <Suspense fallback={null}>
-      <LoginPage />
-    </Suspense>
-  );
+  redirect("/admin");
 }

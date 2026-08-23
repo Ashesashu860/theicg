@@ -4,7 +4,6 @@ import { ContactForm } from "@/components/contact-form";
 import {
   ArrowForwardIcon,
   BusinessCenterIcon,
-  CheckCircleIcon,
   DesignServicesIcon,
   MemoryIcon,
   MonitoringIcon,
@@ -45,12 +44,6 @@ const teams = [
     span: "md:col-span-6 lg:col-span-4",
     featured: false,
   },
-];
-
-const culturePoints = [
-  "Comprehensive physical and mental wellbeing support.",
-  "Continuous learning and aggressive career growth trajectories.",
-  "Global mobility and cross-office collaboration opportunities.",
 ];
 
 export function CareersPage() {
@@ -169,38 +162,6 @@ export function CareersPage() {
               >
                 Explore Paths <ArrowForwardIcon className="h-4 w-4" />
               </Link>
-            </div>
-          </div>
-        </section>
-
-        <section className="mb-section-lg overflow-hidden">
-          <div className="mx-auto max-w-container-max px-margin-mobile md:px-margin-desktop">
-            <div className="grid grid-cols-1 gap-gutter md:grid-cols-12">
-              <div className="flex flex-col justify-center md:col-span-4">
-                <h2 className="mb-6 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
-                  Award Winning Culture
-                </h2>
-                <ul className="space-y-4 border-t border-outline-variant pt-4 font-sans text-body-md text-on-surface-variant">
-                  {culturePoints.map((point) => (
-                    <li
-                      key={point}
-                      className="flex items-start gap-3 border-b border-outline-variant pb-4"
-                    >
-                      <CheckCircleIcon className="mt-1 shrink-0 text-secondary-fixed-dim" />
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="relative mt-10 h-[600px] border border-outline-variant md:col-span-7 md:col-start-6 md:mt-0">
-                <Image
-                  src="/images/careers-culture.jpg"
-                  alt="Diverse professionals collaborating in a modern office"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 58vw"
-                />
-              </div>
             </div>
           </div>
         </section>

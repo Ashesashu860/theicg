@@ -12,7 +12,6 @@ import { CloseIcon, MenuIcon } from "./icons";
 const navLinks = [
   { href: "/about", label: "About Us" },
   { href: "/purpose", label: "Purpose" },
-  { href: "/impact", label: "Impact" },
   { href: "/careers", label: "Careers" },
 ];
 
@@ -61,7 +60,7 @@ export function SiteHeader() {
     setAccountOpen(false);
     setOpen(false);
     await signOutUser();
-    router.replace("/login");
+    router.replace("/admin");
     router.refresh();
   }
 
@@ -167,14 +166,6 @@ export function SiteHeader() {
           >
             {open ? <CloseIcon /> : <MenuIcon />}
           </button>
-          {!loading && !user ? (
-            <Link
-              href="/login"
-              className="inline-flex items-center justify-center border-b-4 border-transparent bg-primary-container px-4 py-2 font-sans text-label-md uppercase tracking-widest text-pure-white transition-all hover:border-secondary-fixed hover:bg-primary md:px-6"
-            >
-              Portal Login
-            </Link>
-          ) : null}
           {!loading && user ? accountMenu : null}
         </div>
       </div>

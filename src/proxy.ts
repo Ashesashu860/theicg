@@ -7,13 +7,19 @@ export function proxy(request: NextRequest) {
   const isAuthed =
     request.cookies.get(AUTH_COOKIE)?.value === AUTH_COOKIE_VALUE;
 
+  if (pathname === "/login") {
+    const adminUrl = request.nextUrl.clone();
+    adminUrl.pathname = "/admin";
+    return NextResponse.redirect(adminUrl);
+  }
+
   if (pathname.startsWith("/portal") && !isAuthed) {
-    const loginUrl = new URL("/login", request.url);
+    const loginUrl = new URL("/admin", request.url);
     loginUrl.searchParams.set("next", pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  if (pathname === "/login" && isAuthed) {
+  if (pathname === "/admin" && isAuthed) {
     return NextResponse.redirect(new URL("/portal/profile", request.url));
   }
 
@@ -21,5 +27,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/portal/:path*", "/login"],
+  matcher: ["/portal/:path*", "/login", "/admin"],
 };

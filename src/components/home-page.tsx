@@ -68,13 +68,6 @@ const capabilities = [
   },
 ];
 
-const stats = [
-  { value: "50+", label: "Engagements Guided" },
-  { value: "90%", label: "Client Satisfaction" },
-  { value: "10+", label: "Practice Areas" },
-  { value: "100+", label: "Experts in Network" },
-];
-
 export function HomePage() {
   return (
     <>
@@ -255,29 +248,6 @@ export function HomePage() {
                   </div>
                 );
               })}
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="industries"
-          className="bg-primary py-24 text-pure-white"
-        >
-          <div className="mx-auto max-w-container-max px-margin-mobile text-center md:px-margin-desktop">
-            <h2 className="mb-16 font-serif text-headline-lg-mobile md:text-headline-lg">
-              Great Minds. Better Perspectives. Smarter Decisions.
-            </h2>
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-              {stats.map((stat) => (
-                <div key={stat.label}>
-                  <div className="mb-2 font-serif text-[40px] font-bold leading-[1.1] tracking-[-0.02em] text-secondary-fixed md:text-display-lg">
-                    {stat.value}
-                  </div>
-                  <div className="font-sans text-label-md uppercase tracking-widest text-surface-container-highest">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </section>
