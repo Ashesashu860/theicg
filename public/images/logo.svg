@@ -1,25 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ICG">
-  <g fill="currentColor">
-    <rect x="50" y="50" width="40" height="40" />
-    <rect x="100" y="100" width="40" height="40" />
-  </g>
-  <rect
-    x="100"
-    y="50"
-    width="40"
-    height="40"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
+  <rect x="50" y="50" width="40" height="40" fill="currentColor" />
+  <rect x="100" y="100" width="40" height="40" fill="currentColor" />
+  <!-- Outline squares use evenodd frames so outer size matches filled 40×40 cells -->
+  <path
+    fill="currentColor"
+    fill-rule="evenodd"
+    d="M100 50h40v40h-40z M102 52h36v36h-36z"
   />
-  <rect
-    x="50"
-    y="100"
-    width="40"
-    height="40"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
+  <path
+    fill="currentColor"
+    fill-rule="evenodd"
+    d="M50 100h40v40h-40z M52 102h36v36h-36z"
   />
   <text
     x="100"

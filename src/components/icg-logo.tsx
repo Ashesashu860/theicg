@@ -5,6 +5,29 @@ type IcgLogoProps = {
   title?: string;
 };
 
+/** 40×40 outline square: outer edge matches filled squares (stroke would overflow). */
+function OutlineSquare({ x, y }: { x: number; y: number }) {
+  const inset = 2;
+  return (
+    <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d={`M${x} ${y}h40v40h-40z M${x + inset} ${y + inset}h${40 - inset * 2}v${40 - inset * 2}h-${40 - inset * 2}z`}
+    />
+  );
+}
+
+function LogoMark() {
+  return (
+    <>
+      <rect x="50" y="50" width="40" height="40" fill="currentColor" />
+      <rect x="100" y="100" width="40" height="40" fill="currentColor" />
+      <OutlineSquare x={100} y={50} />
+      <OutlineSquare x={50} y={100} />
+    </>
+  );
+}
+
 export function IcgLogo({
   className,
   variant = "full",
@@ -20,28 +43,7 @@ export function IcgLogo({
         aria-label={title}
       >
         <title>{title}</title>
-        <g fill="currentColor">
-          <rect x="50" y="50" width="40" height="40" />
-          <rect x="100" y="100" width="40" height="40" />
-        </g>
-        <rect
-          x="100"
-          y="50"
-          width="40"
-          height="40"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        />
-        <rect
-          x="50"
-          y="100"
-          width="40"
-          height="40"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        />
+        <LogoMark />
       </svg>
     );
   }
@@ -55,28 +57,7 @@ export function IcgLogo({
       aria-label={title}
     >
       <title>{title}</title>
-      <g fill="currentColor">
-        <rect x="50" y="50" width="40" height="40" />
-        <rect x="100" y="100" width="40" height="40" />
-      </g>
-      <rect
-        x="100"
-        y="50"
-        width="40"
-        height="40"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <rect
-        x="50"
-        y="100"
-        width="40"
-        height="40"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
+      <LogoMark />
       <text
         x="100"
         y="180"
