@@ -1,10 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowForwardIcon,
   LightbulbIcon,
   MemoryIcon,
 } from "@/components/icons";
+import { IcgLogo } from "@/components/icg-logo";
 import { SiteFooter } from "@/components/site-footer";
 
 const impactStats = [
@@ -34,14 +34,9 @@ export function AboutPage() {
               className="animate-fade-up flex justify-end md:col-span-5"
               style={{ animationDelay: "120ms" }}
             >
-              <Image
-                src="/images/about-mark.jpg"
-                alt="ICG logo"
-                width={384}
-                height={384}
-                className="h-64 w-64 object-cover md:h-96 md:w-96"
-                priority
-              />
+              <div className="flex h-64 w-64 items-center justify-center bg-primary-container text-on-primary md:h-96 md:w-96">
+                <IcgLogo variant="full" className="h-48 w-48 md:h-72 md:w-72" />
+              </div>
             </div>
           </section>
 
@@ -122,10 +117,10 @@ export function AboutPage() {
                 className="absolute inset-0 opacity-80 mix-blend-multiply"
                 style={{
                   backgroundImage:
-                    "radial-gradient(circle at 20% 30%, #144622 0%, transparent 40%), radial-gradient(circle at 75% 60%, #98fa7a55 0%, transparent 35%), linear-gradient(135deg, #f1eeea 0%, #c1c9be 100%)",
+                    "radial-gradient(circle at 20% 30%, #144aa4 0%, transparent 40%), radial-gradient(circle at 75% 60%, #94a3b855 0%, transparent 35%), linear-gradient(135deg, #f5f7fa 0%, #e2e8f0 100%)",
                 }}
               />
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,#14462222_1px,transparent_1px),linear-gradient(to_bottom,#14462222_1px,transparent_1px)] bg-[size:48px_48px]" />
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#144aa422_1px,transparent_1px),linear-gradient(to_bottom,#144aa422_1px,transparent_1px)] bg-[size:48px_48px]" />
             </div>
             <div className="order-1 md:order-2 md:col-span-6 md:col-start-7">
               <h2 className="mb-6 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">

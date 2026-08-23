@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/components/auth-provider";
+import { IcgLogo } from "@/components/icg-logo";
 import { UserAvatar } from "@/components/user-avatar";
 import { signOutUser } from "@/lib/auth-client";
 import { CloseIcon, MenuIcon } from "./icons";
@@ -124,16 +124,9 @@ export function SiteHeader() {
   return (
     <header className="fixed top-0 z-50 w-full border-b border-outline-variant/30 bg-surface/80 backdrop-blur-md">
       <div className="mx-auto flex h-20 max-w-container-max items-center justify-between px-margin-mobile md:px-margin-desktop">
-        <Link href="/" className="flex items-center gap-2">
-          <Image
-            src="/images/logo.png"
-            alt="ICG"
-            width={32}
-            height={32}
-            className="h-8 w-8 object-contain"
-            priority
-          />
-          <span className="hidden font-serif text-headline-md font-bold tracking-tighter text-primary md:block">
+        <Link href="/" className="flex items-center gap-2 text-primary">
+          <IcgLogo variant="mark" className="h-8 w-8" />
+          <span className="hidden font-serif text-headline-md font-bold tracking-tighter md:block">
             ICG
           </span>
         </Link>
