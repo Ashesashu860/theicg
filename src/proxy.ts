@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { AUTH_COOKIE, AUTH_COOKIE_VALUE } from "@/lib/auth";
+import { AUTH_COOKIE } from "@/lib/auth";
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const isAuthed =
-    request.cookies.get(AUTH_COOKIE)?.value === AUTH_COOKIE_VALUE;
+  const sessionCookie = request.cookies.get(AUTH_COOKIE)?.value;
+  const isAuthed = Boolean(sessionCookie);
 
   if (pathname === "/login") {
     const adminUrl = request.nextUrl.clone();

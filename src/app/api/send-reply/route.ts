@@ -1,7 +1,6 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import { AUTH_COOKIE, AUTH_COOKIE_VALUE } from "@/lib/auth";
+import { getAdminSession } from "@/lib/admin-session";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_SUBJECT_LENGTH = 200;
@@ -18,8 +17,8 @@ function isNonEmptyString(value: unknown, maxLength: number): value is string {
 }
 
 export async function POST(request: Request) {
-  const cookieStore = await cookies();
-  if (cookieStore.get(AUTH_COOKIE)?.value !== AUTH_COOKIE_VALUE) {
+  const session = await getAdminSession();
+  if (!session) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 

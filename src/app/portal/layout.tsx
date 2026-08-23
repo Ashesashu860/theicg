@@ -1,10 +1,17 @@
+import { redirect } from "next/navigation";
 import { PortalSidebar } from "@/components/portal-sidebar";
+import { getAdminSession } from "@/lib/admin-session";
 
-export default function PortalLayout({
+export default async function PortalLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getAdminSession();
+  if (!session) {
+    redirect("/admin");
+  }
+
   return (
     <div className="flex min-h-screen bg-off-white text-on-surface">
       <PortalSidebar />

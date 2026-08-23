@@ -1,37 +1,66 @@
 import {
-  GoogleAuthProvider,
   onAuthStateChanged,
-  signInWithPopup,
+  signInWithEmailAndPassword,
   signOut,
   type User,
   type Unsubscribe,
 } from "firebase/auth";
-import { buildAuthCookie, clearAuthCookie } from "@/lib/auth";
 import { getFirebaseAuth, isFirebaseConfigured } from "@/lib/firebase";
 
-const googleProvider = new GoogleAuthProvider();
+async function exchangeSessionCookie(idToken: string): Promise<void> {
+  const response = await fetch("/api/auth/session", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ idToken }),
+  });
 
-export function syncAuthCookie(user: User | null) {
-  if (typeof document === "undefined") {
-    return;
+  if (!response.ok) {
+    let message = "Unable to create session.";
+    try {
+      const data = (await response.json()) as { error?: string };
+      if (data.error) {
+        message = data.error;
+      }
+    } catch {
+      // ignore JSON parse errors
+    }
+
+    if (response.status === 403) {
+      await signOut(getFirebaseAuth()).catch(() => undefined);
+    }
+
+    throw new Error(message);
   }
-  document.cookie = user ? buildAuthCookie() : clearAuthCookie();
 }
 
-export async function signInWithGoogle(): Promise<User> {
+export async function signInWithEmailPassword(
+  email: string,
+  password: string,
+): Promise<User> {
   if (!isFirebaseConfigured()) {
     throw new Error("Firebase is not configured.");
   }
-  const result = await signInWithPopup(getFirebaseAuth(), googleProvider);
-  syncAuthCookie(result.user);
+
+  const result = await signInWithEmailAndPassword(
+    getFirebaseAuth(),
+    email.trim(),
+    password,
+  );
+  const idToken = await result.user.getIdToken();
+  await exchangeSessionCookie(idToken);
   return result.user;
 }
 
 export async function signOutUser(): Promise<void> {
+  try {
+    await fetch("/api/auth/session", { method: "DELETE" });
+  } catch {
+    // Still clear client auth below.
+  }
+
   if (isFirebaseConfigured()) {
     await signOut(getFirebaseAuth());
   }
-  syncAuthCookie(null);
 }
 
 export function subscribeToAuth(
@@ -42,10 +71,7 @@ export function subscribeToAuth(
     return () => undefined;
   }
 
-  return onAuthStateChanged(getFirebaseAuth(), (user) => {
-    syncAuthCookie(user);
-    callback(user);
-  });
+  return onAuthStateChanged(getFirebaseAuth(), callback);
 }
 
 export function getAuthErrorMessage(error: unknown): string {
@@ -61,7 +87,7 @@ export function getAuthErrorMessage(error: unknown): string {
     message.includes("CONFIGURATION_NOT_FOUND") ||
     code === "auth/configuration-not-found"
   ) {
-    return "Firebase Authentication is not set up yet. In Firebase Console, open Authentication → Get started, then enable the Google provider.";
+    return "Firebase Authentication is not set up yet. In Firebase Console, open Authentication → Get started, then enable the Email/Password provider.";
   }
 
   if (
@@ -71,19 +97,33 @@ export function getAuthErrorMessage(error: unknown): string {
     return "Firebase API key is missing or invalid. Set NEXT_PUBLIC_FIREBASE_* in your environment.";
   }
 
+  if (
+    message === "Forbidden." ||
+    message.toLowerCase().includes("forbidden")
+  ) {
+    return "This account is not authorized for admin access.";
+  }
 
   switch (code) {
-    case "auth/popup-closed-by-user":
-      return "Sign-in popup was closed before completing.";
-    case "auth/popup-blocked":
-      return "Sign-in popup was blocked by the browser.";
-    case "auth/unauthorized-domain":
-      return "This domain is not authorized for Google sign-in.";
-    case "auth/cancelled-popup-request":
-      return "Another sign-in attempt is already in progress.";
+    case "auth/invalid-email":
+      return "Enter a valid email address.";
+    case "auth/user-disabled":
+      return "This account has been disabled.";
+    case "auth/user-not-found":
+    case "auth/wrong-password":
+    case "auth/invalid-credential":
+    case "auth/invalid-login-credentials":
+      return "Invalid email or password.";
+    case "auth/too-many-requests":
+      return "Too many failed attempts. Please try again later.";
+    case "auth/network-request-failed":
+      return "Network error. Check your connection and try again.";
     case "auth/operation-not-allowed":
-      return "Google sign-in is disabled. Enable it under Authentication → Sign-in method in Firebase Console.";
+      return "Email/password sign-in is disabled. Enable it under Authentication → Sign-in method in Firebase Console.";
     default:
-      return "Unable to sign in with Google. Please try again.";
+      if (message && !code) {
+        return message;
+      }
+      return "Unable to sign in. Please try again.";
   }
 }
