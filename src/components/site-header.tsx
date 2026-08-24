@@ -12,6 +12,7 @@ import { CloseIcon, MenuIcon } from "./icons";
 const navLinks = [
   { href: "/about", label: "About Us" },
   { href: "/purpose", label: "Purpose" },
+  { href: "/capabilities", label: "Capabilities" },
   { href: "/careers", label: "Careers" },
 ];
 

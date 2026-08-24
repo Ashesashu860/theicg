@@ -201,7 +201,7 @@ export function HomePage() {
                 forward with confidence.
               </p>
               <Link
-                href="#capabilities"
+                href="/capabilities"
                 className="inline-flex items-center gap-2 border border-primary px-6 py-3 font-sans text-label-md uppercase tracking-widest text-primary transition-colors hover:bg-primary hover:text-pure-white"
               >
                 View All Services
