@@ -24,5 +24,21 @@ service firebase.storage {
         && underSizeLimit();
       allow delete: if request.auth != null;
     }
+
+    function isResumeDocument() {
+      return request.resource.contentType in [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      ];
+    }
+
+    match /career-resumes/{allPaths=**} {
+      // Public applicants may upload resumes; paths use unguessable UUIDs.
+      // Application docs (which store URLs) are not publicly readable.
+      allow create: if isResumeDocument() && underSizeLimit();
+      allow read: if true;
+      allow update, delete: if request.auth != null;
+    }
   }
 }

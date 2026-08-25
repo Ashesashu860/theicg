@@ -102,10 +102,10 @@ export function CareersRolesSection({
                   </p>
                 </div>
                 <Link
-                  href="#connect"
+                  href={`/careers/apply?role=${encodeURIComponent(role.id)}`}
                   className="mt-6 flex items-center gap-2 font-sans text-label-md uppercase text-primary-container transition-colors group-hover:text-secondary"
                 >
-                  Register Interest <ArrowForwardIcon className="h-4 w-4" />
+                  Apply <ArrowForwardIcon className="h-4 w-4" />
                 </Link>
               </article>
             );

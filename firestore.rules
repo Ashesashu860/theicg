@@ -67,6 +67,34 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
 
+    match /admin/data/careerApplications/{id} {
+      // Public career application submissions
+      allow create: if
+        request.resource.data.fullName is string
+        && request.resource.data.fullName.size() > 0
+        && request.resource.data.email is string
+        && request.resource.data.email.size() > 0
+        && request.resource.data.email.matches('.*@.*\\..*')
+        && request.resource.data.phone is string
+        && request.resource.data.phone.size() > 0
+        && request.resource.data.location is string
+        && request.resource.data.location.size() > 0
+        && request.resource.data.resumeUrl is string
+        && request.resource.data.resumeUrl.size() > 0
+        && request.resource.data.resumePath is string
+        && request.resource.data.resumePath.size() > 0
+        && request.resource.data.roleId is string
+        && request.resource.data.roleId.size() > 0
+        && request.resource.data.roleTitle is string
+        && request.resource.data.roleTitle.size() > 0
+        && request.resource.data.coverLetter is string
+        && request.resource.data.coverLetter.size() > 0
+        && request.resource.data.keys().hasAny(['createdAt']);
+
+      // Portal consultants (Firebase Auth)
+      allow read, update, delete: if request.auth != null;
+    }
+
     // Allow reading/writing the sentinel admin/data doc (seed/migration metadata)
     match /admin/data {
       allow read: if true;
