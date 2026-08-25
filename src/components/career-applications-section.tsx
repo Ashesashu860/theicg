@@ -19,6 +19,7 @@ import {
   type CareerApplicationRecord,
 } from "@/lib/career-applications";
 import { getFirebaseDb, isFirebaseConfigured } from "@/lib/firebase";
+import { deleteCareerResume } from "@/lib/storage-client";
 
 function toDate(value: unknown): Date | null {
   if (value instanceof Timestamp) {
@@ -168,6 +169,7 @@ export function CareerApplicationsSection() {
     setDeletingId(item.id);
 
     try {
+      await deleteCareerResume(item.resumePath);
       await deleteDoc(
         doc(getFirebaseDb(), ...careerApplicationsPath(), item.id),
       );

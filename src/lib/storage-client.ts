@@ -1,4 +1,5 @@
 import {
+  deleteObject,
   getDownloadURL,
   ref,
   uploadBytes,
@@ -105,4 +106,32 @@ export async function uploadCareerResume(
 
   const url = await getDownloadURL(task.snapshot.ref);
   return { url, path: objectPath };
+}
+
+/** Deletes a resume object. No-ops if path is empty or the object is already gone. */
+export async function deleteCareerResume(resumePath: string): Promise<void> {
+  const path = resumePath.trim();
+  if (!path) {
+    return;
+  }
+  if (
+    !path.startsWith(`${CAREER_RESUME_FOLDER}/`) ||
+    path.includes("..")
+  ) {
+    throw new Error("Invalid resume path.");
+  }
+
+  const storageRef = ref(getFirebaseStorage(), path);
+  try {
+    await deleteObject(storageRef);
+  } catch (error) {
+    const code =
+      error && typeof error === "object" && "code" in error
+        ? String((error as { code: unknown }).code)
+        : "";
+    if (code === "storage/object-not-found") {
+      return;
+    }
+    throw error;
+  }
 }
