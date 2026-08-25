@@ -6,9 +6,11 @@ import {
   type ServiceAccount,
 } from "firebase-admin/app";
 import { getAuth, type Auth } from "firebase-admin/auth";
+import { getFirestore, type Firestore } from "firebase-admin/firestore";
 
 let appInstance: App | null = null;
 let authInstance: Auth | null = null;
+let dbInstance: Firestore | null = null;
 
 /**
  * Normalize a PEM private key from env vars.
@@ -143,6 +145,13 @@ export function getFirebaseAdminAuth(): Auth {
     authInstance = getAuth(getFirebaseAdminApp());
   }
   return authInstance;
+}
+
+export function getFirebaseAdminDb(): Firestore {
+  if (!dbInstance) {
+    dbInstance = getFirestore(getFirebaseAdminApp());
+  }
+  return dbInstance;
 }
 
 export async function verifyIdToken(idToken: string) {

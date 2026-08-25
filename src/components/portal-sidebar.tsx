@@ -10,8 +10,10 @@ import {
   AccountCircleIcon,
   AnalyticsIcon,
   AssignmentIcon,
+  BusinessCenterIcon,
   CloseIcon,
   GroupsIcon,
+  LightbulbIcon,
   LogoutIcon,
   MenuIcon,
 } from "./icons";
@@ -21,6 +23,16 @@ const navItems = [
     href: "/portal/requests",
     label: "Client Requests",
     icon: AssignmentIcon,
+  },
+  {
+    href: "/portal/capabilities",
+    label: "Capabilities",
+    icon: BusinessCenterIcon,
+  },
+  {
+    href: "/portal/blogs",
+    label: "Blogs",
+    icon: LightbulbIcon,
   },
   {
     href: "#",

@@ -291,10 +291,3 @@ export const capabilities: Capability[] = [
   },
 ];
 
-export function getCapabilityBySlug(slug: string): Capability | undefined {
-  return capabilities.find((capability) => capability.slug === slug);
-}
-
-export function getCapabilitySlugs(): string[] {
-  return capabilities.map((capability) => capability.slug);
-}
