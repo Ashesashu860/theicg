@@ -1,4 +1,8 @@
 import type { DocumentData } from "firebase-admin/firestore";
+import {
+  ADMIN_COLLECTION,
+  ADMIN_DOC_ID,
+} from "@/lib/admin-firestore";
 import { BLOGS_COLLECTION, type BlogRecord } from "@/lib/blogs-data";
 import {
   CAPABILITIES_COLLECTION,
@@ -8,6 +12,13 @@ import {
   getFirebaseAdminDb,
   isFirebaseAdminConfigured,
 } from "@/lib/firebase-admin";
+
+function adminDataCollection(subcollection: string) {
+  return getFirebaseAdminDb()
+    .collection(ADMIN_COLLECTION)
+    .doc(ADMIN_DOC_ID)
+    .collection(subcollection);
+}
 
 function toDate(value: unknown): Date | null {
   if (
@@ -54,8 +65,7 @@ export async function listCapabilities(): Promise<CapabilityRecord[]> {
     return [];
   }
 
-  const snapshot = await getFirebaseAdminDb()
-    .collection(CAPABILITIES_COLLECTION)
+  const snapshot = await adminDataCollection(CAPABILITIES_COLLECTION)
     .orderBy("name", "asc")
     .get();
 
@@ -71,8 +81,7 @@ export async function getCapabilityBySlug(
     return null;
   }
 
-  const snapshot = await getFirebaseAdminDb()
-    .collection(CAPABILITIES_COLLECTION)
+  const snapshot = await adminDataCollection(CAPABILITIES_COLLECTION)
     .where("slug", "==", slug)
     .limit(1)
     .get();
@@ -92,8 +101,7 @@ export async function listBlogsByCapabilityId(
     return [];
   }
 
-  const snapshot = await getFirebaseAdminDb()
-    .collection(BLOGS_COLLECTION)
+  const snapshot = await adminDataCollection(BLOGS_COLLECTION)
     .where("capabilityId", "==", capabilityId)
     .orderBy("createdAt", "desc")
     .get();

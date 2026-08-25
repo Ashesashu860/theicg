@@ -16,12 +16,13 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { useAuth } from "@/components/auth-provider";
-import { BLOGS_COLLECTION } from "@/lib/blogs-data";
+import { blogsPath } from "@/lib/blogs-data";
 import {
-  CAPABILITIES_COLLECTION,
+  capabilitiesPath,
   type CapabilityRecord,
 } from "@/lib/capabilities-data";
 import { getFirebaseDb, isFirebaseConfigured } from "@/lib/firebase";
+import { toast } from "react-toastify";
 import { ChevronRightIcon } from "./icons";
 
 type BlogFormPageProps = {
@@ -57,7 +58,6 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
   const [loadingBlog, setLoadingBlog] = useState(mode === "edit");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
 
   const gateError = !configured
     ? "Firebase is not configured."
@@ -71,7 +71,7 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
     }
 
     const capabilitiesQuery = query(
-      collection(getFirebaseDb(), CAPABILITIES_COLLECTION),
+      collection(getFirebaseDb(), ...capabilitiesPath()),
       orderBy("name", "asc"),
     );
 
@@ -105,7 +105,7 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
       setError("");
       try {
         const snap = await getDoc(
-          doc(getFirebaseDb(), BLOGS_COLLECTION, blogId!),
+          doc(getFirebaseDb(), ...blogsPath(), blogId!),
         );
         if (cancelled) return;
         if (!snap.exists()) {
@@ -144,7 +144,6 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
-    setSuccessMessage("");
 
     const title = form.title.trim();
     const content = form.content.trim();
@@ -152,12 +151,16 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
     const imageUrl = form.imageUrl.trim();
 
     if (!title || !content || !capabilityId) {
-      setError("Title, content, and category are required.");
+      const message = "Title, content, and category are required.";
+      setError(message);
+      toast.error(message);
       return;
     }
 
     if (!configured || !user) {
-      setError("Sign in required to save blogs.");
+      const message = "Sign in required to save blogs.";
+      setError(message);
+      toast.error(message);
       return;
     }
 
@@ -172,26 +175,27 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
       };
 
       if (mode === "edit" && blogId) {
-        await updateDoc(doc(getFirebaseDb(), BLOGS_COLLECTION, blogId), payload);
-        setSuccessMessage("Blog updated.");
+        await updateDoc(doc(getFirebaseDb(), ...blogsPath(), blogId), payload);
+        toast.success("Blog updated.");
       } else {
         const created = await addDoc(
-          collection(getFirebaseDb(), BLOGS_COLLECTION),
+          collection(getFirebaseDb(), ...blogsPath()),
           {
             ...payload,
             createdAt: serverTimestamp(),
           },
         );
-        setSuccessMessage("Blog created.");
+        toast.success("Blog created.");
         router.replace(`/portal/blogs/${created.id}/edit`);
         return;
       }
     } catch (saveError) {
-      setError(
+      const message =
         saveError instanceof Error
           ? saveError.message
-          : "Unable to save blog. Please try again.",
-      );
+          : "Unable to save blog. Please try again.";
+      setError(message);
+      toast.error(message);
     } finally {
       setSaving(false);
     }
@@ -356,11 +360,6 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
                   role="alert"
                 >
                   {gateError || error}
-                </p>
-              ) : null}
-              {successMessage ? (
-                <p className="mt-4 font-sans text-body-md text-secondary">
-                  {successMessage}
                 </p>
               ) : null}
 

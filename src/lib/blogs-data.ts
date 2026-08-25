@@ -1,3 +1,5 @@
+import { adminSubcollectionPath } from "@/lib/admin-firestore";
+
 export type BlogRecord = {
   id: string;
   title: string;
@@ -9,6 +11,10 @@ export type BlogRecord = {
 };
 
 export const BLOGS_COLLECTION = "blogs";
+
+export function blogsPath(): [string, string, string] {
+  return adminSubcollectionPath(BLOGS_COLLECTION);
+}
 
 export function excerptFromContent(content: string, maxLength = 160): string {
   const normalized = content.replace(/\s+/g, " ").trim();

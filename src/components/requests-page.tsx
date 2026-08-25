@@ -14,7 +14,7 @@ import {
 import { useAuth } from "@/components/auth-provider";
 import { ReplyEmailModal } from "@/components/reply-email-modal";
 import {
-  CONTACT_REQUESTS_COLLECTION,
+  clientRequestsPath,
   type ContactRequest,
   type RequestStatus,
 } from "@/lib/contact-requests";
@@ -63,7 +63,7 @@ function normalizeStatus(value: unknown): RequestStatus {
 function getRequestsErrorMessage(error: FirestoreError): string {
   switch (error.code) {
     case "permission-denied":
-      return "Permission denied. Sign in again, and publish Firestore rules that allow authenticated reads on contactRequests.";
+      return "Permission denied. Sign in again, and publish Firestore rules that allow authenticated reads on admin/data/clientRequests.";
     case "failed-precondition":
       return "Firestore needs an index for this query. Check the browser console for a create-index link.";
     case "unavailable":
@@ -116,7 +116,7 @@ export function RequestsPage() {
 
     try {
       await deleteDoc(
-        doc(getFirebaseDb(), CONTACT_REQUESTS_COLLECTION, item.id),
+        doc(getFirebaseDb(), ...clientRequestsPath(), item.id),
       );
     } catch (deleteError) {
       const message =
@@ -135,7 +135,7 @@ export function RequestsPage() {
     }
 
     const requestsQuery = query(
-      collection(getFirebaseDb(), CONTACT_REQUESTS_COLLECTION),
+      collection(getFirebaseDb(), ...clientRequestsPath()),
       orderBy("createdAt", "desc"),
     );
 

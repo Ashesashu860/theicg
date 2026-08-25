@@ -1,3 +1,5 @@
+import { adminSubcollectionPath } from "@/lib/admin-firestore";
+
 export type CapabilityRecord = {
   id: string;
   name: string;
@@ -9,6 +11,10 @@ export type CapabilityRecord = {
 };
 
 export const CAPABILITIES_COLLECTION = "capabilities";
+
+export function capabilitiesPath(): [string, string, string] {
+  return adminSubcollectionPath(CAPABILITIES_COLLECTION);
+}
 
 export function slugifyCapabilityName(name: string): string {
   return name

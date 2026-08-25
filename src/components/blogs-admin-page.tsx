@@ -14,9 +14,9 @@ import {
   type FirestoreError,
 } from "firebase/firestore";
 import { useAuth } from "@/components/auth-provider";
-import { BLOGS_COLLECTION, type BlogRecord } from "@/lib/blogs-data";
+import { blogsPath, type BlogRecord } from "@/lib/blogs-data";
 import {
-  CAPABILITIES_COLLECTION,
+  capabilitiesPath,
   type CapabilityRecord,
 } from "@/lib/capabilities-data";
 import { getFirebaseDb, isFirebaseConfigured } from "@/lib/firebase";
@@ -92,7 +92,7 @@ export function BlogsAdminPage() {
     }
 
     const blogsQuery = query(
-      collection(getFirebaseDb(), BLOGS_COLLECTION),
+      collection(getFirebaseDb(), ...blogsPath()),
       orderBy("createdAt", "desc"),
     );
 
@@ -123,7 +123,7 @@ export function BlogsAdminPage() {
     );
 
     const capabilitiesQuery = query(
-      collection(getFirebaseDb(), CAPABILITIES_COLLECTION),
+      collection(getFirebaseDb(), ...capabilitiesPath()),
       orderBy("name", "asc"),
     );
 
@@ -191,7 +191,7 @@ export function BlogsAdminPage() {
     setActionError("");
 
     try {
-      await deleteDoc(doc(getFirebaseDb(), BLOGS_COLLECTION, item.id));
+      await deleteDoc(doc(getFirebaseDb(), ...blogsPath(), item.id));
     } catch (deleteError) {
       setActionError(
         deleteError instanceof Error

@@ -1,32 +1,18 @@
 /**
- * One-shot seed: upserts static capabilities + nested blogs into Firestore.
+ * One-shot migration: copy root collections into admin/data subcollections.
  *
- * Usage (from repo root, with Admin credentials in env):
- *   npx tsx scripts/seed-capabilities.ts
+ *   contactRequests  → admin/data/clientRequests
+ *   capabilities     → admin/data/capabilities
+ *   blogs            → admin/data/blogs
  *
- * Requires FIREBASE_ADMIN_* or FIREBASE_ADMIN_CREDENTIALS.
+ * Does not delete source documents. Run with Admin credentials:
+ *   npm run migrate:admin-data
  */
 
 import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { cert, getApps, initializeApp } from "firebase-admin/app";
-import { getFirestore, Timestamp } from "firebase-admin/firestore";
-
-type SeedBlog = {
-  title: string;
-  excerpt: string;
-  image: string;
-  alt: string;
-  date: string;
-};
-
-type SeedCapability = {
-  slug: string;
-  title: string;
-  description: string;
-  image: string;
-  blogs: SeedBlog[];
-};
+import { getFirestore, Timestamp, type CollectionReference } from "firebase-admin/firestore";
 
 function loadEnvFile(filePath: string) {
   if (!existsSync(filePath)) return;
@@ -115,12 +101,20 @@ function initAdmin() {
   });
 }
 
-function parseSeedDate(dateLabel: string): Date {
-  const parsed = new Date(dateLabel);
-  if (!Number.isNaN(parsed.getTime())) {
-    return parsed;
+async function copyCollection(
+  sourcePath: string,
+  destCollection: CollectionReference,
+): Promise<number> {
+  const db = getFirestore();
+  const snapshot = await db.collection(sourcePath).get();
+  let copied = 0;
+
+  for (const docSnap of snapshot.docs) {
+    await destCollection.doc(docSnap.id).set(docSnap.data(), { merge: true });
+    copied += 1;
   }
-  return new Date();
+
+  return copied;
 }
 
 async function main() {
@@ -128,60 +122,38 @@ async function main() {
   loadEnvFile(resolve(process.cwd(), ".env"));
   initAdmin();
 
-  const { capabilities } = (await import(
-    "../src/lib/capabilities"
-  )) as { capabilities: SeedCapability[] };
-
   const db = getFirestore();
-  const now = Timestamp.now();
   const adminData = db.collection("admin").doc("data");
-  await adminData.set({ seededAt: now }, { merge: true });
-  const capabilitiesCol = adminData.collection("capabilities");
-  const blogsCol = adminData.collection("blogs");
+  await adminData.set(
+    { migratedAt: Timestamp.now() },
+    { merge: true },
+  );
 
-  for (const capability of capabilities) {
-    const capabilityRef = capabilitiesCol.doc(capability.slug);
-    await capabilityRef.set(
-      {
-        name: capability.title,
-        slug: capability.slug,
-        description: capability.description,
-        imageUrl: capability.image || "",
-        createdAt: now,
-        updatedAt: now,
-      },
-      { merge: true },
-    );
-    console.log(`Upserted capability: ${capability.slug}`);
+  const clientCopied = await copyCollection(
+    "contactRequests",
+    adminData.collection("clientRequests"),
+  );
+  console.log(
+    `Copied ${clientCopied} docs: contactRequests → admin/data/clientRequests`,
+  );
 
-    const existingBlogs = await blogsCol
-      .where("capabilityId", "==", capability.slug)
-      .get();
+  const capabilitiesCopied = await copyCollection(
+    "capabilities",
+    adminData.collection("capabilities"),
+  );
+  console.log(
+    `Copied ${capabilitiesCopied} docs: capabilities → admin/data/capabilities`,
+  );
 
-    const existingTitles = new Set(
-      existingBlogs.docs.map((docSnap) => String(docSnap.data().title || "")),
-    );
+  const blogsCopied = await copyCollection(
+    "blogs",
+    adminData.collection("blogs"),
+  );
+  console.log(`Copied ${blogsCopied} docs: blogs → admin/data/blogs`);
 
-    for (const blog of capability.blogs) {
-      if (existingTitles.has(blog.title)) {
-        console.log(`  Skip existing blog: ${blog.title}`);
-        continue;
-      }
-
-      const createdAt = Timestamp.fromDate(parseSeedDate(blog.date));
-      await blogsCol.add({
-        title: blog.title,
-        content: blog.excerpt,
-        capabilityId: capability.slug,
-        imageUrl: blog.image || "",
-        createdAt,
-        updatedAt: createdAt,
-      });
-      console.log(`  Added blog: ${blog.title}`);
-    }
-  }
-
-  console.log("Seed complete.");
+  console.log(
+    "Migration complete. Old root collections were left in place; delete them manually after verifying.",
+  );
 }
 
 main().catch((error) => {

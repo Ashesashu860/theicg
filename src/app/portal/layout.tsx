@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { AppToaster } from "@/components/app-toaster";
 import { PortalSidebar } from "@/components/portal-sidebar";
 import { getAdminSession } from "@/lib/admin-session";
 
@@ -18,6 +19,7 @@ export default async function PortalLayout({
       <main className="flex min-h-screen w-full flex-1 flex-col pt-20 md:ml-64">
         {children}
       </main>
+      <AppToaster />
     </div>
   );
 }

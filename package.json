@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed:capabilities": "npx tsx scripts/seed-capabilities.ts"
+    "seed:capabilities": "npx tsx scripts/seed-capabilities.ts",
+    "migrate:admin-data": "npx tsx scripts/migrate-to-admin-data.ts"
   },
   "dependencies": {
     "firebase": "^12.18.0",
@@ -15,7 +16,8 @@
     "next": "16.3.2",
     "nodemailer": "^9.0.5",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "react-toastify": "^11.1.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

@@ -17,11 +17,12 @@ import {
 } from "firebase/firestore";
 import { useAuth } from "@/components/auth-provider";
 import {
-  CAPABILITIES_COLLECTION,
+  capabilitiesPath,
   slugifyCapabilityName,
   type CapabilityRecord,
 } from "@/lib/capabilities-data";
 import { getFirebaseDb, isFirebaseConfigured } from "@/lib/firebase";
+import { toast } from "react-toastify";
 import { ChevronRightIcon } from "./icons";
 
 function toDate(value: unknown): Date | null {
@@ -72,7 +73,6 @@ export function CapabilitiesAdminPage() {
   const [items, setItems] = useState<CapabilityRecord[]>([]);
   const [liveError, setLiveError] = useState("");
   const [actionError, setActionError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const [loadedForUid, setLoadedForUid] = useState<string | null>(null);
   const [form, setForm] = useState<FormState>(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -94,7 +94,7 @@ export function CapabilitiesAdminPage() {
     }
 
     const capabilitiesQuery = query(
-      collection(getFirebaseDb(), CAPABILITIES_COLLECTION),
+      collection(getFirebaseDb(), ...capabilitiesPath()),
       orderBy("name", "asc"),
     );
 
@@ -162,7 +162,6 @@ export function CapabilitiesAdminPage() {
       imageUrl: item.imageUrl,
     });
     setActionError("");
-    setSuccessMessage("");
     setValidationError("");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -170,7 +169,6 @@ export function CapabilitiesAdminPage() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setActionError("");
-    setSuccessMessage("");
     setValidationError("");
 
     const name = form.name.trim();
@@ -179,11 +177,13 @@ export function CapabilitiesAdminPage() {
 
     if (!name || !description) {
       setValidationError("Capability name and description are required.");
+      toast.error("Capability name and description are required.");
       return;
     }
 
     if (!configured || !user) {
       setActionError("Sign in required to save capabilities.");
+      toast.error("Sign in required to save capabilities.");
       return;
     }
 
@@ -204,17 +204,17 @@ export function CapabilitiesAdminPage() {
             ? existing.slug
             : uniqueSlug(name);
         await updateDoc(
-          doc(getFirebaseDb(), CAPABILITIES_COLLECTION, editingId),
+          doc(getFirebaseDb(), ...capabilitiesPath(), editingId),
           { ...payload, slug },
         );
-        setSuccessMessage("Capability updated.");
+        toast.success("Capability updated.");
       } else {
-        await addDoc(collection(getFirebaseDb(), CAPABILITIES_COLLECTION), {
+        await addDoc(collection(getFirebaseDb(), ...capabilitiesPath()), {
           ...payload,
           slug: uniqueSlug(name),
           createdAt: serverTimestamp(),
         });
-        setSuccessMessage("Capability created.");
+        toast.success("Capability created.");
       }
 
       resetForm();
@@ -224,6 +224,7 @@ export function CapabilitiesAdminPage() {
           ? saveError.message
           : "Unable to save capability. Please try again.";
       setActionError(message);
+      toast.error(message);
     } finally {
       setSaving(false);
     }
@@ -240,25 +241,26 @@ export function CapabilitiesAdminPage() {
 
     if (!configured) {
       setActionError("Firebase is not configured.");
+      toast.error("Firebase is not configured.");
       return;
     }
 
     setDeletingId(item.id);
     setActionError("");
-    setSuccessMessage("");
 
     try {
-      await deleteDoc(doc(getFirebaseDb(), CAPABILITIES_COLLECTION, item.id));
+      await deleteDoc(doc(getFirebaseDb(), ...capabilitiesPath(), item.id));
       if (editingId === item.id) {
         resetForm();
       }
-      setSuccessMessage("Capability deleted.");
+      toast.success("Capability deleted.");
     } catch (deleteError) {
       const message =
         deleteError instanceof Error
           ? deleteError.message
           : "Unable to delete this capability. Please try again.";
       setActionError(message);
+      toast.error(message);
     } finally {
       setDeletingId(null);
     }
@@ -368,11 +370,6 @@ export function CapabilitiesAdminPage() {
             {error ? (
               <p className="mt-4 font-sans text-body-md text-error" role="alert">
                 {error}
-              </p>
-            ) : null}
-            {successMessage ? (
-              <p className="mt-4 font-sans text-body-md text-secondary">
-                {successMessage}
               </p>
             ) : null}
 

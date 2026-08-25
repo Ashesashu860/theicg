@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { CONTACT_REQUESTS_COLLECTION } from "@/lib/contact-requests";
+import { clientRequestsPath } from "@/lib/contact-requests";
 import { getFirebaseDb, isFirebaseConfigured } from "@/lib/firebase";
 
 export function ContactForm() {
@@ -32,7 +32,7 @@ export function ContactForm() {
       if (!isFirebaseConfigured()) {
         throw new Error("Firebase is not configured.");
       }
-      await addDoc(collection(getFirebaseDb(), CONTACT_REQUESTS_COLLECTION), {
+      await addDoc(collection(getFirebaseDb(), ...clientRequestsPath()), {
         name,
         email,
         phone,
