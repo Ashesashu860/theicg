@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { HomePage } from "@/components/home-page";
-import {
-  listCapabilities,
-  listRecentBlogs,
-} from "@/lib/capabilities-server";
+import { listCapabilities } from "@/lib/capabilities-server";
 
 export const dynamic = "force-dynamic";
 
@@ -14,19 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const [featuredBlogs, capabilities] = await Promise.all([
-    listRecentBlogs(3),
-    listCapabilities(),
-  ]);
+  const capabilities = await listCapabilities();
 
-  const capabilityNameById = Object.fromEntries(
-    capabilities.map((capability) => [capability.id, capability.name]),
-  );
-
-  return (
-    <HomePage
-      featuredBlogs={featuredBlogs}
-      capabilityNameById={capabilityNameById}
-    />
-  );
+  return <HomePage capabilities={capabilities} />;
 }

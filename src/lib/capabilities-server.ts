@@ -138,6 +138,18 @@ export async function listBlogsForCapability(
   return merged;
 }
 
+export async function listBlogs(): Promise<BlogRecord[]> {
+  if (!isFirebaseAdminConfigured()) {
+    return [];
+  }
+
+  const snapshot = await adminDataCollection(BLOGS_COLLECTION)
+    .orderBy("createdAt", "desc")
+    .get();
+
+  return snapshot.docs.map((docSnap) => mapBlog(docSnap.id, docSnap.data()));
+}
+
 export async function listRecentBlogs(limitCount = 3): Promise<BlogRecord[]> {
   if (!isFirebaseAdminConfigured()) {
     return [];

@@ -154,6 +154,16 @@
   }
 }
 
+@keyframes scroll-hint {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(6px);
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -170,6 +180,42 @@ body {
 
 .animate-hero-zoom {
   animation: hero-zoom 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-scroll-hint {
+  animation: scroll-hint 1.4s ease-in-out infinite;
+}
+
+.capabilities-scroll-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    #000 0%,
+    #000 calc(100% - 5rem),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    #000 0%,
+    #000 calc(100% - 5rem),
+    transparent 100%
+  );
+}
+
+@media (min-width: 640px) {
+  .capabilities-scroll-mask {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      #000 0%,
+      #000 calc(100% - 8rem),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      #000 0%,
+      #000 calc(100% - 8rem),
+      transparent 100%
+    );
+  }
 }
 
 .bg-gradient-hero {

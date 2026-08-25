@@ -50,6 +50,14 @@ export function SiteFooter() {
             </li>
             <li>
               <Link
+                href="/blogs"
+                className="font-sans text-body-md text-on-primary-container opacity-80 transition-all hover:text-secondary-fixed hover:opacity-100"
+              >
+                Blogs
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/careers"
                 className="font-sans text-body-md text-on-primary-container opacity-80 transition-all hover:text-secondary-fixed hover:opacity-100"
               >

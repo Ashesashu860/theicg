@@ -1,56 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BlogCard } from "@/components/blog-card";
-import {
-  AccountTreeIcon,
-  ArrowForwardIcon,
-  SettingsApplicationsIcon,
-  TransformIcon,
-  TrendingUpIcon,
-} from "@/components/icons";
+import { CapabilityCard } from "@/components/capability-card";
+import { ArrowForwardIcon, ChevronRightIcon } from "@/components/icons";
 import { SiteFooter } from "@/components/site-footer";
-import type { BlogRecord } from "@/lib/blogs-data";
+import type { CapabilityRecord } from "@/lib/capabilities-data";
 
 type HomePageProps = {
-  featuredBlogs: BlogRecord[];
-  capabilityNameById: Record<string, string>;
+  capabilities: CapabilityRecord[];
 };
 
-const capabilities = [
-  {
-    title: "Strategic Consulting",
-    description:
-      "Clarifying goals, evaluating options, and shaping strategies grounded in knowledge and analytical thinking.",
-    icon: AccountTreeIcon,
-    featured: false,
-  },
-  {
-    title: "Expert Consultation",
-    description:
-      "Bringing experienced perspectives to complex questions so you can move forward with greater confidence.",
-    icon: SettingsApplicationsIcon,
-    featured: false,
-  },
-  {
-    title: "Practical Solutions",
-    description:
-      "Translating insight into actionable recommendations tailored to your context, constraints, and ambitions.",
-    icon: TransformIcon,
-    featured: false,
-  },
-  {
-    title: "Collaborative Guidance",
-    description:
-      "Connecting expertise with opportunity through partnership—helping great ideas become meaningful outcomes.",
-    icon: TrendingUpIcon,
-    featured: true,
-  },
-];
-
-export function HomePage({
-  featuredBlogs,
-  capabilityNameById,
-}: HomePageProps) {
+export function HomePage({ capabilities }: HomePageProps) {
   return (
     <>
       <main className="pt-20">
@@ -105,107 +64,80 @@ export function HomePage({
         </section>
 
         <section
-          id="insights"
-          className="relative z-20 -mt-16 mx-auto max-w-container-max border border-outline-variant/30 bg-off-white px-margin-mobile py-24 md:px-margin-desktop"
+          id="capabilities"
+          className="relative z-20 -mt-16 mx-auto max-w-container-max border border-outline-variant/30 bg-off-white py-24"
         >
-          <div className="mb-12 flex items-end justify-between">
+          <div className="mb-12 flex items-end justify-between gap-6 px-margin-mobile md:px-margin-desktop">
             <div>
               <h2 className="mb-2 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
-                Featured Insights
-              </h2>
-              <p className="font-sans text-body-md text-on-surface-variant">
-                Perspectives on knowledge, strategy, and smarter decisions.
-              </p>
-            </div>
-            <Link
-              href="/capabilities"
-              className="hidden items-center gap-2 font-sans text-label-md uppercase tracking-widest text-primary transition-colors hover:text-primary-container md:inline-flex"
-            >
-              View All Insights <ArrowForwardIcon />
-            </Link>
-          </div>
-
-          {featuredBlogs.length === 0 ? (
-            <p className="font-sans text-body-md text-on-surface-variant">
-              Insights will appear here once blogs are published.
-            </p>
-          ) : (
-            <div className="grid grid-cols-1 gap-gutter md:grid-cols-3">
-              {featuredBlogs.map((blog) => (
-                <BlogCard
-                  key={blog.id}
-                  blog={blog}
-                  meta={capabilityNameById[blog.capabilityId] || undefined}
-                />
-              ))}
-            </div>
-          )}
-        </section>
-
-        <section
-          id="capabilities"
-          className="mx-auto max-w-container-max bg-surface px-margin-mobile py-24 md:px-margin-desktop"
-        >
-          <div className="grid grid-cols-1 items-center gap-gutter md:grid-cols-12">
-            <div className="md:col-span-5 md:pr-8">
-              <h2 className="mb-6 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
                 Our Capabilities
               </h2>
-              <p className="mb-8 font-sans text-body-lg text-on-surface-variant">
-                ICG is a consulting group built on the power of knowledge,
-                collaboration, and strategic thinking. We connect expertise with
-                opportunity to help our clients make smarter decisions and move
-                forward with confidence.
+              <p className="font-sans text-body-md text-on-surface-variant">
+                Bridging strategic clarity with technical excellence across
+                critical domains.
               </p>
+            </div>
+            <div className="hidden shrink-0 flex-col items-end gap-3 md:flex">
               <Link
                 href="/capabilities"
-                className="inline-flex items-center gap-2 border border-primary px-6 py-3 font-sans text-label-md uppercase tracking-widest text-primary transition-colors hover:bg-primary hover:text-pure-white"
+                className="inline-flex items-center gap-2 font-sans text-label-md uppercase tracking-widest text-primary transition-colors hover:text-primary-container"
               >
-                View All Services
+                View All Capabilities <ArrowForwardIcon />
               </Link>
+              {capabilities.length > 1 ? (
+                <p
+                  className="inline-flex items-center gap-1 font-sans text-label-md uppercase tracking-widest text-on-surface-variant"
+                  aria-hidden="true"
+                >
+                  Scroll
+                  <ChevronRightIcon className="animate-scroll-hint" />
+                </p>
+              ) : null}
             </div>
+          </div>
 
-            <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 md:col-span-7 md:mt-0">
-              {capabilities.map((capability) => {
-                const Icon = capability.icon;
-                return (
-                  <div
-                    key={capability.title}
-                    className={
-                      capability.featured
-                        ? "border border-outline-variant/50 bg-primary-container p-8 text-pure-white transition-colors hover:border-primary"
-                        : "border border-outline-variant/50 bg-pure-white p-8 transition-colors hover:border-primary"
-                    }
-                  >
-                    <Icon
-                      className={
-                        capability.featured
-                          ? "mb-4 text-secondary-fixed"
-                          : "mb-4 text-primary"
-                      }
-                    />
-                    <h3
-                      className={
-                        capability.featured
-                          ? "mb-3 font-serif text-xl font-semibold text-pure-white"
-                          : "mb-3 font-serif text-xl font-semibold text-primary"
-                      }
+          {capabilities.length === 0 ? (
+            <p className="px-margin-mobile font-sans text-body-md text-on-surface-variant md:px-margin-desktop">
+              Capabilities will appear here once they are published.
+            </p>
+          ) : (
+            <div className="relative">
+              <div
+                className="capabilities-scroll-mask snap-x snap-mandatory overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                tabIndex={0}
+                aria-label="Capabilities. Scroll horizontally to see more."
+              >
+                <div className="flex w-max gap-6 px-margin-mobile md:px-margin-desktop">
+                  {capabilities.map((capability) => (
+                    <div
+                      key={capability.id}
+                      className="w-[min(340px,78vw)] shrink-0 snap-start"
                     >
-                      {capability.title}
-                    </h3>
-                    <p
-                      className={
-                        capability.featured
-                          ? "font-sans text-body-md text-surface-container-highest"
-                          : "font-sans text-body-md text-on-surface-variant"
-                      }
-                    >
-                      {capability.description}
-                    </p>
-                  </div>
-                );
-              })}
+                      <CapabilityCard capability={capability} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {capabilities.length > 1 ? (
+                <p
+                  className="pointer-events-none absolute bottom-4 right-4 z-10 inline-flex items-center gap-1 bg-off-white/90 px-3 py-1.5 font-sans text-label-md uppercase tracking-widest text-on-surface-variant md:hidden"
+                  aria-hidden="true"
+                >
+                  Scroll
+                  <ChevronRightIcon className="animate-scroll-hint" />
+                </p>
+              ) : null}
             </div>
+          )}
+
+          <div className="mt-8 px-margin-mobile md:hidden md:px-margin-desktop">
+            <Link
+              href="/capabilities"
+              className="inline-flex items-center gap-2 font-sans text-label-md uppercase tracking-widest text-primary transition-colors hover:text-primary-container"
+            >
+              View All Capabilities <ArrowForwardIcon />
+            </Link>
           </div>
         </section>
       </main>
