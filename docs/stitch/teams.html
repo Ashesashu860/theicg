@@ -1,0 +1,390 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>THE ICG Portal - Teams</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600&amp;family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-highest": "#e0e3e6",
+                      "surface-variant": "#e0e3e6",
+                      "on-surface": "#191c1e",
+                      "secondary": "#515f74",
+                      "on-primary-fixed-variant": "#01429c",
+                      "success": "#16A34A",
+                      "tertiary": "#5d2534",
+                      "inverse-surface": "#2d3133",
+                      "surface-container-low": "#f2f4f7",
+                      "surface-container-high": "#e6e8eb",
+                      "on-secondary-fixed": "#0d1c2e",
+                      "on-secondary-fixed-variant": "#3a485b",
+                      "on-surface-variant": "#434652",
+                      "secondary-fixed": "#d5e3fc",
+                      "primary-fixed": "#d9e2ff",
+                      "on-tertiary-fixed-variant": "#703442",
+                      "primary-container": "#144aa4",
+                      "on-error": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "error": "#DC2626",
+                      "on-primary": "#ffffff",
+                      "outline-variant": "#c3c6d4",
+                      "on-secondary-container": "#57657a",
+                      "on-tertiary-container": "#fcaaba",
+                      "on-tertiary-fixed": "#390818",
+                      "background": "#f7f9fc",
+                      "outline": "#737783",
+                      "primary-fixed-dim": "#b0c6ff",
+                      "on-tertiary": "#ffffff",
+                      "on-background": "#191c1e",
+                      "error-container": "#ffdad6",
+                      "inverse-primary": "#b0c6ff",
+                      "surface-bright": "#f7f9fc",
+                      "on-primary-fixed": "#001945",
+                      "slate-muted": "#94A3B8",
+                      "primary": "#00347e",
+                      "tertiary-fixed": "#ffd9df",
+                      "primary-deep": "#0B2F6B",
+                      "surface-dim": "#d8dadd",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container": "#eceef1",
+                      "on-primary-container": "#a7c0ff",
+                      "tertiary-fixed-dim": "#ffb1c1",
+                      "tertiary-container": "#793b4a",
+                      "on-secondary": "#ffffff",
+                      "surface": "#f7f9fc",
+                      "secondary-fixed-dim": "#b9c7df",
+                      "surface-tint": "#2c5ab5",
+                      "secondary-container": "#d5e3fc",
+                      "inverse-on-surface": "#eff1f4"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "section-v-space-lg": "120px",
+                      "base": "8px",
+                      "container-max": "1280px",
+                      "gutter": "24px",
+                      "section-v-space-md": "80px",
+                      "margin-desktop": "64px",
+                      "margin-mobile": "20px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "display-lg": [
+                              "\"Source Serif 4\""
+                      ],
+                      "headline-md": [
+                              "\"Source Serif 4\""
+                      ],
+                      "label-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-lg": [
+                              "\"Source Serif 4\""
+                      ],
+                      "headline-lg-mobile": [
+                              "\"Source Serif 4\""
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .ghost-border {
+            border: 1px solid theme('colors.outline-variant');
+        }
+        .btn-primary {
+            background-color: theme('colors.primary');
+            color: theme('colors.on-primary');
+            border-radius: 0;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            box-shadow: inset 0 -4px 0 0 theme('colors.secondary-fixed-dim');
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: theme('colors.primary');
+            border: 1px solid theme('colors.outline-variant');
+            border-radius: 0;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover {
+            border-color: theme('colors.primary');
+        }
+        .input-line {
+            border: none;
+            border-bottom: 2px solid theme('colors.outline-variant');
+            border-radius: 0;
+            background: transparent;
+            padding: 8px 0;
+        }
+        .input-line:focus {
+            outline: none;
+            border-bottom-color: theme('colors.primary');
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex">
+<!-- SideNavBar (Shared Component Blueprint executed) -->
+<nav class="bg-surface dark:bg-inverse-surface fixed left-0 top-0 h-screen w-64 border-r border-outline-variant dark:border-outline flex flex-col h-full p-gutter z-40">
+<div class="mb-12 flex items-center gap-4">
+<div class="w-10 h-10 bg-primary flex items-center justify-center text-on-primary font-bold">
+                ICG
+            </div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary text-xl">THE ICG</h1>
+<p class="font-label-md text-label-md text-secondary">Consultant Portal</p>
+</div>
+</div>
+<ul class="flex flex-col gap-2 flex-grow">
+<!-- Active state intent mapped to a generic 'Teams' representation, though not explicitly in the JSON array, assuming 'Capabilities' is closest or it's a sub-nav. We'll map to first item for structural display as requested to include it -->
+<li class="">
+<a class="flex items-center gap-3 p-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high dark:hover:bg-secondary-container transition-colors scale-102 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">business_center</span>
+<span class="font-label-md text-label-md">Client Requests</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 p-3 text-primary dark:text-inverse-primary font-bold border-r-4 border-primary bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="font-label-md text-label-md">Teams</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 p-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high dark:hover:bg-secondary-container transition-colors scale-102 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">psychology</span>
+<span class="font-label-md text-label-md">Capabilities</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 p-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high dark:hover:bg-secondary-container transition-colors scale-102 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">article</span>
+<span class="font-label-md text-label-md">Blogs</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 p-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high dark:hover:bg-secondary-container transition-colors scale-102 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">work</span>
+<span class="font-label-md text-label-md">Careers</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto pt-6">
+<button class="btn-primary w-full py-3 px-4 font-label-md text-label-md uppercase tracking-wider flex items-center justify-center gap-2">
+                 + Add Career Role
+            </button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 flex flex-col min-h-screen">
+<!-- TopAppBar (Minimal execution for layout context) -->
+<header class="bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-md sticky top-0 z-30 h-16 px-margin-desktop w-full flex justify-end items-center border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-secondary cursor-pointer">search</span>
+<span class="material-symbols-outlined text-secondary cursor-pointer">notifications</span>
+<div class="w-8 h-8 bg-surface-container-highest rounded-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A close-up black and white professional corporate headshot of a mature executive in a tailored suit, high contrast lighting, modern light-mode office background, conveying authority and experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUiFpf6DTlIZtJI0I4pPMk92_ao0PAuwYFztOPWGOK42YZs73wCZ6EBXBUfc7HevJ6WrP8Xjbi6xyGVzFvY5ocff4nkdc3po_HdrBz1uHMy0EEjqmH-GzLE9i7TizjA9ZAzfLMwdlxrUno1z3v0bt4Ze1y85kQQ5N4Qdrh3sYRx__0C06_9VuO1m0Y06BFo2z_akrIevQ5yD6yTiKM86bOREr4RBNcvyVavAEkIAp5TMEWWin462vg">
+</div>
+</div>
+</header>
+<div class="p-margin-desktop flex-1">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-section-v-space-md pb-4 border-b border-outline-variant">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary-deep mb-2">Teams</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Manage your organization's talent and division members.</p>
+</div>
+<button class="btn-primary py-3 px-6 font-label-md text-label-md uppercase tracking-wider flex items-center gap-2" onclick="document.getElementById('addMemberModal').classList.remove('hidden')">
+                    + Add Team Member
+                </button>
+</div>
+<!-- Bento Grid Content Area -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Division Summary Card (Asymmetric detail) -->
+
+<!-- High-Density Table List -->
+<div class="col-span-12">
+<div class="bg-surface-container-lowest ghost-border w-full">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-low/50">
+<th class="py-4 px-6 font-label-md text-label-md uppercase text-secondary tracking-wider">Name</th><th class="py-4 px-6 font-label-md text-label-md uppercase text-secondary tracking-wider">Department</th>
+<th class="py-4 px-6 font-label-md text-label-md uppercase text-secondary tracking-wider">Designation</th>
+<th class="py-4 px-6 font-label-md text-label-md uppercase text-secondary tracking-wider hidden sm:table-cell">Contact</th>
+<th class="py-4 px-6 font-label-md text-label-md uppercase text-secondary tracking-wider">Status</th>
+<th class="py-4 px-6 font-label-md text-label-md uppercase text-secondary tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-6">
+<div class="font-body-lg text-body-lg text-on-surface font-semibold">Eleanor Vance</div>
+</td><td class="py-4 px-6 font-body-md text-body-md text-on-surface-variant">Strategy</td>
+<td class="py-4 px-6 font-body-md text-body-md text-on-surface-variant">Senior Partner</td>
+<td class="py-4 px-6 hidden sm:table-cell">
+<div class="font-body-md text-body-md text-secondary">e.vance@icg.com</div>
+<div class="font-label-md text-label-md text-outline">+1 (555) 019-2834</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 py-1 px-2 border border-success/30 bg-success/10 text-success font-label-md text-label-md text-xs">
+<span class="w-1.5 h-1.5 bg-success rounded-full"></span> Active
+                                        </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-secondary hover:text-primary transition-colors mx-1"><span class="material-symbols-outlined text-lg">edit</span></button>
+<button class="text-secondary hover:text-error transition-colors mx-1"><span class="material-symbols-outlined text-lg">delete</span></button>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-6">
+<div class="font-body-lg text-body-lg text-on-surface font-semibold">Marcus Sterling</div>
+</td><td class="py-4 px-6 font-body-md text-body-md text-on-surface-variant">Engineering</td>
+<td class="py-4 px-6 font-body-md text-body-md text-on-surface-variant">Tech Lead</td>
+<td class="py-4 px-6 hidden sm:table-cell">
+<div class="font-body-md text-body-md text-secondary">m.sterling@icg.com</div>
+<div class="font-label-md text-label-md text-outline">+44 20 7946 0958</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 py-1 px-2 border border-outline-variant bg-surface-container text-secondary font-label-md text-label-md text-xs">
+<span class="w-1.5 h-1.5 bg-secondary rounded-full"></span> On Leave
+                                        </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-secondary hover:text-primary transition-colors mx-1"><span class="material-symbols-outlined text-lg">edit</span></button>
+<button class="text-secondary hover:text-error transition-colors mx-1"><span class="material-symbols-outlined text-lg">delete</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Empty State Example (Hidden by default, shown for demonstration if no rows existed) -->
+<!--
+            <div class="mt-12 flex flex-col items-center justify-center p-12 ghost-border bg-surface-container-lowest text-center">
+                <span class="material-symbols-outlined text-display-lg text-outline-variant mb-4" style="font-size: 64px;">group_off</span>
+                <h3 class="font-headline-md text-headline-md text-primary-deep mb-2">No Team Members Found</h3>
+                <p class="font-body-lg text-body-lg text-secondary max-w-md mb-6">The organization directory is currently empty. Begin by adding division members to populate the hierarchy.</p>
+                <button class="btn-secondary py-3 px-6 font-label-md text-label-md uppercase tracking-wider">
+                    Add First Member
+                </button>
+            </div>
+            -->
+</div>
+</main>
+<!-- Add/Edit Form Modal -->
+<div class="fixed inset-0 bg-inverse-surface/60 backdrop-blur-sm z-50 flex items-center justify-center hidden" id="addMemberModal">
+<div class="bg-surface-container-lowest w-full max-w-lg shadow-2xl relative p-8">
+<button class="absolute top-6 right-6 text-secondary hover:text-primary transition-colors" onclick="document.getElementById('addMemberModal').classList.add('hidden')">
+<span class="material-symbols-outlined">close</span>
+</button>
+<h3 class="font-headline-md text-headline-md text-primary-deep mb-6 text-2xl border-b border-outline-variant pb-4">New Talent Profile</h3>
+<form class="flex flex-col gap-6">
+<div class="flex flex-col">
+<label class="font-label-md text-label-md text-secondary uppercase tracking-widest mb-1 text-xs">Full Name</label>
+<input class="input-line font-body-lg text-body-lg text-on-surface" placeholder="e.g. Jane Doe" type="text">
+</div>
+<div class="flex flex-col">
+<label class="font-label-md text-label-md text-secondary uppercase tracking-widest mb-1 text-xs">Designation</label>
+<select class="input-line font-body-lg text-body-lg text-on-surface bg-transparent">
+<option value="partner">Partner</option>
+<option value="senior">Senior Consultant</option>
+<option value="analyst">Analyst</option>
+<option value="tech">Tech Lead</option>
+</select>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="flex flex-col">
+<label class="font-label-md text-label-md text-secondary uppercase tracking-widest mb-1 text-xs">Email Address</label>
+<input class="input-line font-body-lg text-body-lg text-on-surface" placeholder="jane@icg.com" type="email">
+</div>
+<div class="flex flex-col">
+<label class="font-label-md text-label-md text-secondary uppercase tracking-widest mb-1 text-xs">Phone Number</label>
+<input class="input-line font-body-lg text-body-lg text-on-surface" placeholder="+1 ..." type="tel">
+</div>
+</div>
+<div class="flex justify-end gap-4 mt-8 pt-6 border-t border-outline-variant">
+<button class="btn-secondary py-3 px-6 font-label-md text-label-md uppercase tracking-wider" onclick="document.getElementById('addMemberModal').classList.add('hidden')" type="button">
+                        Cancel
+                    </button>
+<button class="btn-primary py-3 px-6 font-label-md text-label-md uppercase tracking-wider" type="submit">
+                        Save Member
+                    </button>
+</div>
+</form>
+</div>
+</div>
+
+
+</body></html>

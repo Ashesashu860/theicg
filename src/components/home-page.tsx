@@ -1,15 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CapabilityCard } from "@/components/capability-card";
+import { CareersWhySection } from "@/components/careers-why-section";
 import { ArrowForwardIcon, ChevronRightIcon } from "@/components/icons";
+import { IcgPrinciplesSection } from "@/components/icg-principles-section";
+import { OurTeamSection } from "@/components/our-team-section";
 import { SiteFooter } from "@/components/site-footer";
 import type { CapabilityRecord } from "@/lib/capabilities-data";
+import type { PublicTeamMember } from "@/lib/teams-data";
 
 type HomePageProps = {
   capabilities: CapabilityRecord[];
+  members: PublicTeamMember[];
 };
 
-export function HomePage({ capabilities }: HomePageProps) {
+export function HomePage({ capabilities, members }: HomePageProps) {
   return (
     <>
       <main className="pt-20">
@@ -140,6 +145,12 @@ export function HomePage({ capabilities }: HomePageProps) {
             </Link>
           </div>
         </section>
+
+        <CareersWhySection />
+
+        <IcgPrinciplesSection className="mx-auto max-w-container-max px-margin-mobile pb-24 md:px-margin-desktop md:pb-32" />
+
+        <OurTeamSection members={members} />
       </main>
 
       <SiteFooter />

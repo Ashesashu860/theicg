@@ -333,6 +333,14 @@ export function GroupsIcon({ className }: IconProps) {
   );
 }
 
+export function WorkIcon({ className }: IconProps) {
+  return (
+    <svg className={className} width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" />
+    </svg>
+  );
+}
+
 export function AccountCircleIcon({ className }: IconProps) {
   return (
     <svg className={className} width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -488,6 +496,14 @@ export function WorkOffIcon({ className }: IconProps) {
   return (
     <svg className={className} width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M21.41 17.16l-1.53-1.53A1.98 1.98 0 0020 15V8c0-1.11-.89-2-2-2h-4V4c0-1.11-.89-2-2-2h-2c-.98 0-1.79.71-1.96 1.65L7.1 3.5 5.68 2.08 4.27 3.5l16.24 16.24 1.41-1.41-0.51-1.17zM10 4h2v2h-1.17L10 4.17V4zM12.83 10H18v5.17L12.83 10zM2.41 2.13L1 3.54l2.01 2.01C2.42 5.9 2 6.4 2 7v10c0 1.11.89 2 2 2h12.46l2 2 1.41-1.41L2.41 2.13zM4 17V8.54l8.46 8.46H4z" />
+    </svg>
+  );
+}
+
+export function GroupOffIcon({ className }: IconProps) {
+  return (
+    <svg className={className} width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M15 8c0-1.42-.59-2.7-1.55-3.62l4.53 4.53c.01-.3.02-.61.02-.91C18 6.34 16.66 5 15 5c-.3 0-.61.01-.91.02zM8.07 16.09C8.59 16.03 9.06 16 9.5 16c1.29 0 2.5.23 3.6.64C11.32 18.16 9.16 19.5 6.5 19.5c-1.27 0-2.48-.32-3.53-.88.64-1.29 1.77-2.12 3.04-2.12.73 0 1.43.15 2.06.59zM1.39 4.22l2.27 2.27C3.25 6.82 3 7.38 3 8c0 1.66 1.34 3 3 3 .99 0 1.86-.49 2.41-1.24l8.8 8.8L19.73 22 21 20.73 2.81 2.81 1.39 4.22zM20 17.17V18h-1.17L20 17.17zM12 6c1.66 0 3 1.34 3 3 0 .79-.31 1.5-.81 2.04L9.96 6.81C10.5 6.31 11.21 6 12 6z" />
     </svg>
   );
 }

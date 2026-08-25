@@ -14,6 +14,7 @@ import {
   LightbulbIcon,
   LogoutIcon,
   MenuIcon,
+  WorkIcon,
 } from "./icons";
 
 const navItems = [
@@ -21,6 +22,11 @@ const navItems = [
     href: "/portal/requests",
     label: "Client Requests",
     icon: AssignmentIcon,
+  },
+  {
+    href: "/portal/teams",
+    label: "Teams",
+    icon: GroupsIcon,
   },
   {
     href: "/portal/capabilities",
@@ -35,7 +41,7 @@ const navItems = [
   {
     href: "/portal/careers",
     label: "Careers",
-    icon: GroupsIcon,
+    icon: WorkIcon,
   },
 ];
 

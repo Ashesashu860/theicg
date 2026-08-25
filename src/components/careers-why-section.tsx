@@ -26,9 +26,16 @@ const reasons = [
 
 export function CareersWhySection() {
   return (
-    <section className="mx-auto max-w-container-max px-margin-mobile py-section-sm md:px-margin-desktop md:py-section-lg">
+    <section
+      id="why-icg"
+      className="mx-auto max-w-container-max px-margin-mobile py-section-sm md:px-margin-desktop md:py-section-lg"
+      aria-labelledby="why-icg-heading"
+    >
       <div className="mb-16 text-center">
-        <h2 className="font-serif text-headline-lg-mobile text-primary md:text-headline-md">
+        <h2
+          id="why-icg-heading"
+          className="font-serif text-headline-lg-mobile text-primary md:text-headline-md"
+        >
           Why ICG
         </h2>
       </div>

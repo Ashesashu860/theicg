@@ -7,7 +7,7 @@ import {
 } from "firebase/storage";
 import { getFirebaseStorage } from "@/lib/firebase";
 
-export type ContentImageFolder = "capabilities" | "blogs";
+export type ContentImageFolder = "capabilities" | "blogs" | "teams";
 
 const ALLOWED_IMAGE_TYPES = new Set([
   "image/jpeg",

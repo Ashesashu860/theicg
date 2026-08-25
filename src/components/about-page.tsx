@@ -5,9 +5,15 @@ import {
   MemoryIcon,
 } from "@/components/icons";
 import { IcgLogo } from "@/components/icg-logo";
+import { OurTeamSection } from "@/components/our-team-section";
 import { SiteFooter } from "@/components/site-footer";
+import type { PublicTeamMember } from "@/lib/teams-data";
 
-export function AboutPage() {
+type AboutPageProps = {
+  members: PublicTeamMember[];
+};
+
+export function AboutPage({ members }: AboutPageProps) {
   return (
     <>
       <main className="bg-off-white pt-24">
@@ -110,6 +116,8 @@ export function AboutPage() {
             </div>
           </section>
         </div>
+
+        <OurTeamSection members={members} />
       </main>
       <SiteFooter />
     </>
