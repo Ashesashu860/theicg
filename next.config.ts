@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Keep Admin (and jwks-rsa/jose) as Node requires — bundling breaks jose@6 ESM.
+  serverExternalPackages: ["firebase-admin"],
   images: {
     remotePatterns: [
       {

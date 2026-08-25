@@ -1,0 +1,15 @@
+---
+description: Always-on Next.js 16 App Router + Firebase client/Admin practices for this repo
+alwaysApply: true
+---
+
+# Next.js + Firebase (always)
+
+This is a Next.js 16 App Router + Firebase app. Before writing or changing code, read `.cursor/skills/nextjs-firebase/SKILL.md` and follow it.
+
+- Training-data Next.js is wrong here. Prefer `node_modules/next/dist/docs/01-app/`. Use `src/proxy.ts` (`export function proxy`), not `middleware.ts`.
+- Default Server Components. `"use client"` only for interactivity or browser APIs. `params` / `searchParams` / `cookies()` / `headers()` are async — await them.
+- Client Firebase: `@/lib/firebase`, `@/lib/auth-client`. Admin: `@/lib/firebase-admin`, `@/lib/admin-session`. Never import Admin into a Client Component.
+- `NEXT_PUBLIC_*` is browser-visible. Secrets stay server-only.
+- Real auth is `await getAdminSession()` (verified `__session` + `ADMIN_EMAILS`). Proxy cookie presence is optimistic only.
+- Session flow: ID token → `POST /api/auth/session` → HttpOnly `__session`. Do not store ID tokens in web storage.
