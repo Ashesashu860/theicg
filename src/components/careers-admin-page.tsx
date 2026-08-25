@@ -15,6 +15,7 @@ import {
   type FirestoreError,
 } from "firebase/firestore";
 import { useAuth } from "@/components/auth-provider";
+import { CareerApplicationsSection } from "@/components/career-applications-section";
 import {
   AddIcon,
   ChevronRightIcon,
@@ -642,7 +643,7 @@ export function CareersAdminPage() {
               Careers
             </h2>
             <p className="mt-2 max-w-2xl font-sans text-body-lg text-on-surface-variant">
-              Create categories, then add career roles under each category.
+              Manage categories and open roles, and review career applications.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -803,6 +804,8 @@ export function CareersAdminPage() {
               ) : null}
             </div>
           ) : null}
+
+          <CareerApplicationsSection />
         </div>
       </section>
 
