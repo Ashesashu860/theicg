@@ -7,12 +7,6 @@ import {
 import { IcgLogo } from "@/components/icg-logo";
 import { SiteFooter } from "@/components/site-footer";
 
-const impactStats = [
-  { value: "30K+", label: "Global Reach" },
-  { value: "$10B+", label: "Revenue Impact" },
-  { value: "100+", label: "Cities Worldwide" },
-];
-
 export function AboutPage() {
   return (
     <>
@@ -83,34 +77,7 @@ export function AboutPage() {
               </div>
             </div>
           </section>
-        </div>
 
-        <section className="bg-primary-container px-margin-mobile py-24 text-pure-white md:px-margin-desktop md:py-32">
-          <h2 className="mb-16 text-center font-serif text-headline-lg-mobile md:text-headline-lg">
-            Our Impact
-          </h2>
-          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3">
-            {impactStats.map((stat, index) => (
-              <div
-                key={stat.label}
-                className={
-                  index === 1
-                    ? "border-y border-outline-variant/30 py-8 text-center md:border-x md:border-y-0 md:py-0"
-                    : "text-center"
-                }
-              >
-                <div className="mb-2 font-serif text-[40px] font-bold leading-[1.1] tracking-[-0.02em] text-secondary-fixed md:text-display-lg">
-                  {stat.value}
-                </div>
-                <div className="font-sans text-label-md uppercase tracking-wider text-primary-fixed-dim">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <div className="mx-auto max-w-container-max px-margin-mobile md:px-margin-desktop">
           <section className="grid grid-cols-1 items-center gap-8 border-b border-outline-variant py-24 md:grid-cols-12 md:py-32">
             <div className="relative order-2 h-64 overflow-hidden bg-surface-variant md:order-1 md:col-span-5 md:col-start-1 md:h-96">
               <div

@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo, useState } from "react";
+import { CareerRoleDetailModal } from "@/components/career-role-detail-modal";
 import { ArrowForwardIcon, SearchIcon } from "@/components/icons";
 import type {
   CareerCategoryRecord,
@@ -18,6 +18,9 @@ export function CareersRolesSection({
   categories,
 }: CareersRolesSectionProps) {
   const [query, setQuery] = useState("");
+  const [selectedRole, setSelectedRole] = useState<CareerRoleRecord | null>(
+    null,
+  );
 
   const categoryNameById = useMemo(() => {
     const map = new Map<string, string>();
@@ -86,9 +89,12 @@ export function CareersRolesSection({
               categoryNameById.get(role.categoryId) || "General";
 
             return (
-              <article
+              <button
                 key={role.id}
-                className="hover-border-expand group flex min-h-[280px] flex-col justify-between border border-outline-variant bg-pure-white p-8 transition-all duration-300"
+                type="button"
+                aria-haspopup="dialog"
+                onClick={() => setSelectedRole(role)}
+                className="hover-border-expand group flex min-h-[280px] cursor-pointer flex-col justify-between border border-outline-variant bg-pure-white p-8 text-left transition-all duration-300"
               >
                 <div>
                   <p className="mb-3 font-sans text-label-md uppercase tracking-widest text-primary-container">
@@ -101,17 +107,24 @@ export function CareersRolesSection({
                     {role.description}
                   </p>
                 </div>
-                <Link
-                  href={`/careers/apply?role=${encodeURIComponent(role.id)}`}
-                  className="mt-6 flex items-center gap-2 font-sans text-label-md uppercase text-primary-container transition-colors group-hover:text-secondary"
-                >
-                  Apply <ArrowForwardIcon className="h-4 w-4" />
-                </Link>
-              </article>
+                <span className="mt-6 flex items-center gap-2 font-sans text-label-md uppercase text-primary-container transition-colors group-hover:text-secondary">
+                  View details <ArrowForwardIcon className="h-4 w-4" />
+                </span>
+              </button>
             );
           })}
         </div>
       )}
+
+      {selectedRole ? (
+        <CareerRoleDetailModal
+          role={selectedRole}
+          categoryName={
+            categoryNameById.get(selectedRole.categoryId) || "General"
+          }
+          onClose={() => setSelectedRole(null)}
+        />
+      ) : null}
     </section>
   );
 }
