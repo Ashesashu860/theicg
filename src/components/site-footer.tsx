@@ -9,7 +9,7 @@ export function SiteFooter() {
             ICG
           </div>
           <p className="mb-6 max-w-xs font-sans text-body-md text-on-primary-container">
-            ICG – IITans Consulting Group. Built on knowledge, collaboration,
+            ICG – IITians Consulting Group. Built on knowledge, collaboration,
             and strategic thinking to help clients make smarter decisions.
           </p>
           <div className="text-sm text-on-primary-container">

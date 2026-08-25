@@ -104,7 +104,7 @@ export function HomePage() {
               className="animate-fade-up mx-auto mb-10 max-w-2xl font-sans text-body-md text-surface-container-high"
               style={{ animationDelay: "160ms" }}
             >
-              At ICG – IITans Consulting Group, we believe great decisions are
+              At ICG – IITians Consulting Group, we believe great decisions are
               powered by great minds. Our team combines knowledge, experience,
               analytical thinking, and innovative perspectives to provide
               thoughtful consultations and practical solutions tailored to your

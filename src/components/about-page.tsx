@@ -52,7 +52,7 @@ export function AboutPage() {
                   Where Knowledge Meets Strategy
                 </h3>
                 <p className="mb-8 font-sans text-body-lg text-on-surface-variant">
-                  At ICG – IITans Consulting Group, we believe great decisions
+                  At ICG – IITians Consulting Group, we believe great decisions
                   are powered by great minds. Our team combines knowledge,
                   experience, analytical thinking, and innovative perspectives
                   to provide thoughtful consultations and practical solutions
@@ -127,7 +127,7 @@ export function AboutPage() {
                 How We Work
               </h2>
               <p className="mb-8 font-sans text-body-lg text-on-surface-variant">
-                ICG – IITans Consulting Group brings together great minds to
+                ICG – IITians Consulting Group brings together great minds to
                 deliver expert consultation, strategic guidance, and practical
                 solutions. We partner with individuals and organizations to turn
                 challenges into opportunities—and ideas into meaningful

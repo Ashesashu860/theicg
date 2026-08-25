@@ -22,12 +22,12 @@ export async function generateMetadata({
 
   if (!capability) {
     return {
-      title: "Capability Not Found | ICG: IITans Consulting Group",
+      title: "Capability Not Found | ICG: IITians Consulting Group",
     };
   }
 
   return {
-    title: `${capability.title} | ICG: IITans Consulting Group`,
+    title: `${capability.title} | ICG: IITians Consulting Group`,
     description: capability.description,
   };
 }

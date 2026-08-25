@@ -19,16 +19,16 @@ const hankenGrotesk = Hanken_Grotesk({
 });
 
 const siteDescription =
-  "ICG – IITans Consulting Group brings together great minds to deliver expert consultation, strategic guidance, and practical solutions that help individuals and organizations achieve their goals.";
+  "ICG – IITians Consulting Group brings together great minds to deliver expert consultation, strategic guidance, and practical solutions that help individuals and organizations achieve their goals.";
 
 const socialDescription =
-  "ICG – IITans Consulting Group | Great minds. Better perspectives. Smarter decisions. Expert consultation and strategic guidance designed to help you turn challenges into opportunities.";
+  "ICG – IITians Consulting Group | Great minds. Better perspectives. Smarter decisions. Expert consultation and strategic guidance designed to help you turn challenges into opportunities.";
 
 export const metadata: Metadata = {
-  title: "ICG: IITans Consulting Group | Expert Consulting & Guidance",
+  title: "ICG: IITians Consulting Group | Expert Consulting & Guidance",
   description: siteDescription,
   keywords: [
-    "IITans Consulting Group",
+    "IITians Consulting Group",
     "ICG consulting",
     "consulting group",
     "expert consultants",
@@ -41,14 +41,14 @@ export const metadata: Metadata = {
     "consulting services",
   ],
   openGraph: {
-    title: "ICG: IITans Consulting Group | Expert Consulting & Guidance",
+    title: "ICG: IITians Consulting Group | Expert Consulting & Guidance",
     description: socialDescription,
-    siteName: "ICG: IITans Consulting Group",
+    siteName: "ICG: IITians Consulting Group",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ICG: IITans Consulting Group | Expert Consulting & Guidance",
+    title: "ICG: IITians Consulting Group | Expert Consulting & Guidance",
     description: socialDescription,
   },
 };

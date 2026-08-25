@@ -57,7 +57,7 @@ export function CareersPage() {
                 Beyond Is Where We Begin
               </h1>
               <p className="mb-8 max-w-2xl font-sans text-body-lg text-on-surface-variant">
-                At ICG – IITans Consulting Group, you&apos;ll join great minds
+                At ICG – IITians Consulting Group, you&apos;ll join great minds
                 delivering expert consultation, strategic guidance, and
                 practical solutions. We invest in your growth, wellbeing, and
                 future—empowering you to thrive and help clients make smarter
