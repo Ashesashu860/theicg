@@ -58,6 +58,7 @@ export async function signOutUser(): Promise<void> {
     // Still clear client auth below.
   }
 
+
   if (isFirebaseConfigured()) {
     await signOut(getFirebaseAuth());
   }
