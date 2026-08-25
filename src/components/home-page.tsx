@@ -70,7 +70,7 @@ export function HomePage({ capabilities, members }: HomePageProps) {
 
         <section
           id="capabilities"
-          className="relative z-20 -mt-16 mx-auto max-w-container-max border border-outline-variant/30 bg-off-white py-24"
+          className="relative z-20 -mt-16 mx-auto max-w-container-max border border-outline-variant/30 bg-off-white pt-24"
         >
           <div className="mb-12 flex items-end justify-between gap-6 px-margin-mobile md:px-margin-desktop">
             <div>

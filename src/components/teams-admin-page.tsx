@@ -26,7 +26,7 @@ import {
 import { getNameInitial } from "@/components/user-avatar";
 import { getFirebaseDb, isFirebaseConfigured } from "@/lib/firebase";
 import { canDisplayImageUrl, isBlobImageUrl } from "@/lib/image-url";
-import { uploadContentImage } from "@/lib/storage-client";
+import { deleteContentImage, uploadContentImage } from "@/lib/storage-client";
 import {
   isTeamMemberStatus,
   TEAM_STATUSES,
@@ -610,6 +610,7 @@ export function TeamsAdminPage() {
     setActionError("");
 
     try {
+      await deleteContentImage(member.imageUrl, "teams");
       await deleteDoc(doc(getFirebaseDb(), ...teamMembersPath(), member.id));
       if (editingMemberId === member.id) {
         closeMemberFormModal();

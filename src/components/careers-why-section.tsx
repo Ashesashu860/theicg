@@ -31,13 +31,14 @@ export function CareersWhySection() {
       className="mx-auto max-w-container-max px-margin-mobile py-section-sm md:px-margin-desktop md:py-section-lg"
       aria-labelledby="why-icg-heading"
     >
-      <div className="mb-16 text-center">
+      <div className="mb-16">
         <h2
           id="why-icg-heading"
-          className="font-serif text-headline-lg-mobile text-primary md:text-headline-md"
+          className="mb-4 font-serif text-headline-lg-mobile text-primary md:text-headline-lg"
         >
           Why ICG
         </h2>
+        <div className="h-1 w-16 bg-primary-container" />
       </div>
       <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
         {reasons.map((reason) => {

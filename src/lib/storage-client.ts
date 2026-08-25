@@ -6,6 +6,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { getFirebaseStorage } from "@/lib/firebase";
+import { canDisplayImageUrl } from "@/lib/image-url";
 
 export type ContentImageFolder = "capabilities" | "blogs" | "teams";
 
@@ -108,19 +109,34 @@ export async function uploadCareerResume(
   return { url, path: objectPath };
 }
 
-/** Deletes a resume object. No-ops if path is empty or the object is already gone. */
-export async function deleteCareerResume(resumePath: string): Promise<void> {
-  const path = resumePath.trim();
-  if (!path) {
-    return;
-  }
-  if (
-    !path.startsWith(`${CAREER_RESUME_FOLDER}/`) ||
-    path.includes("..")
-  ) {
-    throw new Error("Invalid resume path.");
+/**
+ * Object path from a Firebase download URL (`.../o/{encodedPath}?alt=media`).
+ * Returns null when the URL is empty or not a Storage download URL.
+ */
+function storagePathFromDownloadUrl(downloadUrl: string): string | null {
+  const url = downloadUrl.trim();
+  if (!url || !canDisplayImageUrl(url)) {
+    return null;
   }
 
+  try {
+    const { pathname } = new URL(url);
+    const marker = "/o/";
+    const markerIndex = pathname.indexOf(marker);
+    if (markerIndex === -1) {
+      return null;
+    }
+    const encodedPath = pathname.slice(markerIndex + marker.length);
+    if (!encodedPath) {
+      return null;
+    }
+    return decodeURIComponent(encodedPath);
+  } catch {
+    return null;
+  }
+}
+
+async function deleteStorageObjectIfPresent(path: string): Promise<void> {
   const storageRef = ref(getFirebaseStorage(), path);
   try {
     await deleteObject(storageRef);
@@ -134,4 +150,36 @@ export async function deleteCareerResume(resumePath: string): Promise<void> {
     }
     throw error;
   }
+}
+
+/** Deletes a resume object. No-ops if path is empty or the object is already gone. */
+export async function deleteCareerResume(resumePath: string): Promise<void> {
+  const path = resumePath.trim();
+  if (!path) {
+    return;
+  }
+  if (
+    !path.startsWith(`${CAREER_RESUME_FOLDER}/`) ||
+    path.includes("..")
+  ) {
+    throw new Error("Invalid resume path.");
+  }
+
+  await deleteStorageObjectIfPresent(path);
+}
+
+/**
+ * Deletes a content image in Storage. No-ops if the URL is empty, not a
+ * Storage download URL, or the object is already gone.
+ */
+export async function deleteContentImage(
+  downloadUrl: string,
+  folder: ContentImageFolder,
+): Promise<void> {
+  const path = storagePathFromDownloadUrl(downloadUrl);
+  if (!path || !path.startsWith(`${folder}/`) || path.includes("..")) {
+    return;
+  }
+
+  await deleteStorageObjectIfPresent(path);
 }
