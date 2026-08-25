@@ -1,52 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CareersRolesSection } from "@/components/careers-roles-section";
 import { ContactForm } from "@/components/contact-form";
-import {
-  ArrowForwardIcon,
-  BusinessCenterIcon,
-  DesignServicesIcon,
-  MemoryIcon,
-  MonitoringIcon,
-} from "@/components/icons";
 import { SiteFooter } from "@/components/site-footer";
+import type {
+  CareerCategoryRecord,
+  CareerRoleRecord,
+} from "@/lib/careers-data";
 
-const teams = [
-  {
-    title: "Careers in AI",
-    description:
-      "Build cutting-edge AI solutions that transform businesses and create meaningful impact.",
-    icon: MemoryIcon,
-    span: "md:col-span-6 lg:col-span-4",
-    featured: false,
-  },
-  {
-    title: "Consulting",
-    description:
-      "Partner with clients to solve their most challenging problems through thoughtful consultation and strategic guidance. Collaborate with great minds to shape lasting impact.",
-    icon: BusinessCenterIcon,
-    span: "md:col-span-6 lg:col-span-8",
-    featured: false,
-    background: "/images/careers-consulting.jpg",
-  },
-  {
-    title: "Data Science",
-    description:
-      "Uncover innovative insights that create lasting impact for our firm and our clients.",
-    icon: MonitoringIcon,
-    span: "md:col-span-6 lg:col-span-4",
-    featured: false,
-  },
-  {
-    title: "Design Strategy",
-    description:
-      "Transform ideas into powerful design experiences that solve real problems and elevate user journeys.",
-    icon: DesignServicesIcon,
-    span: "md:col-span-6 lg:col-span-4",
-    featured: false,
-  },
-];
+type CareersPageProps = {
+  roles: CareerRoleRecord[];
+  categories: CareerCategoryRecord[];
+};
 
-export function CareersPage() {
+export function CareersPage({ roles, categories }: CareersPageProps) {
   return (
     <>
       <main className="flex min-h-screen flex-col bg-off-white pb-section-lg pt-32">
@@ -86,85 +53,7 @@ export function CareersPage() {
           </div>
         </section>
 
-        <section
-          id="roles"
-          className="mx-auto mb-section-lg max-w-container-max px-margin-mobile md:px-margin-desktop"
-        >
-          <div className="mb-12">
-            <h2 className="mb-4 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
-              Find Your Team
-            </h2>
-            <p className="max-w-3xl font-sans text-body-lg text-on-surface-variant">
-              Discover where your skills, passions, and ambitions fit best.
-              Explore diverse teams across our organization, learn what drives
-              them, and see how their work makes an impact.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-gutter md:grid-cols-12">
-            {teams.map((team) => {
-              const Icon = team.icon;
-              return (
-                <div
-                  key={team.title}
-                  className={`hover-border-expand group relative flex min-h-[320px] flex-col justify-between overflow-hidden border border-outline-variant bg-pure-white p-8 transition-all duration-300 ${team.span}`}
-                >
-                  {team.background ? (
-                    <div className="absolute inset-0 opacity-10">
-                      <Image
-                        src={team.background}
-                        alt=""
-                        fill
-                        className="object-cover"
-                        sizes="50vw"
-                      />
-                    </div>
-                  ) : null}
-                  <div className="relative z-10">
-                    <Icon className="mb-4 text-primary-container" />
-                    <h3 className="mb-3 font-serif text-headline-md text-primary">
-                      {team.title}
-                    </h3>
-                    <p
-                      className={
-                        team.background
-                          ? "max-w-lg font-sans text-body-md text-on-surface-variant"
-                          : "font-sans text-body-md text-on-surface-variant"
-                      }
-                    >
-                      {team.description}
-                    </p>
-                  </div>
-                  <Link
-                    href="#connect"
-                    className="relative z-10 mt-6 flex items-center gap-2 font-sans text-label-md uppercase text-primary-container transition-colors group-hover:text-secondary"
-                  >
-                    Learn More <ArrowForwardIcon className="h-4 w-4" />
-                  </Link>
-                </div>
-              );
-            })}
-
-            <div className="col-span-1 flex min-h-[320px] flex-col justify-between border border-primary bg-primary p-8 text-pure-white md:col-span-12 lg:col-span-4">
-              <div>
-                <h3 className="mb-3 font-serif text-headline-md">
-                  Early Careers &amp; Internships
-                </h3>
-                <p className="font-sans text-body-md text-surface-variant opacity-90">
-                  Kickstart your journey with structured learning, dedicated
-                  mentorship, and the chance to make an impact from your very
-                  first day.
-                </p>
-              </div>
-              <Link
-                href="#connect"
-                className="mt-6 flex items-center gap-2 font-sans text-label-md uppercase text-secondary-fixed transition-colors hover:text-pure-white"
-              >
-                Explore Paths <ArrowForwardIcon className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-        </section>
+        <CareersRolesSection roles={roles} categories={categories} />
 
         <section
           id="connect"

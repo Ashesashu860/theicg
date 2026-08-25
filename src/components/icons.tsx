@@ -444,3 +444,35 @@ export function VisibilityOffIcon({ className }: IconProps) {
     </svg>
   );
 }
+
+export function EditIcon({ className }: IconProps) {
+  return (
+    <svg className={className} width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 000-1.41l-2.34-2.34a1.003 1.003 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+    </svg>
+  );
+}
+
+export function DeleteIcon({ className }: IconProps) {
+  return (
+    <svg className={className} width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+    </svg>
+  );
+}
+
+export function ExpandMoreIcon({ className }: IconProps) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z" />
+    </svg>
+  );
+}
+
+export function WorkOffIcon({ className }: IconProps) {
+  return (
+    <svg className={className} width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M21.41 17.16l-1.53-1.53A1.98 1.98 0 0020 15V8c0-1.11-.89-2-2-2h-4V4c0-1.11-.89-2-2-2h-2c-.98 0-1.79.71-1.96 1.65L7.1 3.5 5.68 2.08 4.27 3.5l16.24 16.24 1.41-1.41-0.51-1.17zM10 4h2v2h-1.17L10 4.17V4zM12.83 10H18v5.17L12.83 10zM2.41 2.13L1 3.54l2.01 2.01C2.42 5.9 2 6.4 2 7v10c0 1.11.89 2 2 2h12.46l2 2 1.41-1.41L2.41 2.13zM4 17V8.54l8.46 8.46H4z" />
+    </svg>
+  );
+}

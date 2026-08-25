@@ -10,6 +10,7 @@ import {
   AssignmentIcon,
   BusinessCenterIcon,
   CloseIcon,
+  GroupsIcon,
   LightbulbIcon,
   LogoutIcon,
   MenuIcon,
@@ -30,6 +31,11 @@ const navItems = [
     href: "/portal/blogs",
     label: "Blogs",
     icon: LightbulbIcon,
+  },
+  {
+    href: "/portal/careers",
+    label: "Careers",
+    icon: GroupsIcon,
   },
 ];
 
