@@ -6,15 +6,12 @@ import { looksLikeHtml } from "@/lib/blog-html";
 import { sanitizeBlogHtml } from "@/lib/sanitize-blog-html";
 import type { BlogRecord } from "@/lib/blogs-data";
 import type { CapabilityRecord } from "@/lib/capabilities-data";
+import { canDisplayImageUrl } from "@/lib/image-url";
 
 type BlogDetailPageProps = {
   blog: BlogRecord;
   capability: CapabilityRecord | null;
 };
-
-function isLocalImagePath(src: string): boolean {
-  return Boolean(src) && src.startsWith("/");
-}
 
 function formatBlogDate(value: Date | null): string {
   if (!value) return "";
@@ -70,7 +67,7 @@ export function BlogDetailPage({ blog, capability }: BlogDetailPageProps) {
             ) : null}
           </header>
 
-          {isLocalImagePath(blog.imageUrl) ? (
+          {canDisplayImageUrl(blog.imageUrl) ? (
             <div className="relative mx-auto mb-12 aspect-[2/1] max-w-4xl overflow-hidden border border-outline-variant/30 bg-surface-container md:mb-16">
               <Image
                 src={blog.imageUrl}

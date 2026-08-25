@@ -24,6 +24,7 @@ import {
   type CapabilityRecord,
 } from "@/lib/capabilities-data";
 import { getFirebaseDb, isFirebaseConfigured } from "@/lib/firebase";
+import { canDisplayImageUrl } from "@/lib/image-url";
 import { AddIcon, ChevronRightIcon } from "./icons";
 
 function toDate(value: unknown): Date | null {
@@ -43,10 +44,6 @@ function formatDate(value: Date | null): string {
     day: "numeric",
     year: "numeric",
   });
-}
-
-function isLocalImagePath(src: string): boolean {
-  return src.startsWith("/");
 }
 
 function getErrorMessage(error: FirestoreError): string {
@@ -318,7 +315,7 @@ export function BlogsAdminPage() {
                       className="grid grid-cols-1 gap-4 p-4 transition-colors hover:bg-surface-container-low md:grid-cols-12 md:items-center"
                     >
                       <div className="relative h-16 w-full overflow-hidden border border-outline-variant/30 bg-surface-container md:col-span-2">
-                        {item.imageUrl && isLocalImagePath(item.imageUrl) ? (
+                        {item.imageUrl && canDisplayImageUrl(item.imageUrl) ? (
                           <Image
                             src={item.imageUrl}
                             alt={item.title}

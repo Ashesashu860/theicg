@@ -1,6 +1,7 @@
 import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app";
 import { getAuth, type Auth } from "firebase/auth";
 import { getFirestore, type Firestore } from "firebase/firestore";
+import { getStorage, type FirebaseStorage } from "firebase/storage";
 import { getAnalytics, isSupported, type Analytics } from "firebase/analytics";
 
 const firebaseConfig = {
@@ -16,6 +17,7 @@ const firebaseConfig = {
 let appInstance: FirebaseApp | null = null;
 let authInstance: Auth | null = null;
 let dbInstance: Firestore | null = null;
+let storageInstance: FirebaseStorage | null = null;
 let analyticsInstance: Analytics | null = null;
 
 export function isFirebaseConfigured(): boolean {
@@ -54,6 +56,18 @@ export function getFirebaseDb(): Firestore {
     dbInstance = getFirestore(getFirebaseApp());
   }
   return dbInstance;
+}
+
+export function getFirebaseStorage(): FirebaseStorage {
+  if (!firebaseConfig.storageBucket) {
+    throw new Error(
+      "Firebase Storage is not configured. Set NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET.",
+    );
+  }
+  if (!storageInstance) {
+    storageInstance = getStorage(getFirebaseApp());
+  }
+  return storageInstance;
 }
 
 export async function getFirebaseAnalytics(): Promise<Analytics | null> {

@@ -6,16 +6,13 @@ import {
   resolvePublicBlogSlug,
   type BlogRecord,
 } from "@/lib/blogs-data";
+import { canDisplayImageUrl } from "@/lib/image-url";
 
 type BlogCardProps = {
   blog: BlogRecord;
   /** Optional label above the title (date, category name, etc.). */
   meta?: string;
 };
-
-function isLocalImagePath(src: string): boolean {
-  return Boolean(src) && src.startsWith("/");
-}
 
 export function BlogCard({ blog, meta }: BlogCardProps) {
   const slug = resolvePublicBlogSlug(blog);
@@ -25,7 +22,7 @@ export function BlogCard({ blog, meta }: BlogCardProps) {
       href={`/blogs/${slug}`}
       className="group flex h-full flex-col border border-outline-variant bg-pure-white transition-all duration-300 hover:border-primary-container"
     >
-      {isLocalImagePath(blog.imageUrl) ? (
+      {canDisplayImageUrl(blog.imageUrl) ? (
         <div className="relative h-48 overflow-hidden bg-surface-container">
           <Image
             src={blog.imageUrl}

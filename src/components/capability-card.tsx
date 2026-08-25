@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowForwardIcon } from "@/components/icons";
 import type { CapabilityRecord } from "@/lib/capabilities-data";
+import { canDisplayImageUrl } from "@/lib/image-url";
 
 type CapabilityCardProps = {
   capability: CapabilityRecord;
@@ -9,10 +10,6 @@ type CapabilityCardProps = {
   offset?: boolean;
   className?: string;
 };
-
-function isLocalImagePath(src: string): boolean {
-  return Boolean(src) && src.startsWith("/");
-}
 
 export function CapabilityCard({
   capability,
@@ -26,7 +23,7 @@ export function CapabilityCard({
         offset ? "lg:translate-y-8" : ""
       } ${className}`}
     >
-      {isLocalImagePath(capability.imageUrl) ? (
+      {canDisplayImageUrl(capability.imageUrl) ? (
         <div className="relative aspect-[1.49] overflow-hidden bg-surface-container">
           <Image
             src={capability.imageUrl}

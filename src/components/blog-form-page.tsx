@@ -26,6 +26,8 @@ import {
   type CapabilityRecord,
 } from "@/lib/capabilities-data";
 import { getFirebaseDb, isFirebaseConfigured } from "@/lib/firebase";
+import { canDisplayImageUrl, isBlobImageUrl } from "@/lib/image-url";
+import { uploadContentImage } from "@/lib/storage-client";
 import { toast } from "react-toastify";
 import { ChevronRightIcon } from "./icons";
 import { RichTextEditor } from "./rich-text-editor";
@@ -49,10 +51,6 @@ const emptyForm: FormState = {
   imageUrl: "",
 };
 
-function isLocalImagePath(src: string): boolean {
-  return src.startsWith("/");
-}
-
 export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
@@ -60,6 +58,9 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
 
   const [capabilities, setCapabilities] = useState<CapabilityRecord[]>([]);
   const [form, setForm] = useState<FormState>(emptyForm);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState("");
+  const [fileInputKey, setFileInputKey] = useState(0);
   const [existingSlug, setExistingSlug] = useState("");
   const [loadingBlog, setLoadingBlog] = useState(mode === "edit");
   const [saving, setSaving] = useState(false);
@@ -70,6 +71,14 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
     : !authLoading && !user
       ? "Sign in required to manage blogs."
       : "";
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl && isBlobImageUrl(previewUrl)) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
 
   useEffect(() => {
     if (!configured || authLoading || !user) {
@@ -173,6 +182,26 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
     }
   }
 
+  function clearImagePreview() {
+    setPreviewUrl("");
+    setImageFile(null);
+    setFileInputKey((key) => key + 1);
+  }
+
+  function handleImageFileChange(file: File | null) {
+    if (!file) {
+      clearImagePreview();
+      return;
+    }
+    setImageFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+  }
+
+  function clearImage() {
+    clearImagePreview();
+    setForm((prev) => ({ ...prev, imageUrl: "" }));
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
@@ -180,7 +209,6 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
     const title = form.title.trim();
     const content = form.content.trim();
     const capabilityId = form.capabilityId.trim();
-    const imageUrl = form.imageUrl.trim();
 
     if (!title || isBlankBlogContent(content) || !capabilityId) {
       const message = "Title, content, and category are required.";
@@ -198,6 +226,11 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
 
     setSaving(true);
     try {
+      let imageUrl = form.imageUrl.trim();
+      if (imageFile) {
+        imageUrl = await uploadContentImage(imageFile, "blogs");
+      }
+
       const payload = {
         title,
         content,
@@ -216,6 +249,8 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
           slug,
         });
         setExistingSlug(slug);
+        clearImagePreview();
+        setForm((prev) => ({ ...prev, imageUrl }));
         toast.success("Blog updated.");
       } else {
         const slug = await uniqueBlogSlug(title);
@@ -224,6 +259,7 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
           slug,
           createdAt: serverTimestamp(),
         });
+        clearImagePreview();
         setForm(emptyForm);
         setExistingSlug("");
         toast.success("Blog created.");
@@ -266,7 +302,7 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
             {mode === "edit" ? "Edit Blog" : "Create Blog"}
           </h2>
           <p className="mt-2 max-w-2xl font-sans text-body-lg text-on-surface-variant">
-            Every blog must be linked to a capability category. Image URL is
+            Every blog must be linked to a capability category. Image is
             optional.
           </p>
         </div>
@@ -363,36 +399,53 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
                   />
                 </div>
 
-                <label className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2">
                   <span className="font-sans text-label-md uppercase tracking-widest text-on-surface-variant">
-                    Image URL{" "}
+                    Image{" "}
                     <span className="normal-case tracking-normal text-outline">
                       (optional)
                     </span>
                   </span>
                   <input
-                    value={form.imageUrl}
+                    key={fileInputKey}
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
                     onChange={(event) =>
-                      setForm((prev) => ({
-                        ...prev,
-                        imageUrl: event.target.value,
-                      }))
+                      handleImageFileChange(event.target.files?.[0] ?? null)
                     }
-                    className="border border-outline-variant bg-surface-container-lowest px-4 py-3 font-sans text-body-md text-on-surface focus:border-primary focus:outline-none"
-                    placeholder="/images/insight-ai.jpg"
+                    className="border border-outline-variant bg-surface-container-lowest px-4 py-3 font-sans text-body-md text-on-surface file:mr-4 file:border-0 file:bg-transparent file:font-sans file:text-label-md file:uppercase file:tracking-widest file:text-primary focus:border-primary focus:outline-none"
                   />
-                </label>
+                  {(previewUrl || form.imageUrl) && (
+                    <button
+                      type="button"
+                      onClick={clearImage}
+                      className="self-start font-sans text-sm text-on-surface-variant underline hover:text-primary"
+                    >
+                      Remove image
+                    </button>
+                  )}
+                </div>
 
-                {form.imageUrl.trim() &&
-                isLocalImagePath(form.imageUrl.trim()) ? (
+                {previewUrl ||
+                (form.imageUrl.trim() &&
+                  canDisplayImageUrl(form.imageUrl.trim())) ? (
                   <div className="relative h-40 w-full max-w-md overflow-hidden border border-outline-variant/30">
-                    <Image
-                      src={form.imageUrl.trim()}
-                      alt="Preview"
-                      fill
-                      className="object-cover"
-                      sizes="400px"
-                    />
+                    {previewUrl && isBlobImageUrl(previewUrl) ? (
+                      // eslint-disable-next-line @next/next/no-img-element -- blob preview
+                      <img
+                        src={previewUrl}
+                        alt="Preview"
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                    ) : (
+                      <Image
+                        src={previewUrl || form.imageUrl.trim()}
+                        alt="Preview"
+                        fill
+                        className="object-cover"
+                        sizes="400px"
+                      />
+                    )}
                   </div>
                 ) : null}
               </div>

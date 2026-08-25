@@ -8,15 +8,12 @@ import {
 import { SiteFooter } from "@/components/site-footer";
 import type { BlogRecord } from "@/lib/blogs-data";
 import type { CapabilityRecord } from "@/lib/capabilities-data";
+import { canDisplayImageUrl } from "@/lib/image-url";
 
 type CapabilityDetailPageProps = {
   capability: CapabilityRecord;
   blogs: BlogRecord[];
 };
-
-function isLocalImagePath(src: string): boolean {
-  return Boolean(src) && src.startsWith("/");
-}
 
 function formatBlogDate(value: Date | null): string {
   if (!value) return "";
@@ -59,7 +56,7 @@ export function CapabilityDetailPage({
               </p>
             </div>
             <div className="relative mt-10 aspect-[1.49] overflow-hidden border border-outline-variant/30 bg-surface-container md:col-span-6 md:mt-0">
-              {isLocalImagePath(capability.imageUrl) ? (
+              {canDisplayImageUrl(capability.imageUrl) ? (
                 <Image
                   src={capability.imageUrl}
                   alt={capability.name}

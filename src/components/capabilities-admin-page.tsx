@@ -22,6 +22,8 @@ import {
   type CapabilityRecord,
 } from "@/lib/capabilities-data";
 import { getFirebaseDb, isFirebaseConfigured } from "@/lib/firebase";
+import { canDisplayImageUrl, isBlobImageUrl } from "@/lib/image-url";
+import { uploadContentImage } from "@/lib/storage-client";
 import { toast } from "react-toastify";
 import { ChevronRightIcon } from "./icons";
 
@@ -48,10 +50,6 @@ function getErrorMessage(error: FirestoreError): string {
   }
 }
 
-function isLocalImagePath(src: string): boolean {
-  return src.startsWith("/");
-}
-
 type FormState = {
   name: string;
   description: string;
@@ -75,6 +73,9 @@ export function CapabilitiesAdminPage() {
   const [actionError, setActionError] = useState("");
   const [loadedForUid, setLoadedForUid] = useState<string | null>(null);
   const [form, setForm] = useState<FormState>(emptyForm);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState("");
+  const [fileInputKey, setFileInputKey] = useState(0);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -87,6 +88,14 @@ export function CapabilitiesAdminPage() {
       : "";
   const error = gateError || actionError || liveError || validationError;
   const loading = authLoading || (canSubscribe && loadedForUid !== uid);
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl && isBlobImageUrl(previewUrl)) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
 
   useEffect(() => {
     if (!canSubscribe || uid === null) {
@@ -148,13 +157,21 @@ export function CapabilitiesAdminPage() {
     return `${base}-${index}`;
   }
 
+  function clearImagePreview() {
+    setPreviewUrl("");
+    setImageFile(null);
+    setFileInputKey((key) => key + 1);
+  }
+
   function resetForm() {
+    clearImagePreview();
     setForm(emptyForm);
     setEditingId(null);
     setValidationError("");
   }
 
   function startEdit(item: CapabilityRecord) {
+    clearImagePreview();
     setEditingId(item.id);
     setForm({
       name: item.name,
@@ -166,6 +183,20 @@ export function CapabilitiesAdminPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  function handleImageFileChange(file: File | null) {
+    if (!file) {
+      clearImagePreview();
+      return;
+    }
+    setImageFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+  }
+
+  function clearImage() {
+    clearImagePreview();
+    setForm((prev) => ({ ...prev, imageUrl: "" }));
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setActionError("");
@@ -173,7 +204,6 @@ export function CapabilitiesAdminPage() {
 
     const name = form.name.trim();
     const description = form.description.trim();
-    const imageUrl = form.imageUrl.trim();
 
     if (!name || !description) {
       setValidationError("Capability name and description are required.");
@@ -190,6 +220,11 @@ export function CapabilitiesAdminPage() {
     setSaving(true);
 
     try {
+      let imageUrl = form.imageUrl.trim();
+      if (imageFile) {
+        imageUrl = await uploadContentImage(imageFile, "capabilities");
+      }
+
       const payload = {
         name,
         description,
@@ -284,7 +319,7 @@ export function CapabilitiesAdminPage() {
           </h2>
           <p className="mt-2 max-w-2xl font-sans text-body-lg text-on-surface-variant">
             Create and update capability categories shown on the public site.
-            Image URL is optional.
+            Image is optional.
           </p>
         </div>
       </header>
@@ -334,35 +369,53 @@ export function CapabilitiesAdminPage() {
                 />
               </label>
 
-              <label className="flex flex-col gap-2 md:col-span-2">
+              <div className="flex flex-col gap-2 md:col-span-2">
                 <span className="font-sans text-label-md uppercase tracking-widest text-on-surface-variant">
-                  Image URL{" "}
+                  Image{" "}
                   <span className="normal-case tracking-normal text-outline">
                     (optional)
                   </span>
                 </span>
                 <input
-                  value={form.imageUrl}
+                  key={fileInputKey}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif"
                   onChange={(event) =>
-                    setForm((prev) => ({
-                      ...prev,
-                      imageUrl: event.target.value,
-                    }))
+                    handleImageFileChange(event.target.files?.[0] ?? null)
                   }
-                  className="border border-outline-variant bg-surface-container-lowest px-4 py-3 font-sans text-body-md text-on-surface focus:border-primary focus:outline-none"
-                  placeholder="/images/capabilities-example.jpg"
+                  className="border border-outline-variant bg-surface-container-lowest px-4 py-3 font-sans text-body-md text-on-surface file:mr-4 file:border-0 file:bg-transparent file:font-sans file:text-label-md file:uppercase file:tracking-widest file:text-primary focus:border-primary focus:outline-none"
                 />
-              </label>
+                {(previewUrl || form.imageUrl) && (
+                  <button
+                    type="button"
+                    onClick={clearImage}
+                    className="self-start font-sans text-sm text-on-surface-variant underline hover:text-primary"
+                  >
+                    Remove image
+                  </button>
+                )}
+              </div>
 
-              {form.imageUrl.trim() && isLocalImagePath(form.imageUrl.trim()) ? (
+              {previewUrl ||
+              (form.imageUrl.trim() &&
+                canDisplayImageUrl(form.imageUrl.trim())) ? (
                 <div className="relative aspect-[1.49] overflow-hidden border border-outline-variant/30 md:col-span-1">
-                  <Image
-                    src={form.imageUrl.trim()}
-                    alt="Preview"
-                    fill
-                    className="object-cover"
-                    sizes="320px"
-                  />
+                  {previewUrl && isBlobImageUrl(previewUrl) ? (
+                    // eslint-disable-next-line @next/next/no-img-element -- blob preview
+                    <img
+                      src={previewUrl}
+                      alt="Preview"
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src={previewUrl || form.imageUrl.trim()}
+                      alt="Preview"
+                      fill
+                      className="object-cover"
+                      sizes="320px"
+                    />
+                  )}
                 </div>
               ) : null}
             </div>
@@ -420,7 +473,7 @@ export function CapabilitiesAdminPage() {
                     className="grid grid-cols-1 gap-4 p-4 transition-colors hover:bg-surface-container-low md:grid-cols-12 md:items-center"
                   >
                     <div className="relative h-20 w-full overflow-hidden border border-outline-variant/30 bg-surface-container md:col-span-2">
-                      {item.imageUrl && isLocalImagePath(item.imageUrl) ? (
+                      {item.imageUrl && canDisplayImageUrl(item.imageUrl) ? (
                         <Image
                           src={item.imageUrl}
                           alt={item.name}
