@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Careers | ICG: IITians Consulting Group",
   description:
-    "Join ICG – IITians Consulting Group. Work with great minds to deliver expert consultation, strategic guidance, and practical solutions.",
+    "Join a rocketship at ICG – IITians Consulting Group. High growth, high impact, elite talent. Explore open roles and start your application.",
 };
 
 export default async function Careers() {

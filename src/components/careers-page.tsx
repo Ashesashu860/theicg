@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CareersCultureSection } from "@/components/careers-culture-section";
 import { CareersRolesSection } from "@/components/careers-roles-section";
+import { CareersWhySection } from "@/components/careers-why-section";
 import { ContactForm } from "@/components/contact-form";
 import { SiteFooter } from "@/components/site-footer";
 import type {
@@ -16,48 +18,87 @@ type CareersPageProps = {
 export function CareersPage({ roles, categories }: CareersPageProps) {
   return (
     <>
-      <main className="flex min-h-screen flex-col bg-off-white pb-section-lg pt-32">
-        <section className="mx-auto mb-section-lg max-w-container-max px-margin-mobile md:px-margin-desktop">
-          <div className="grid grid-cols-1 items-center gap-gutter md:grid-cols-12">
-            <div className="animate-fade-up md:col-span-7 md:pr-12">
-              <h1 className="mb-6 font-serif text-[40px] font-bold leading-[1.1] tracking-[-0.02em] text-primary md:text-display-lg">
-                Beyond Is Where We Begin
+      <main className="flex min-h-screen flex-grow flex-col bg-surface pt-20">
+        <section className="relative flex h-[80vh] min-h-[600px] items-center">
+          <div className="absolute inset-0 z-0 overflow-hidden">
+            <Image
+              src="/images/careers-hero.jpg"
+              alt="Low-angle view of a modern glass office tower reaching into a clear sky"
+              fill
+              priority
+              className="scale-[1.04] object-cover blur-[2px] saturate-[1.05]"
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-surface/90 via-surface/70 to-transparent" />
+          </div>
+          <div className="relative z-10 mx-auto w-full max-w-container-max px-margin-mobile md:px-margin-desktop">
+            <div className="max-w-2xl">
+              <h1 className="mb-6 font-serif text-headline-lg-mobile font-bold leading-[1.1] tracking-[-0.02em] text-primary md:text-display-lg">
+                Join a Rocketship.
               </h1>
-              <p className="mb-8 max-w-2xl font-sans text-body-lg text-on-surface-variant">
-                At ICG – IITians Consulting Group, you&apos;ll join great minds
-                delivering expert consultation, strategic guidance, and
-                practical solutions. We invest in your growth, wellbeing, and
-                future—empowering you to thrive and help clients make smarter
-                decisions with confidence.
+              <p className="mb-10 max-w-lg font-sans text-body-lg text-on-surface-variant">
+                Accelerate your career with the world&apos;s most ambitious
+                strategic architects. We don&apos;t just advise; we build the
+                future of global enterprise.
               </p>
               <Link
-                href="#roles"
-                className="hover-btn-primary inline-block bg-primary-container px-8 py-4 font-sans text-label-md uppercase tracking-wider text-pure-white transition-all duration-300"
+                href="#open-roles"
+                className="hover-accent-bottom inline-block bg-primary px-8 py-4 font-sans text-label-md uppercase tracking-wider text-on-primary shadow-sm"
               >
-                Explore Openings
+                <span>View Open Roles</span>
               </Link>
-            </div>
-            <div
-              className="animate-fade-up relative mt-10 h-[500px] md:col-span-5 md:mt-0"
-              style={{ animationDelay: "120ms" }}
-            >
-              <Image
-                src="/images/careers-hero.jpg"
-                alt="Corporate leaders in a modern glass boardroom overlooking the city"
-                fill
-                className="border border-outline-variant object-cover"
-                sizes="(max-width: 768px) 100vw, 40vw"
-                priority
-              />
             </div>
           </div>
         </section>
 
+        <section className="mx-auto max-w-container-max px-margin-mobile py-section-sm md:px-margin-desktop md:py-section-lg">
+          <div className="grid grid-cols-1 items-start gap-gutter md:grid-cols-12">
+            <div className="border-t border-primary pt-4 md:col-span-4 md:col-start-2">
+              <h2 className="mb-4 font-sans text-label-md uppercase tracking-wider text-secondary">
+                The Mandate
+              </h2>
+              <p className="font-serif text-headline-lg-mobile leading-tight text-primary md:text-headline-md">
+                High growth. High impact. Elite talent.
+              </p>
+            </div>
+            <div className="md:col-span-6 md:col-start-7">
+              <p className="mb-6 font-sans text-body-lg text-on-surface-variant">
+                At ICG, we operate at the intersection of audacious vision and
+                rigorous execution. Our culture is deliberately designed for
+                those who seek to compress a decade of career growth into a few
+                transformative years.
+              </p>
+              <p className="font-sans text-body-lg text-on-surface-variant">
+                We reject complacency. Here, meritocracy rules, and the best
+                ideas win, regardless of tenure. If you are prepared to be
+                challenged, to learn relentlessly, and to leave an indelible
+                mark on global industries, you have found your launchpad.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <CareersCultureSection />
+
+        <CareersWhySection />
+
         <CareersRolesSection roles={roles} categories={categories} />
+
+        <section className="bg-primary px-margin-mobile py-section-sm text-center md:px-margin-desktop">
+          <h2 className="mb-8 font-serif text-headline-lg-mobile font-bold tracking-[-0.02em] text-on-primary md:text-display-lg">
+            Ready for Launch?
+          </h2>
+          <Link
+            href="/careers/apply"
+            className="inline-block border-2 border-transparent bg-pure-white px-10 py-5 font-sans text-label-md uppercase tracking-wider text-primary transition-colors hover:border-surface-tint hover:bg-surface-container-lowest"
+          >
+            Start Your Application
+          </Link>
+        </section>
 
         <section
           id="connect"
-          className="mx-auto mb-section-sm max-w-container-max px-margin-mobile md:px-margin-desktop"
+          className="mx-auto w-full max-w-container-max px-margin-mobile py-section-sm md:px-margin-desktop md:py-section-lg"
         >
           <div className="mx-auto max-w-4xl border border-outline-variant bg-pure-white p-8 md:p-16">
             <div className="mb-10 text-center">

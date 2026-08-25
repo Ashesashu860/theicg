@@ -48,20 +48,20 @@ export function CareersRolesSection({
 
   return (
     <section
-      id="roles"
-      className="mx-auto mb-section-lg max-w-container-max px-margin-mobile md:px-margin-desktop"
+      id="open-roles"
+      className="mx-auto max-w-container-max px-margin-mobile pb-section-sm md:px-margin-desktop md:pb-section-lg"
     >
-      <div className="mb-12">
-        <h2 className="mb-4 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
+      <div className="mb-12 text-center">
+        <h2 className="mb-4 font-serif text-headline-lg-mobile text-primary md:text-headline-md">
           Open Roles
         </h2>
-        <p className="max-w-3xl font-sans text-body-lg text-on-surface-variant">
+        <p className="mx-auto max-w-3xl font-sans text-body-lg text-on-surface-variant">
           Explore current openings across ICG. Search by role, category, or
           keywords to find where you fit best.
         </p>
       </div>
 
-      <label className="relative mb-10 block max-w-xl">
+      <label className="relative mx-auto mb-10 block max-w-xl">
         <span className="sr-only">Search open roles</span>
         <SearchIcon className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" />
         <input
@@ -83,7 +83,7 @@ export function CareersRolesSection({
           No roles match “{query.trim()}”. Try a different search.
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-gutter md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
           {filtered.map((role) => {
             const categoryName =
               categoryNameById.get(role.categoryId) || "General";
@@ -94,7 +94,7 @@ export function CareersRolesSection({
                 type="button"
                 aria-haspopup="dialog"
                 onClick={() => setSelectedRole(role)}
-                className="hover-border-expand group flex min-h-[280px] cursor-pointer flex-col justify-between border border-outline-variant bg-pure-white p-8 text-left transition-all duration-300"
+                className="ghost-border group flex min-h-[280px] cursor-pointer flex-col justify-between bg-pure-white p-8 text-left transition-colors duration-300 hover:bg-surface-container-lowest"
               >
                 <div>
                   <p className="mb-3 font-sans text-label-md uppercase tracking-widest text-primary-container">

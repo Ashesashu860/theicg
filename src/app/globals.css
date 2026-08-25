@@ -239,6 +239,38 @@ body {
   box-shadow: inset 0 -4px 0 0 #94a3b8;
 }
 
+.ghost-border {
+  border: 1px solid #e2e8f0;
+}
+
+.ghost-border:hover {
+  border-color: #00347e;
+}
+
+.hover-accent-bottom {
+  position: relative;
+}
+
+.hover-accent-bottom::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background-color: #94a3b8;
+  transition: height 0.2s ease;
+}
+
+.hover-accent-bottom:hover::after {
+  height: 4px;
+}
+
+.hover-accent-bottom > * {
+  position: relative;
+  z-index: 10;
+}
+
 .input-minimal {
   border: none;
   border-bottom: 2px solid #94a3b8;
