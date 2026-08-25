@@ -7,12 +7,9 @@ import { useAuth } from "@/components/auth-provider";
 import { UserAvatar } from "@/components/user-avatar";
 import { signOutUser } from "@/lib/auth-client";
 import {
-  AccountCircleIcon,
-  AnalyticsIcon,
   AssignmentIcon,
   BusinessCenterIcon,
   CloseIcon,
-  GroupsIcon,
   LightbulbIcon,
   LogoutIcon,
   MenuIcon,
@@ -33,23 +30,6 @@ const navItems = [
     href: "/portal/blogs",
     label: "Blogs",
     icon: LightbulbIcon,
-  },
-  {
-    href: "#",
-    label: "Project Pipeline",
-    icon: AnalyticsIcon,
-    disabled: true,
-  },
-  {
-    href: "#",
-    label: "Expert Network",
-    icon: GroupsIcon,
-    disabled: true,
-  },
-  {
-    href: "/portal/profile",
-    label: "Profile Settings",
-    icon: AccountCircleIcon,
   },
 ];
 
@@ -81,21 +61,10 @@ export function PortalSidebar() {
       <ul className="flex flex-1 flex-col gap-2 px-4">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const active = item.href !== "#" && pathname.startsWith(item.href);
+          const active = pathname.startsWith(item.href);
           const className = active
             ? "flex translate-x-1 items-center gap-3 border-r-4 border-secondary bg-secondary-container/30 px-4 py-3 font-sans text-label-md font-bold uppercase tracking-widest text-primary transition-transform"
             : "flex items-center gap-3 px-4 py-3 font-sans text-label-md uppercase tracking-widest text-on-surface-variant transition-colors hover:bg-surface-container-low hover:text-primary";
-
-          if (item.disabled) {
-            return (
-              <li key={item.label}>
-                <span className={`${className} cursor-not-allowed opacity-50`}>
-                  <Icon />
-                  {item.label}
-                </span>
-              </li>
-            );
-          }
 
           return (
             <li key={item.label}>

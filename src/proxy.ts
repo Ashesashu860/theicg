@@ -20,7 +20,7 @@ export function proxy(request: NextRequest) {
   }
 
   if (pathname === "/admin" && isAuthed) {
-    return NextResponse.redirect(new URL("/portal/profile", request.url));
+    return NextResponse.redirect(new URL("/portal/requests", request.url));
   }
 
   return NextResponse.next();

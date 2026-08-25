@@ -26,8 +26,8 @@ export function LoginPage() {
 
     try {
       await signInWithEmailPassword(email, password);
-      const next = searchParams.get("next") || "/portal/profile";
-      router.replace(next.startsWith("/portal") ? next : "/portal/profile");
+      const next = searchParams.get("next") || "/portal/requests";
+      router.replace(next.startsWith("/portal") ? next : "/portal/requests");
       router.refresh();
     } catch (err) {
       setError(getAuthErrorMessage(err));

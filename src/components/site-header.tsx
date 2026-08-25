@@ -101,14 +101,6 @@ export function SiteHeader() {
               </p>
             ) : null}
           </div>
-          <Link
-            href="/portal/profile"
-            role="menuitem"
-            className="block px-4 py-2.5 font-sans text-label-md uppercase tracking-widest text-on-surface-variant transition-colors hover:bg-surface-container-low hover:text-primary"
-            onClick={() => setAccountOpen(false)}
-          >
-            My Profile
-          </Link>
           <button
             type="button"
             role="menuitem"
