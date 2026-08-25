@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { CapabilityDetailPage } from "@/components/capability-detail-page";
 import {
   getCapabilityBySlug,
-  listBlogsByCapabilityId,
+  listBlogsForCapability,
 } from "@/lib/capabilities-server";
 
 export const dynamic = "force-dynamic";
@@ -40,7 +40,7 @@ export default async function CapabilityDetail({
     notFound();
   }
 
-  const blogs = await listBlogsByCapabilityId(capability.id);
+  const blogs = await listBlogsForCapability(capability);
 
   return <CapabilityDetailPage capability={capability} blogs={blogs} />;
 }

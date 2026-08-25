@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BlogCard } from "@/components/blog-card";
 import {
   ArrowBackIcon,
   ArrowForwardIcon,
-  ArrowOutwardIcon,
 } from "@/components/icons";
 import { SiteFooter } from "@/components/site-footer";
-import { excerptFromContent, type BlogRecord } from "@/lib/blogs-data";
+import type { BlogRecord } from "@/lib/blogs-data";
 import type { CapabilityRecord } from "@/lib/capabilities-data";
 
 type CapabilityDetailPageProps = {
@@ -43,7 +43,7 @@ export function CapabilityDetailPage({
             All Capabilities
           </Link>
 
-          <section className="mb-24 grid grid-cols-1 items-center gap-gutter border-b border-outline-variant pb-24 md:mb-32 md:grid-cols-12 md:pb-32">
+          <section className="mb-10 grid grid-cols-1 items-center gap-gutter border-b border-outline-variant pb-8 md:mb-12 md:grid-cols-12 md:pb-10">
             <div className="md:col-span-6">
               <div className="mb-6 flex items-center gap-4">
                 <div className="h-px w-12 bg-primary" />
@@ -100,43 +100,11 @@ export function CapabilityDetailPage({
             ) : (
               <div className="grid grid-cols-1 gap-gutter md:grid-cols-3">
                 {blogs.map((blog) => (
-                  <article
+                  <BlogCard
                     key={blog.id}
-                    className="group flex h-full flex-col border border-outline-variant bg-pure-white transition-all duration-300 hover:border-primary-container"
-                  >
-                    <div className="relative h-48 overflow-hidden bg-surface-container">
-                      {isLocalImagePath(blog.imageUrl) ? (
-                        <Image
-                          src={blog.imageUrl}
-                          alt={blog.title}
-                          fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-105"
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-surface-container to-primary-container/30" />
-                      )}
-                    </div>
-                    <div className="flex flex-grow flex-col p-6">
-                      {blog.createdAt ? (
-                        <span className="mb-3 block font-sans text-label-md uppercase tracking-widest text-on-surface-variant">
-                          {formatBlogDate(blog.createdAt)}
-                        </span>
-                      ) : null}
-                      <h3 className="mb-4 font-serif text-headline-md text-primary transition-colors group-hover:text-primary-container">
-                        {blog.title}
-                      </h3>
-                      <p className="mb-6 flex-grow font-sans text-body-md text-on-surface-variant">
-                        {excerptFromContent(blog.content)}
-                      </p>
-                      <div className="flex items-center justify-between border-t border-outline-variant/50 pt-4">
-                        <span className="font-sans text-sm font-semibold uppercase tracking-widest text-on-surface-variant">
-                          Read Article
-                        </span>
-                        <ArrowOutwardIcon className="text-primary" />
-                      </div>
-                    </div>
-                  </article>
+                    blog={blog}
+                    meta={formatBlogDate(blog.createdAt)}
+                  />
                 ))}
               </div>
             )}

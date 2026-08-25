@@ -16,7 +16,7 @@ export function CapabilitiesPage({ capabilities }: CapabilitiesPageProps) {
   return (
     <>
       <main className="mx-auto w-full max-w-container-max flex-grow bg-off-white px-margin-mobile pb-24 pt-32 md:px-margin-desktop">
-        <section className="mb-24 max-w-4xl md:mb-32">
+        <section className="mb-10 max-w-4xl md:mb-12">
           <div className="mb-6 flex items-center gap-4">
             <div className="h-px w-12 bg-primary" />
             <span className="font-sans text-label-md uppercase tracking-wider text-primary">
@@ -46,8 +46,8 @@ export function CapabilitiesPage({ capabilities }: CapabilitiesPageProps) {
                   index % 3 === 1 ? "lg:translate-y-8" : ""
                 }`}
               >
-                <div className="relative aspect-[1.49] overflow-hidden bg-surface-container">
-                  {isLocalImagePath(capability.imageUrl) ? (
+                {isLocalImagePath(capability.imageUrl) ? (
+                  <div className="relative aspect-[1.49] overflow-hidden bg-surface-container">
                     <Image
                       src={capability.imageUrl}
                       alt={capability.name}
@@ -55,11 +55,9 @@ export function CapabilitiesPage({ capabilities }: CapabilitiesPageProps) {
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
-                  ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-surface-container to-primary-container/30" />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  </div>
+                ) : null}
                 <div className="relative z-10 flex flex-grow flex-col bg-pure-white p-6 md:p-8">
                   <h2 className="mb-4 font-serif text-headline-md text-primary transition-colors group-hover:text-primary-container">
                     {capability.name}

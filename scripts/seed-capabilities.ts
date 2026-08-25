@@ -131,6 +131,7 @@ async function main() {
   const { capabilities } = (await import(
     "../src/lib/capabilities"
   )) as { capabilities: SeedCapability[] };
+  const { slugifyBlogTitle } = await import("../src/lib/blogs-data");
 
   const db = getFirestore();
   const now = Timestamp.now();
@@ -162,6 +163,17 @@ async function main() {
       existingBlogs.docs.map((docSnap) => String(docSnap.data().title || "")),
     );
 
+    for (const existing of existingBlogs.docs) {
+      const data = existing.data();
+      if (typeof data.slug === "string" && data.slug.trim()) {
+        continue;
+      }
+      const slug =
+        slugifyBlogTitle(String(data.title || "")) || existing.id;
+      await existing.ref.update({ slug });
+      console.log(`  Backfilled slug: ${slug}`);
+    }
+
     for (const blog of capability.blogs) {
       if (existingTitles.has(blog.title)) {
         console.log(`  Skip existing blog: ${blog.title}`);
@@ -169,9 +181,11 @@ async function main() {
       }
 
       const createdAt = Timestamp.fromDate(parseSeedDate(blog.date));
+      const slug = slugifyBlogTitle(blog.title) || "blog";
       await blogsCol.add({
         title: blog.title,
         content: blog.excerpt,
+        slug,
         capabilityId: capability.slug,
         imageUrl: blog.image || "",
         createdAt,

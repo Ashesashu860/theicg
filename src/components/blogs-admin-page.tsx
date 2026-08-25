@@ -14,7 +14,11 @@ import {
   type FirestoreError,
 } from "firebase/firestore";
 import { useAuth } from "@/components/auth-provider";
-import { blogsPath, type BlogRecord } from "@/lib/blogs-data";
+import {
+  blogsPath,
+  resolvePublicBlogSlug,
+  type BlogRecord,
+} from "@/lib/blogs-data";
 import {
   capabilitiesPath,
   type CapabilityRecord,
@@ -102,9 +106,15 @@ export function BlogsAdminPage() {
         setBlogs(
           snapshot.docs.map((docSnap) => {
             const data = docSnap.data();
+            const title = String(data.title || "");
             return {
               id: docSnap.id,
-              title: String(data.title || ""),
+              title,
+              slug: resolvePublicBlogSlug({
+                id: docSnap.id,
+                title,
+                slug: String(data.slug || ""),
+              }),
               content: String(data.content || ""),
               capabilityId: String(data.capabilityId || ""),
               imageUrl: String(data.imageUrl || ""),
@@ -323,9 +333,12 @@ export function BlogsAdminPage() {
                         )}
                       </div>
                       <div className="md:col-span-4">
-                        <p className="font-serif text-[20px] text-primary">
+                        <Link
+                          href={`/blogs/${item.slug}`}
+                          className="font-serif text-[20px] text-primary hover:text-primary-container"
+                        >
                           {item.title}
-                        </p>
+                        </Link>
                       </div>
                       <div className="md:col-span-2">
                         <span className="inline-flex border border-outline-variant/50 bg-surface-container px-2 py-1 font-sans text-xs uppercase tracking-wider text-on-surface">

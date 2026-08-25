@@ -9,14 +9,18 @@ import {
   collection,
   doc,
   getDoc,
+  getDocs,
+  limit,
   onSnapshot,
   orderBy,
   query,
   serverTimestamp,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { useAuth } from "@/components/auth-provider";
-import { blogsPath } from "@/lib/blogs-data";
+import { isBlankBlogContent } from "@/lib/blog-html";
+import { blogsPath, slugifyBlogTitle } from "@/lib/blogs-data";
 import {
   capabilitiesPath,
   type CapabilityRecord,
@@ -24,6 +28,7 @@ import {
 import { getFirebaseDb, isFirebaseConfigured } from "@/lib/firebase";
 import { toast } from "react-toastify";
 import { ChevronRightIcon } from "./icons";
+import { RichTextEditor } from "./rich-text-editor";
 
 type BlogFormPageProps = {
   mode: "create" | "edit";
@@ -55,6 +60,7 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
 
   const [capabilities, setCapabilities] = useState<CapabilityRecord[]>([]);
   const [form, setForm] = useState<FormState>(emptyForm);
+  const [existingSlug, setExistingSlug] = useState("");
   const [loadingBlog, setLoadingBlog] = useState(mode === "edit");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -120,6 +126,7 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
           capabilityId: String(data.capabilityId || ""),
           imageUrl: String(data.imageUrl || ""),
         });
+        setExistingSlug(String(data.slug || ""));
       } catch (loadError) {
         if (!cancelled) {
           setError(
@@ -141,6 +148,31 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
     };
   }, [authLoading, blogId, configured, mode, user]);
 
+  async function uniqueBlogSlug(
+    title: string,
+    excludeId?: string,
+  ): Promise<string> {
+    const base = slugifyBlogTitle(title) || "blog";
+    let candidate = base;
+    let index = 2;
+
+    while (true) {
+      const snapshot = await getDocs(
+        query(
+          collection(getFirebaseDb(), ...blogsPath()),
+          where("slug", "==", candidate),
+          limit(1),
+        ),
+      );
+      const conflict = snapshot.docs.find((docSnap) => docSnap.id !== excludeId);
+      if (!conflict) {
+        return candidate;
+      }
+      candidate = `${base}-${index}`;
+      index += 1;
+    }
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
@@ -150,7 +182,7 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
     const capabilityId = form.capabilityId.trim();
     const imageUrl = form.imageUrl.trim();
 
-    if (!title || !content || !capabilityId) {
+    if (!title || isBlankBlogContent(content) || !capabilityId) {
       const message = "Title, content, and category are required.";
       setError(message);
       toast.error(message);
@@ -175,18 +207,27 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
       };
 
       if (mode === "edit" && blogId) {
-        await updateDoc(doc(getFirebaseDb(), ...blogsPath(), blogId), payload);
+        const slug =
+          existingSlug.length > 0
+            ? existingSlug
+            : await uniqueBlogSlug(title, blogId);
+        await updateDoc(doc(getFirebaseDb(), ...blogsPath(), blogId), {
+          ...payload,
+          slug,
+        });
+        setExistingSlug(slug);
         toast.success("Blog updated.");
       } else {
-        const created = await addDoc(
-          collection(getFirebaseDb(), ...blogsPath()),
-          {
-            ...payload,
-            createdAt: serverTimestamp(),
-          },
-        );
+        const slug = await uniqueBlogSlug(title);
+        await addDoc(collection(getFirebaseDb(), ...blogsPath()), {
+          ...payload,
+          slug,
+          createdAt: serverTimestamp(),
+        });
+        setForm(emptyForm);
+        setExistingSlug("");
         toast.success("Blog created.");
-        router.replace(`/portal/blogs/${created.id}/edit`);
+        router.push("/portal/blogs");
         return;
       }
     } catch (saveError) {
@@ -302,23 +343,25 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
                   ) : null}
                 </label>
 
-                <label className="flex flex-col gap-2">
-                  <span className="font-sans text-label-md uppercase tracking-widest text-on-surface-variant">
+                <div className="flex flex-col gap-2">
+                  <span
+                    id="blog-content-label"
+                    className="font-sans text-label-md uppercase tracking-widest text-on-surface-variant"
+                  >
                     Blog Content
                   </span>
-                  <textarea
-                    required
-                    rows={12}
+                  <RichTextEditor
                     value={form.content}
-                    onChange={(event) =>
+                    onChange={(nextContent) =>
                       setForm((prev) => ({
                         ...prev,
-                        content: event.target.value,
+                        content: nextContent,
                       }))
                     }
-                    className="resize-y border border-outline-variant bg-surface-container-lowest px-4 py-3 font-sans text-body-md text-on-surface focus:border-primary focus:outline-none"
+                    disabled={!!gateError}
+                    labelledBy="blog-content-label"
                   />
-                </label>
+                </div>
 
                 <label className="flex flex-col gap-2">
                   <span className="font-sans text-label-md uppercase tracking-widest text-on-surface-variant">

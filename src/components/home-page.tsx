@@ -1,41 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BlogCard } from "@/components/blog-card";
 import {
   AccountTreeIcon,
   ArrowForwardIcon,
-  ArrowOutwardIcon,
   SettingsApplicationsIcon,
   TransformIcon,
   TrendingUpIcon,
-} from "./icons";
-import { SiteFooter } from "./site-footer";
+} from "@/components/icons";
+import { SiteFooter } from "@/components/site-footer";
+import type { BlogRecord } from "@/lib/blogs-data";
 
-const insights = [
-  {
-    category: "Strategy",
-    title: "Better Decisions Start With Better Perspectives",
-    excerpt:
-      "How combining deep knowledge with collaborative thinking helps leaders cut through complexity and choose a clearer path forward.",
-    image: "/images/insight-ai.jpg",
-    alt: "Digital visualization representing strategic thinking and analysis",
-  },
-  {
-    category: "Growth",
-    title: "Turning Challenges Into Practical Opportunity",
-    excerpt:
-      "Thoughtful consultation that connects expertise with real-world constraints—so ideas become solutions clients can act on.",
-    image: "/images/insight-sustain.jpg",
-    alt: "Modern infrastructure representing growth and opportunity",
-  },
-  {
-    category: "Leadership",
-    title: "Where Knowledge Meets Strategy",
-    excerpt:
-      "Great minds bring analytical rigor and innovative perspectives together to guide individuals and organizations toward smarter decisions.",
-    image: "/images/insight-macro.jpg",
-    alt: "Abstract visualization of connected ideas and global perspectives",
-  },
-];
+type HomePageProps = {
+  featuredBlogs: BlogRecord[];
+  capabilityNameById: Record<string, string>;
+};
 
 const capabilities = [
   {
@@ -68,7 +47,10 @@ const capabilities = [
   },
 ];
 
-export function HomePage() {
+export function HomePage({
+  featuredBlogs,
+  capabilityNameById,
+}: HomePageProps) {
   return (
     <>
       <main className="pt-20">
@@ -85,9 +67,7 @@ export function HomePage() {
             <div className="absolute inset-0 bg-gradient-hero" />
           </div>
           <div className="relative z-10 mx-auto mt-20 max-w-container-max px-margin-mobile text-center md:px-margin-desktop">
-            <p
-              className="animate-fade-up mb-4 font-sans text-label-md uppercase tracking-widest text-secondary-fixed"
-            >
+            <p className="animate-fade-up mb-4 font-sans text-label-md uppercase tracking-widest text-secondary-fixed">
               The Great Minds. The Best Consultations.
             </p>
             <h1 className="animate-fade-up mx-auto mb-6 max-w-4xl font-serif text-[32px] font-bold leading-[1.1] tracking-[-0.02em] text-pure-white md:text-display-lg">
@@ -126,7 +106,7 @@ export function HomePage() {
 
         <section
           id="insights"
-          className="relative z-20 -mt-16 border border-outline-variant/30 bg-off-white py-24 mx-auto max-w-container-max px-margin-mobile md:px-margin-desktop"
+          className="relative z-20 -mt-16 mx-auto max-w-container-max border border-outline-variant/30 bg-off-white px-margin-mobile py-24 md:px-margin-desktop"
         >
           <div className="mb-12 flex items-end justify-between">
             <div>
@@ -138,51 +118,28 @@ export function HomePage() {
               </p>
             </div>
             <Link
-              href="#insights"
+              href="/capabilities"
               className="hidden items-center gap-2 font-sans text-label-md uppercase tracking-widest text-primary transition-colors hover:text-primary-container md:inline-flex"
             >
               View All Insights <ArrowForwardIcon />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 gap-gutter md:grid-cols-3">
-            {insights.map((insight) => (
-              <Link
-                key={insight.title}
-                href="#"
-                className="group block border border-outline-variant bg-pure-white transition-all duration-300 hover:border-primary-container"
-              >
-                <div className="h-48 overflow-hidden">
-                  <div className="relative h-full w-full transition-transform duration-500 group-hover:scale-105">
-                    <Image
-                      src={insight.image}
-                      alt={insight.alt}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  </div>
-                </div>
-                <div className="p-6">
-                  <span className="mb-3 block font-sans text-label-md uppercase tracking-widest text-on-surface-variant">
-                    {insight.category}
-                  </span>
-                  <h3 className="mb-4 font-serif text-headline-md text-primary transition-colors group-hover:text-primary-container">
-                    {insight.title}
-                  </h3>
-                  <p className="mb-6 line-clamp-3 font-sans text-body-md text-on-surface-variant">
-                    {insight.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between border-t border-outline-variant/50 pt-4">
-                    <span className="font-sans text-sm font-semibold uppercase tracking-widest text-on-surface-variant">
-                      Read Article
-                    </span>
-                    <ArrowOutwardIcon className="text-primary" />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          {featuredBlogs.length === 0 ? (
+            <p className="font-sans text-body-md text-on-surface-variant">
+              Insights will appear here once blogs are published.
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 gap-gutter md:grid-cols-3">
+              {featuredBlogs.map((blog) => (
+                <BlogCard
+                  key={blog.id}
+                  blog={blog}
+                  meta={capabilityNameById[blog.capabilityId] || undefined}
+                />
+              ))}
+            </div>
+          )}
         </section>
 
         <section
