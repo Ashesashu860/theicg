@@ -302,7 +302,7 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
             {mode === "edit" ? "Edit Blog" : "Create Blog"}
           </h2>
           <p className="mt-2 max-w-2xl font-sans text-body-lg text-on-surface-variant">
-            Every blog must be linked to a capability category. Image is
+            Every blog must be linked to a capability category. Cover image is
             optional.
           </p>
         </div>
@@ -401,7 +401,7 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
 
                 <div className="flex flex-col gap-2">
                   <span className="font-sans text-label-md uppercase tracking-widest text-on-surface-variant">
-                    Image{" "}
+                    Cover image{" "}
                     <span className="normal-case tracking-normal text-outline">
                       (optional)
                     </span>

@@ -372,6 +372,13 @@ body {
   padding: 0;
 }
 
+.blog-prose img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 30%, transparent);
+}
+
 .rich-text-editor .tiptap p.is-empty:first-child::before,
 .ProseMirror p.is-editor-empty:first-child::before,
 .ProseMirror p.is-empty:first-child::before {

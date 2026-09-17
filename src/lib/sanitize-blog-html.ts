@@ -1,3 +1,5 @@
+import { canDisplayImageUrl } from "@/lib/image-url";
+
 const ALLOWED_TAGS = new Set([
   "p",
   "br",
@@ -18,9 +20,10 @@ const ALLOWED_TAGS = new Set([
   "hr",
   "code",
   "pre",
+  "img",
 ]);
 
-const VOID_TAGS = new Set(["br", "hr"]);
+const VOID_TAGS = new Set(["br", "hr", "img"]);
 const DROP_WITH_CONTENTS = new Set([
   "script",
   "style",
@@ -121,11 +124,51 @@ function hrefFromAttributes(raw: string): string | null {
   return null;
 }
 
+function isSafeImageSrc(src: string): boolean {
+  const normalized = decodeEntities(src)
+    .trim()
+    .replace(/[\u0000-\u001f\u007f]/g, "");
+  if (!normalized || normalized.startsWith("//")) return false;
+
+  const lower = normalized.toLowerCase();
+  if (
+    lower.startsWith("javascript:") ||
+    lower.startsWith("data:") ||
+    lower.startsWith("blob:") ||
+    lower.startsWith("vbscript:") ||
+    lower.startsWith("file:")
+  ) {
+    return false;
+  }
+
+  return canDisplayImageUrl(normalized);
+}
+
+function imgFromAttributes(raw: string): { src: string; alt: string } | null {
+  let src = "";
+  let alt = "";
+  for (const [name, value] of parseAttributes(raw)) {
+    if (name === "src") {
+      src = decodeEntities(value).trim();
+    }
+    if (name === "alt") {
+      alt = decodeEntities(value);
+    }
+  }
+  if (!isSafeImageSrc(src)) return null;
+  return { src, alt };
+}
+
 function emitOpenTag(name: string, attrRaw: string): string | null {
   if (name === "a") {
     const href = hrefFromAttributes(attrRaw);
     if (!href) return null;
     return `<a href="${escapeAttr(href)}" rel="noopener noreferrer nofollow" target="_blank">`;
+  }
+  if (name === "img") {
+    const image = imgFromAttributes(attrRaw);
+    if (!image) return null;
+    return `<img src="${escapeAttr(image.src)}" alt="${escapeAttr(image.alt)}">`;
   }
   if (VOID_TAGS.has(name)) {
     return `<${name}>`;

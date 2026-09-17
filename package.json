@@ -11,6 +11,7 @@
     "migrate:admin-data": "npx tsx scripts/migrate-to-admin-data.ts"
   },
   "dependencies": {
+    "@tiptap/extension-image": "3.30.3",
     "@tiptap/extensions": "^3.30.3",
     "@tiptap/pm": "^3.30.3",
     "@tiptap/react": "^3.30.3",

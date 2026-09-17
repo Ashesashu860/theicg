@@ -1,10 +1,18 @@
 "use client";
 
+import TiptapImage from "@tiptap/extension-image";
 import { Placeholder } from "@tiptap/extensions/placeholder";
 import { EditorContent, useEditor, useEditorState, type Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { editorContentFromStored } from "@/lib/blog-html";
+import { uploadContentImage } from "@/lib/storage-client";
 
 type RichTextEditorProps = {
   value: string;
@@ -28,7 +36,22 @@ const editorExtensions = [
   Placeholder.configure({
     placeholder: "Write the article…",
   }),
+  TiptapImage.configure({
+    inline: false,
+    allowBase64: false,
+  }),
 ];
+
+const IMAGE_ACCEPT = "image/jpeg,image/png,image/webp,image/gif";
+
+function imageFilesFromList(files: FileList | null | undefined): File[] {
+  if (!files?.length) return [];
+  return Array.from(files).filter((file) => file.type.startsWith("image/"));
+}
+
+function altFromFileName(name: string): string {
+  return name.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ").trim();
+}
 
 function normalizeHref(raw: string): string | null {
   const trimmed = raw.trim();
@@ -74,8 +97,44 @@ export function RichTextEditor({
   labelledBy,
 }: RichTextEditorProps) {
   const lastEmitted = useRef(value);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const editorHolder = useRef<Editor | null>(null);
+  const uploadingRef = useRef(false);
   const [linkOpen, setLinkOpen] = useState(false);
   const [linkHref, setLinkHref] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [imageError, setImageError] = useState("");
+
+  const insertImageFiles = useCallback(async (files: File[]) => {
+    const current = editorHolder.current;
+    if (!current || files.length === 0 || uploadingRef.current) {
+      return;
+    }
+
+    uploadingRef.current = true;
+    setUploading(true);
+    setImageError("");
+
+    try {
+      for (const file of files) {
+        const src = await uploadContentImage(file, "blogs");
+        current.chain().focus().setImage({
+          src,
+          alt: altFromFileName(file.name),
+        }).run();
+      }
+    } catch (error) {
+      setImageError(
+        error instanceof Error ? error.message : "Unable to upload image.",
+      );
+    } finally {
+      uploadingRef.current = false;
+      setUploading(false);
+    }
+  }, []);
+
+  const insertImageFilesRef = useRef(insertImageFiles);
+  insertImageFilesRef.current = insertImageFiles;
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -87,6 +146,20 @@ export function RichTextEditor({
         class: "tiptap blog-prose min-h-72 px-4 py-3 focus:outline-none",
         ...(labelledBy ? { "aria-labelledby": labelledBy } : {}),
       },
+      handlePaste(_view, event) {
+        const files = imageFilesFromList(event.clipboardData?.files);
+        if (files.length === 0) return false;
+        event.preventDefault();
+        void insertImageFilesRef.current(files);
+        return true;
+      },
+      handleDrop(_view, event) {
+        const files = imageFilesFromList(event.dataTransfer?.files);
+        if (files.length === 0) return false;
+        event.preventDefault();
+        void insertImageFilesRef.current(files);
+        return true;
+      },
     },
     onUpdate: ({ editor: current }) => {
       const html = current.getHTML();
@@ -94,6 +167,10 @@ export function RichTextEditor({
       onChange(html);
     },
   });
+
+  useEffect(() => {
+    editorHolder.current = editor;
+  }, [editor]);
 
   useEffect(() => {
     if (!editor) return;
@@ -122,15 +199,42 @@ export function RichTextEditor({
         disabled ? "pointer-events-none opacity-60" : ""
       }`}
     >
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept={IMAGE_ACCEPT}
+        multiple
+        className="hidden"
+        onChange={(event) => {
+          const files = imageFilesFromList(event.target.files);
+          event.target.value = "";
+          void insertImageFiles(files);
+        }}
+      />
       <EditorToolbar
         editor={editor}
         linkOpen={linkOpen}
+        uploading={uploading}
+        onInsertImage={() => fileInputRef.current?.click()}
         onToggleLink={() => {
           const current = String(editor.getAttributes("link").href || "");
           setLinkHref(current);
           setLinkOpen((open) => !open);
         }}
       />
+      {uploading ? (
+        <p className="border-b border-outline-variant px-3 py-2 font-sans text-sm text-on-surface-variant">
+          Uploading image…
+        </p>
+      ) : null}
+      {imageError ? (
+        <p
+          className="border-b border-outline-variant px-3 py-2 font-sans text-sm text-error"
+          role="alert"
+        >
+          {imageError}
+        </p>
+      ) : null}
       {linkOpen ? (
         <div className="flex flex-wrap items-center gap-2 border-b border-outline-variant px-3 py-2">
           <input
@@ -182,10 +286,18 @@ export function RichTextEditor({
 type EditorToolbarProps = {
   editor: Editor;
   linkOpen: boolean;
+  uploading: boolean;
+  onInsertImage: () => void;
   onToggleLink: () => void;
 };
 
-function EditorToolbar({ editor, linkOpen, onToggleLink }: EditorToolbarProps) {
+function EditorToolbar({
+  editor,
+  linkOpen,
+  uploading,
+  onInsertImage,
+  onToggleLink,
+}: EditorToolbarProps) {
   const state = useEditorState({
     editor,
     selector: ({ editor: current }) => ({
@@ -305,6 +417,13 @@ function EditorToolbar({ editor, linkOpen, onToggleLink }: EditorToolbarProps) {
         onClick={onToggleLink}
       >
         <LinkIcon />
+      </ToolbarButton>
+      <ToolbarButton
+        label="Insert image"
+        disabled={uploading}
+        onClick={onInsertImage}
+      >
+        <ImageIcon />
       </ToolbarButton>
       <ToolbarButton
         label="Horizontal rule"
@@ -432,6 +551,20 @@ function LinkIcon() {
         strokeWidth="1.75"
         strokeLinecap="square"
       />
+    </svg>
+  );
+}
+
+function ImageIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M4 5h16v14H4V5zM4 16l5-5 4 4 2-2 5 5"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="square"
+      />
+      <circle cx="9" cy="9" r="1.25" fill="currentColor" />
     </svg>
   );
 }
