@@ -182,12 +182,16 @@ export async function getBlogBySlug(slug: string): Promise<BlogRecord | null> {
     // Missing slug field/index on legacy docs — fall through to a full scan.
   }
 
-  const all = await adminDataCollection(BLOGS_COLLECTION).get();
-  for (const candidate of all.docs) {
-    const mapped = mapBlog(candidate.id, candidate.data());
-    if (mapped.slug === slug || candidate.id === slug) {
-      return mapped;
+  try {
+    const all = await adminDataCollection(BLOGS_COLLECTION).get();
+    for (const candidate of all.docs) {
+      const mapped = mapBlog(candidate.id, candidate.data());
+      if (mapped.slug === slug || candidate.id === slug) {
+        return mapped;
+      }
     }
+  } catch {
+    return null;
   }
 
   return null;

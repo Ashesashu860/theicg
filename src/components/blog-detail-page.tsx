@@ -24,7 +24,14 @@ function formatBlogDate(value: Date | null): string {
 
 export function BlogDetailPage({ blog, capability }: BlogDetailPageProps) {
   const storedAsHtml = looksLikeHtml(blog.content);
-  const htmlContent = storedAsHtml ? sanitizeBlogHtml(blog.content) : "";
+  let htmlContent = "";
+  if (storedAsHtml) {
+    try {
+      htmlContent = sanitizeBlogHtml(blog.content);
+    } catch {
+      htmlContent = "";
+    }
+  }
   const paragraphs = storedAsHtml
     ? []
     : blog.content
