@@ -67,6 +67,15 @@ export function SiteHeader() {
   }
 
   const displayName = user?.displayName?.trim() || user?.email || "Account";
+  const links = user
+    ? [...navLinks, { href: "/portal/requests", label: "Portal" }]
+    : navLinks;
+
+  function isNavActive(href: string) {
+    return href.startsWith("/portal")
+      ? pathname.startsWith("/portal")
+      : pathname === href;
+  }
 
   const accountMenu = user ? (
     <div className="relative" ref={accountRef}>
@@ -101,6 +110,14 @@ export function SiteHeader() {
               </p>
             ) : null}
           </div>
+          <Link
+            href="/portal/requests"
+            role="menuitem"
+            className="block w-full px-4 py-2.5 text-left font-sans text-label-md uppercase tracking-widest text-on-surface-variant transition-colors hover:bg-surface-container-low hover:text-primary"
+            onClick={() => setAccountOpen(false)}
+          >
+            Portal
+          </Link>
           <button
             type="button"
             role="menuitem"
@@ -125,8 +142,8 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden gap-8 md:flex" aria-label="Primary">
-          {navLinks.map((link) => {
-            const active = pathname === link.href;
+          {links.map((link) => {
+            const active = isNavActive(link.href);
             return (
               <Link
                 key={link.href}
@@ -170,8 +187,8 @@ export function SiteHeader() {
           className="border-t border-outline-variant/30 bg-surface px-margin-mobile py-6 md:hidden"
         >
           <nav className="flex flex-col gap-4" aria-label="Mobile">
-            {navLinks.map((link) => {
-              const active = pathname === link.href;
+            {links.map((link) => {
+              const active = isNavActive(link.href);
               return (
                 <Link
                   key={link.href}

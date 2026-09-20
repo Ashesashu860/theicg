@@ -1,55 +1,59 @@
 import {
   AccountTreeIcon,
+  AssignmentIcon,
+  BusinessCenterIcon,
   GavelIcon,
-  LightbulbIcon,
-  PsychologyIcon,
-  RocketLaunchIcon,
+  GroupsIcon,
 } from "@/components/icons";
+import {
+  homepagePrinciples,
+  type HomepagePrincipleId,
+} from "@/lib/icg-principles";
 
-const principles = [
+const homepageLayout: Record<
+  HomepagePrincipleId,
   {
-    title: "Insight to Light",
-    description:
-      "We don't just gather data; we illuminate truths. By transforming complex information into clear, actionable intelligence, we guide our clients through their most challenging terrains with unshakeable confidence.",
-    icon: LightbulbIcon,
+    icon: typeof AssignmentIcon;
+    span?: string;
+    dark: boolean;
+    large: boolean;
+    paired: boolean;
+  }
+> = {
+  evidence: {
+    icon: AssignmentIcon,
     span: "md:col-span-8",
     dark: false,
     large: true,
+    paired: false,
   },
-  {
-    title: "Inspired Impact",
-    description:
-      "Our solutions are designed not just for immediate gains, but to create lasting ripples of positive change across industries and communities.",
-    icon: RocketLaunchIcon,
+  adoption: {
+    icon: BusinessCenterIcon,
     span: "md:col-span-4",
     dark: false,
     large: false,
+    paired: false,
   },
-  {
-    title: "Conquer Complexity",
-    description:
-      "We thrive in ambiguity. Our structural thinking dismantles the convoluted, delivering elegant simplicity and strategic clarity.",
+  ambiguity: {
     icon: AccountTreeIcon,
     span: "md:col-span-4",
     dark: true,
     large: false,
+    paired: false,
   },
-] as const;
-
-const pairedPrinciples = [
-  {
-    title: "Lead with Integrity",
-    description:
-      "Uncompromising ethical standards form the bedrock of every recommendation and action we take.",
+  accountable: {
     icon: GavelIcon,
+    dark: false,
+    large: false,
+    paired: true,
   },
-  {
-    title: "Grow by Growing Others",
-    description:
-      "We elevate our clients and our teams simultaneously, fostering a culture of continuous intellectual and professional development.",
-    icon: PsychologyIcon,
+  practice: {
+    icon: GroupsIcon,
+    dark: false,
+    large: false,
+    paired: true,
   },
-] as const;
+};
 
 type IcgPrinciplesSectionProps = {
   className?: string;
@@ -58,6 +62,13 @@ type IcgPrinciplesSectionProps = {
 export function IcgPrinciplesSection({
   className = "mx-auto mb-32 max-w-container-max px-margin-mobile md:px-margin-desktop",
 }: IcgPrinciplesSectionProps) {
+  const featured = homepagePrinciples.filter(
+    (principle) => !homepageLayout[principle.id].paired,
+  );
+  const paired = homepagePrinciples.filter(
+    (principle) => homepageLayout[principle.id].paired,
+  );
+
   return (
     <section
       id="icg-principles"
@@ -75,13 +86,14 @@ export function IcgPrinciplesSection({
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
-        {principles.map((principle) => {
-          const Icon = principle.icon;
+        {featured.map((principle) => {
+          const layout = homepageLayout[principle.id];
+          const Icon = layout.icon;
           return (
             <div
-              key={principle.title}
-              className={`${principle.span} border p-10 transition-colors ${
-                principle.dark
+              key={principle.id}
+              className={`${layout.span} border p-10 transition-colors ${
+                layout.dark
                   ? "border-transparent bg-primary-container text-pure-white"
                   : "group flex min-h-[300px] flex-col justify-between border-outline-variant/50 bg-pure-white hover:border-primary-container"
               }`}
@@ -89,16 +101,16 @@ export function IcgPrinciplesSection({
               <div>
                 <Icon
                   className={`mb-6 block ${
-                    principle.dark
+                    layout.dark
                       ? "text-secondary-fixed"
                       : "text-primary-container"
-                  } ${principle.large ? "h-10 w-10" : "h-8 w-8"}`}
+                  } ${layout.large ? "h-10 w-10" : "h-8 w-8"}`}
                 />
                 <h3
                   className={`mb-3 font-serif ${
-                    principle.large
+                    layout.large
                       ? "text-headline-md text-primary"
-                      : principle.dark
+                      : layout.dark
                         ? "text-2xl text-pure-white"
                         : "text-2xl text-primary"
                   }`}
@@ -107,12 +119,12 @@ export function IcgPrinciplesSection({
                 </h3>
                 <p
                   className={`font-sans text-body-md ${
-                    principle.dark
+                    layout.dark
                       ? "text-pure-white/80"
                       : "max-w-lg text-on-surface-variant"
                   }`}
                 >
-                  {principle.description}
+                  {principle.short}
                 </p>
               </div>
             </div>
@@ -120,11 +132,11 @@ export function IcgPrinciplesSection({
         })}
 
         <div className="grid grid-cols-1 gap-6 md:col-span-8 md:grid-cols-2">
-          {pairedPrinciples.map((principle) => {
-            const Icon = principle.icon;
+          {paired.map((principle) => {
+            const Icon = homepageLayout[principle.id].icon;
             return (
               <div
-                key={principle.title}
+                key={principle.id}
                 className="border border-outline-variant/50 bg-pure-white p-8 transition-colors hover:border-primary-container"
               >
                 <Icon className="mb-4 block h-8 w-8 text-primary-container" />
@@ -132,7 +144,7 @@ export function IcgPrinciplesSection({
                   {principle.title}
                 </h3>
                 <p className="font-sans text-body-md text-on-surface-variant">
-                  {principle.description}
+                  {principle.short}
                 </p>
               </div>
             );

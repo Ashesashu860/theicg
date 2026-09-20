@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { PurposePeoplePage } from "@/components/purpose-people-page";
 
 export const metadata: Metadata = {
-  title: "Purpose & People | ICG: IITians Consulting Group",
+  title: "Purpose | ICG: IITians Consulting Group",
   description:
-    "Leading with empathy and expertise. Discover the ICG principles, standards, and purpose that guide how we work with clients and grow together.",
+    "To partner with government so that national priorities are served by practising expertise, advice that can be built, operated and sustained long after an engagement ends.",
 };
 
 export default function Purpose() {

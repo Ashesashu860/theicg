@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CheckIcon, FormatQuoteIcon } from "@/components/icons";
-import { IcgPrinciplesSection } from "@/components/icg-principles-section";
+import { CheckIcon } from "@/components/icons";
 import { SiteFooter } from "@/components/site-footer";
+import { icgPrinciples } from "@/lib/icg-principles";
 
 const standards = [
-  "Absolute Client Confidentiality",
-  "Rigorous Conflict of Interest Protocols",
-  "Intellectual Honesty in Advisory",
+  "Client confidentiality",
+  "Disclosure of conflicts of interest",
+  "Intellectual honesty in every recommendation",
 ];
 
 export function PurposePeoplePage() {
@@ -28,64 +28,83 @@ export function PurposePeoplePage() {
           </div>
           <div className="relative z-10 mx-auto w-full max-w-container-max px-margin-mobile md:px-margin-desktop">
             <div className="max-w-2xl">
-              <p className="mb-4 font-sans text-label-md uppercase tracking-wider text-primary-container">
-                About Us
-              </p>
               <h1 className="mb-6 font-serif text-[40px] font-bold leading-[1.1] tracking-[-0.02em] text-primary md:text-display-lg">
                 Our Purpose
-                <br />
-                and People
               </h1>
               <p className="font-sans text-body-lg text-on-surface-variant">
-                Leading with empathy and expertise. We believe that true
-                transformation is driven not just by insight, but by the people
-                who illuminate the path forward.
+                To partner with government so that national priorities are
+                served by practising expertise, advice that can be built,
+                operated and sustained long after an engagement ends.
               </p>
             </div>
           </div>
         </section>
 
-        <IcgPrinciplesSection />
+        <section
+          id="icg-principles"
+          className="mx-auto mb-32 max-w-container-max px-margin-mobile md:px-margin-desktop"
+          aria-labelledby="purpose-principles-heading"
+        >
+          <div className="mb-16">
+            <h2
+              id="purpose-principles-heading"
+              className="mb-4 font-serif text-headline-lg-mobile text-primary md:text-headline-lg"
+            >
+              The ICG Principles
+            </h2>
+            <div className="h-1 w-16 bg-primary-container" />
+          </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {icgPrinciples.map((principle) => (
+              <article
+                key={principle.id}
+                className="border border-outline-variant/50 bg-pure-white p-8 transition-colors hover:border-primary-container md:p-10"
+              >
+                <p className="mb-4 font-sans text-label-md uppercase tracking-wider text-primary-container">
+                  {principle.number}
+                </p>
+                <h3 className="mb-3 font-serif text-2xl text-primary">
+                  {principle.title}
+                </h3>
+                <p className="font-sans text-body-md text-on-surface-variant">
+                  {principle.full}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
 
         <section className="mb-32 border-y border-outline-variant/30 bg-surface-container-low py-32">
           <div className="mx-auto max-w-container-max px-margin-mobile md:px-margin-desktop">
             <div className="grid grid-cols-1 gap-gutter md:grid-cols-12">
               <div className="md:col-span-4">
                 <h2 className="mb-6 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
-                  Unwavering Standards
+                  Ethics and Commitment
                 </h2>
-                <p className="font-sans text-label-md uppercase tracking-wider text-on-surface-variant">
-                  Ethics &amp; Commitment
-                </p>
               </div>
-              <div className="relative border border-outline-variant/50 bg-pure-white p-12 md:col-span-8">
-                <FormatQuoteIcon className="absolute left-8 top-8 text-surface-variant/50" />
-                <div className="relative z-10 pt-4">
-                  <p className="mb-8 font-sans text-body-lg italic text-on-surface">
-                    &ldquo;The true measure of our firm is not simply in the
-                    financial value we create, but in the integrity with which we
-                    operate. We hold ourselves to a standard that transcends
-                    compliance, aiming always for the highest ethical
-                    ground.&rdquo;
-                  </p>
-                  <ul className="space-y-4">
-                    {standards.map((item, index) => (
-                      <li
-                        key={item}
-                        className={`flex items-center gap-3 ${
-                          index < standards.length - 1
-                            ? "border-b border-outline-variant/30 pb-3"
-                            : "pb-2"
+              <div className="border border-outline-variant/50 bg-pure-white p-12 md:col-span-8">
+                <p className="mb-8 font-sans text-body-lg text-on-surface">
+                  Three standards are non-negotiable at ICG: client
+                  confidentiality, disclosure of conflicts of interest, and
+                  intellectual honesty in every recommendation, regardless of
+                  convenience.
+                </p>
+                <ul className="space-y-4">
+                  {standards.map((item, index) => (
+                    <li
+                      key={item}
+                      className={`flex items-center gap-3 ${index < standards.length - 1
+                          ? "border-b border-outline-variant/30 pb-3"
+                          : "pb-2"
                         }`}
-                      >
-                        <CheckIcon className="shrink-0 text-secondary-fixed-dim" />
-                        <span className="font-sans text-body-md text-on-surface">
-                          {item}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                    >
+                      <CheckIcon className="shrink-0 text-secondary-fixed-dim" />
+                      <span className="font-sans text-body-md text-on-surface">
+                        {item}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
@@ -94,11 +113,12 @@ export function PurposePeoplePage() {
         <section className="bg-primary py-32 text-center text-pure-white">
           <div className="mx-auto max-w-3xl px-margin-mobile">
             <h2 className="mb-8 font-serif text-[40px] font-bold leading-[1.1] tracking-[-0.02em] md:text-display-lg">
-              Beyond is where we begin.
+              Standards, Not Slogans
             </h2>
             <p className="mb-12 font-sans text-body-lg text-pure-white/80">
-              Join a collective of intellectual pioneers. We are always seeking
-              brilliant minds to help shape the future of global enterprise.
+              We look for individuals who would rather verify one figure
+              thoroughly than publish ten without scrutiny. If that describes
+              your standard of work, we would like to hear from you.
             </p>
             <div className="flex flex-col justify-center gap-4 sm:flex-row">
               <Link

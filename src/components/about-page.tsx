@@ -1,8 +1,7 @@
-import Link from "next/link";
 import {
-  ArrowForwardIcon,
-  LightbulbIcon,
-  MemoryIcon,
+  AssignmentIcon,
+  GroupsIcon,
+  PsychologyIcon,
 } from "@/components/icons";
 import { IcgLogo } from "@/components/icg-logo";
 import { OurTeamSection } from "@/components/our-team-section";
@@ -13,6 +12,27 @@ type AboutPageProps = {
   members: PublicTeamMember[];
 };
 
+const pillars = [
+  {
+    title: "Judgement Earned in Delivery",
+    description:
+      "Our specialists have carried solutions through design, construction, commissioning and operation, and know which choices hold up once they meet the ground.",
+    icon: PsychologyIcon,
+  },
+  {
+    title: "Detail That Survives Scrutiny",
+    description:
+      "Recommendations are made at the level of specification, sequence and cost, detailed enough to be tendered, audited and defended.",
+    icon: AssignmentIcon,
+  },
+  {
+    title: "Knowledge That Transfers",
+    description:
+      "We work so that a client's own team is stronger at the end of an engagement than at the start, and able to carry the work forward without us.",
+    icon: GroupsIcon,
+  },
+] as const;
+
 export function AboutPage({ members }: AboutPageProps) {
   return (
     <>
@@ -21,13 +41,14 @@ export function AboutPage({ members }: AboutPageProps) {
           <section className="grid grid-cols-1 items-center gap-8 border-b border-outline-variant py-24 md:grid-cols-12 md:py-32">
             <div className="animate-fade-up md:col-span-7">
               <h1 className="mb-6 font-serif text-[40px] font-bold leading-[1.1] tracking-[-0.02em] text-primary md:text-display-lg">
-                Great Minds. Best Consultations.
+                The Brightest Minds, in Service of the Nation
               </h1>
               <p className="max-w-2xl font-sans text-body-lg text-on-surface-variant">
-                ICG is a consulting group built on the power of knowledge,
-                collaboration, and strategic thinking. We connect expertise with
-                opportunity to help our clients make smarter decisions and move
-                forward with confidence.
+                ICG is a consulting practice built by engineers, researchers and
+                specialists who have already built, deployed and operated real
+                solutions in their fields. We direct that experience at
+                India&apos;s public programmes, from policy design through to
+                systems that run on the ground.
               </p>
             </div>
             <div
@@ -44,41 +65,37 @@ export function AboutPage({ members }: AboutPageProps) {
             <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
               <div className="md:col-span-4">
                 <h2 className="sticky top-32 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
-                  Our Expertise
+                  Closing the Gap Between Policy and Delivery
                 </h2>
               </div>
               <div className="md:col-span-8">
-                <h3 className="mb-6 font-serif text-headline-md text-primary-container">
-                  Where Knowledge Meets Strategy
-                </h3>
                 <p className="mb-8 font-sans text-body-lg text-on-surface-variant">
-                  At ICG – IITians Consulting Group, we believe great decisions
-                  are powered by great minds. Our team combines knowledge,
-                  experience, analytical thinking, and innovative perspectives
-                  to provide thoughtful consultations and practical solutions
-                  tailored to your needs.
+                  India&apos;s public programmes are rarely short on ambition.
+                  Funding is committed, timelines are published, and intent is
+                  clear. What is often missing is the expertise to carry that
+                  intent through site conditions, procurement and the failure
+                  modes that only appear at scale. That is the distance ICG
+                  exists to close.
                 </p>
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  <div className="border border-outline-variant bg-surface-container-lowest p-6 transition-colors duration-300 hover:border-primary-container">
-                    <LightbulbIcon className="mb-4 text-secondary" />
-                    <h4 className="mb-2 font-sans text-label-md uppercase tracking-widest">
-                      Strategic Thinking
-                    </h4>
-                    <p className="font-sans text-body-md text-on-surface-variant">
-                      Helping leaders cut through complexity and choose clearer,
-                      more confident paths forward.
-                    </p>
-                  </div>
-                  <div className="border border-outline-variant bg-surface-container-lowest p-6 transition-colors duration-300 hover:border-primary-container">
-                    <MemoryIcon className="mb-4 text-secondary" />
-                    <h4 className="mb-2 font-sans text-label-md uppercase tracking-widest">
-                      Collaborative Expertise
-                    </h4>
-                    <p className="font-sans text-body-md text-on-surface-variant">
-                      Bringing great minds together so insight becomes practical
-                      solutions you can put to work.
-                    </p>
-                  </div>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {pillars.map((pillar) => {
+                    const Icon = pillar.icon;
+
+                    return (
+                      <div
+                        key={pillar.title}
+                        className="border border-outline-variant bg-surface-container-lowest p-6 transition-colors duration-300 hover:border-primary-container"
+                      >
+                        <Icon className="mb-4 h-8 w-8 text-secondary" />
+                        <h3 className="mb-2 font-sans text-label-md uppercase tracking-widest">
+                          {pillar.title}
+                        </h3>
+                        <p className="font-sans text-body-md text-on-surface-variant">
+                          {pillar.description}
+                        </p>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -97,22 +114,14 @@ export function AboutPage({ members }: AboutPageProps) {
             </div>
             <div className="order-1 md:order-2 md:col-span-6 md:col-start-7">
               <h2 className="mb-6 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
-                How We Work
+                Working With Government
               </h2>
-              <p className="mb-8 font-sans text-body-lg text-on-surface-variant">
-                ICG – IITians Consulting Group brings together great minds to
-                deliver expert consultation, strategic guidance, and practical
-                solutions. We partner with individuals and organizations to turn
-                challenges into opportunities—and ideas into meaningful
-                outcomes.
+              <p className="font-sans text-body-lg text-on-surface-variant">
+                ICG is an Indian firm built around public-sector work. We are
+                familiar with how departments scope, procure and govern
+                programmes, and with the realities of delivering against public
+                timelines, audit requirements and accountability.
               </p>
-              <Link
-                href="/careers"
-                className="inline-flex items-center font-sans text-label-md uppercase tracking-wider text-primary-container transition-colors hover:text-secondary"
-              >
-                Explore Careers
-                <ArrowForwardIcon className="ml-2" />
-              </Link>
             </div>
           </section>
         </div>

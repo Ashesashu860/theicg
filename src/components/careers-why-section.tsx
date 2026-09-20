@@ -1,11 +1,11 @@
-import { HubIcon, LanguageIcon, TrendingUpIcon } from "@/components/icons";
+import { CheckCircleIcon, HubIcon, TrendingUpIcon } from "@/components/icons";
 
 const reasons = [
   {
-    title: "Global Trajectory",
+    title: "Six Domains, One Standard",
     description:
-      "Working on projects that shape industries across continents. Your work will have a demonstrable footprint on the global economy.",
-    icon: LanguageIcon,
+      "From geotechnical surveys to water and sanitation, every engagement is held to the same standard of evidence and delivery.",
+    icon: CheckCircleIcon,
     className: "",
   },
   {
