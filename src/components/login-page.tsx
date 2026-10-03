@@ -37,7 +37,7 @@ export function LoginPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-off-white text-on-surface antialiased">
-      <main className="relative flex flex-grow items-center justify-center pb-20 pt-20">
+      <main className="relative flex flex-grow items-center justify-center pb-24 pt-36">
         <div className="absolute inset-0 z-0 opacity-10">
           <Image
             src="/images/login-bg.jpg"
@@ -52,7 +52,7 @@ export function LoginPage() {
         <div className="relative z-10 w-full max-w-md px-margin-mobile md:px-0">
           <div className="animate-fade-up border border-outline-variant bg-pure-white p-8 transition-all duration-300 hover:border-outline md:p-12">
             <div className="mb-10 text-center">
-              <h1 className="mb-2 font-serif text-headline-lg-mobile text-primary md:text-headline-md">
+              <h1 className="mb-2 text-headline-lg-mobile text-primary md:text-headline-md">
                 Admin
               </h1>
               <p className="font-sans text-body-md text-on-surface-variant">
@@ -108,7 +108,9 @@ export function LoginPage() {
                     type="button"
                     className="absolute inset-y-0 right-0 flex items-center px-3 text-on-surface-variant transition-colors hover:text-on-surface disabled:opacity-70"
                     onClick={() => setShowPassword((visible) => !visible)}
-                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
                     aria-pressed={showPassword}
                     disabled={submitting}
                   >
@@ -118,7 +120,7 @@ export function LoginPage() {
               </div>
 
               <button
-                className="group relative flex w-full items-center justify-center overflow-hidden bg-primary-container px-6 py-4 font-sans text-label-md uppercase tracking-widest text-pure-white transition-transform duration-200 hover:scale-[1.02] disabled:opacity-70"
+                className="btn btn-primary w-full"
                 type="submit"
                 disabled={submitting}
               >

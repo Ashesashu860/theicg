@@ -84,7 +84,7 @@ export function ProfilePage() {
               priority
             />
             <div>
-              <h2 className="mb-2 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
+              <h2 className="mb-2 text-headline-lg-mobile text-primary md:text-headline-lg">
                 {displayName}
               </h2>
               <p className="font-sans text-label-md uppercase tracking-widest text-on-surface-variant">
@@ -171,7 +171,7 @@ export function ProfilePage() {
 
       <section className="mb-[120px]">
         <div className="mb-12 flex items-center justify-between border-b-2 border-primary pb-4">
-          <h3 className="font-serif text-headline-md text-primary">
+          <h3 className="text-headline-md text-primary">
             Core Competencies
           </h3>
           <span className="font-sans text-label-md uppercase tracking-widest text-on-surface-variant">
@@ -188,7 +188,7 @@ export function ProfilePage() {
               >
                 <div className="relative z-10 flex h-full flex-col">
                   <div className="mb-6 h-1 w-12 bg-secondary-fixed" />
-                  <h4 className="mb-4 font-serif text-[24px] font-bold leading-tight text-off-white">
+                  <h4 className="mb-4 text-[24px] font-bold leading-tight text-off-white">
                     {area.title}
                   </h4>
                   <p className="mb-6 font-sans text-body-md text-off-white/80">
@@ -217,7 +217,7 @@ export function ProfilePage() {
                 className="group col-span-12 border border-outline-variant bg-pure-white p-6 transition-colors duration-300 hover:border-primary md:col-span-4"
               >
                 <div className="mb-6 h-1 w-12 bg-primary transition-colors group-hover:bg-secondary-fixed" />
-                <h4 className="mb-4 font-serif text-[24px] font-bold leading-tight text-primary">
+                <h4 className="mb-4 text-[24px] font-bold leading-tight text-primary">
                   {area.title}
                 </h4>
                 <ul className="space-y-3 font-sans text-body-md text-on-surface-variant">

@@ -173,17 +173,14 @@ export function CareerApplicationForm({
   if (success) {
     return (
       <div className="space-y-6 text-center" role="status">
-        <h2 className="font-serif text-headline-md text-primary">
+        <h2 className="text-headline-md text-primary">
           Application Submitted Successfully
         </h2>
         <p className="font-sans text-body-md text-on-surface-variant">
           Thank you for applying. We&apos;ve received your application and will
           review it shortly.
         </p>
-        <Link
-          href="/careers"
-          className="hover-btn-primary inline-block bg-primary-container px-10 py-3 font-sans text-label-md uppercase tracking-wider text-pure-white transition-all duration-300"
-        >
+        <Link href="/careers" className="btn btn-primary">
           Back to Careers
         </Link>
       </div>
@@ -193,10 +190,7 @@ export function CareerApplicationForm({
   return (
     <form className="space-y-10" onSubmit={onSubmit} noValidate>
       <section className="space-y-8" aria-labelledby={`${formId}-basics`}>
-        <h2
-          id={`${formId}-basics`}
-          className="font-serif text-headline-md text-primary"
-        >
+        <h2 id={`${formId}-basics`} className="text-headline-md text-primary">
           Basic Details
         </h2>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -272,10 +266,7 @@ export function CareerApplicationForm({
       </section>
 
       <section className="space-y-6" aria-labelledby={`${formId}-resume`}>
-        <h2
-          id={`${formId}-resume`}
-          className="font-serif text-headline-md text-primary"
-        >
+        <h2 id={`${formId}-resume`} className="text-headline-md text-primary">
           Resume
         </h2>
         <div className="space-y-3">
@@ -332,10 +323,7 @@ export function CareerApplicationForm({
       </section>
 
       <section className="space-y-6" aria-labelledby={`${formId}-role`}>
-        <h2
-          id={`${formId}-role`}
-          className="font-serif text-headline-md text-primary"
-        >
+        <h2 id={`${formId}-role`} className="text-headline-md text-primary">
           Role to Apply
         </h2>
         <div className="relative">
@@ -366,10 +354,7 @@ export function CareerApplicationForm({
       </section>
 
       <section className="space-y-6" aria-labelledby={`${formId}-cover`}>
-        <h2
-          id={`${formId}-cover`}
-          className="font-serif text-headline-md text-primary"
-        >
+        <h2 id={`${formId}-cover`} className="text-headline-md text-primary">
           Cover Letter
         </h2>
         <div className="relative pt-2">
@@ -399,7 +384,7 @@ export function CareerApplicationForm({
 
       <div className="flex justify-end pt-2">
         <button
-          className="hover-btn-primary w-full bg-primary-container px-10 py-3 font-sans text-label-md uppercase tracking-wider text-pure-white transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-70 md:w-auto"
+          className="btn btn-primary w-full md:w-auto"
           type="submit"
           disabled={submitting || roles.length === 0}
         >

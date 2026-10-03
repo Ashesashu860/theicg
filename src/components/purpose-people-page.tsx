@@ -1,6 +1,7 @@
-import Image from "next/image";
-import Link from "next/link";
+import { CtaBand } from "@/components/cta-band";
 import { CheckIcon } from "@/components/icons";
+import { PageHero } from "@/components/page-hero";
+import { SectionHeading } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
 import { icgPrinciples } from "@/lib/icg-principles";
 
@@ -13,60 +14,37 @@ const standards = [
 export function PurposePeoplePage() {
   return (
     <>
-      <main className="bg-off-white pt-[100px]">
-        <section className="relative mb-32 flex min-h-[70vh] items-center">
-          <div className="absolute inset-0 z-0 h-full w-full">
-            <Image
-              src="/images/purpose-people-hero.jpg"
-              alt="Modern glass office building and plaza"
-              fill
-              className="object-cover opacity-90"
-              sizes="100vw"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-off-white/90 via-off-white/70 to-transparent" />
-          </div>
-          <div className="relative z-10 mx-auto w-full max-w-container-max px-margin-mobile md:px-margin-desktop">
-            <div className="max-w-2xl">
-              <h1 className="mb-6 font-serif text-[40px] font-bold leading-[1.1] tracking-[-0.02em] text-primary md:text-display-lg">
-                Our Purpose
-              </h1>
-              <p className="font-sans text-body-lg text-on-surface-variant">
-                To partner with government so that national priorities are
-                served by practising expertise, advice that can be built,
-                operated and sustained long after an engagement ends.
-              </p>
-            </div>
-          </div>
-        </section>
+      <main>
+        <PageHero
+          eyebrow="Why we exist"
+          title="Our Purpose"
+          imageSrc="/images/purpose-people-hero.jpg"
+          lead="To partner with government so that national priorities are served by practising expertise, advice that can be built, operated and sustained long after an engagement ends."
+        />
 
         <section
           id="icg-principles"
-          className="mx-auto mb-32 max-w-container-max px-margin-mobile md:px-margin-desktop"
+          className="mx-auto max-w-container-max px-margin-mobile py-section-sm md:px-margin-desktop md:py-section-lg"
           aria-labelledby="purpose-principles-heading"
         >
-          <div className="mb-16">
-            <h2
-              id="purpose-principles-heading"
-              className="mb-4 font-serif text-headline-lg-mobile text-primary md:text-headline-lg"
-            >
-              The ICG Principles
-            </h2>
-            <div className="h-1 w-16 bg-primary-container" />
-          </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <SectionHeading
+            id="purpose-principles-heading"
+            eyebrow="How we work"
+            title="The ICG Principles"
+          />
+          <div className="grid grid-cols-1 border-l border-t border-outline-variant md:grid-cols-2">
             {icgPrinciples.map((principle) => (
               <article
                 key={principle.id}
-                className="border border-outline-variant/50 bg-pure-white p-8 transition-colors hover:border-primary-container md:p-10"
+                className="border-b border-r border-outline-variant bg-surface-container-lowest p-8 md:p-10"
               >
-                <p className="mb-4 font-sans text-label-md uppercase tracking-wider text-primary-container">
+                <p className="mb-8 text-label-md text-on-surface-variant">
                   {principle.number}
                 </p>
-                <h3 className="mb-3 font-serif text-2xl text-primary">
+                <h3 className="mb-3 text-headline-md text-primary">
                   {principle.title}
                 </h3>
-                <p className="font-sans text-body-md text-on-surface-variant">
+                <p className="text-body-md text-on-surface-variant">
                   {principle.full}
                 </p>
               </article>
@@ -74,68 +52,42 @@ export function PurposePeoplePage() {
           </div>
         </section>
 
-        <section className="mb-32 border-y border-outline-variant/30 bg-surface-container-low py-32">
-          <div className="mx-auto max-w-container-max px-margin-mobile md:px-margin-desktop">
-            <div className="grid grid-cols-1 gap-gutter md:grid-cols-12">
-              <div className="md:col-span-4">
-                <h2 className="mb-6 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
-                  Ethics and Commitment
-                </h2>
-              </div>
-              <div className="border border-outline-variant/50 bg-pure-white p-12 md:col-span-8">
-                <p className="mb-8 font-sans text-body-lg text-on-surface">
-                  Three standards are non-negotiable at ICG: client
-                  confidentiality, disclosure of conflicts of interest, and
-                  intellectual honesty in every recommendation, regardless of
-                  convenience.
-                </p>
-                <ul className="space-y-4">
-                  {standards.map((item, index) => (
-                    <li
-                      key={item}
-                      className={`flex items-center gap-3 ${index < standards.length - 1
-                          ? "border-b border-outline-variant/30 pb-3"
-                          : "pb-2"
-                        }`}
-                    >
-                      <CheckIcon className="shrink-0 text-secondary-fixed-dim" />
-                      <span className="font-sans text-body-md text-on-surface">
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+        <section className="border-t border-outline-variant bg-surface-container-low py-section-sm md:py-section-lg">
+          <div className="mx-auto grid max-w-container-max grid-cols-1 gap-12 px-margin-mobile md:grid-cols-12 md:px-margin-desktop">
+            <div className="md:col-span-5">
+              <p className="eyebrow mb-4 text-on-surface-variant">Standards</p>
+              <h2 className="text-headline-lg-mobile md:text-headline-lg">
+                Ethics and Commitment
+              </h2>
+            </div>
+            <div className="md:col-span-7">
+              <p className="mb-10 text-body-lg text-on-surface md:text-[20px] md:leading-[1.6]">
+                Three standards are non-negotiable at ICG: client
+                confidentiality, disclosure of conflicts of interest, and
+                intellectual honesty in every recommendation, regardless of
+                convenience.
+              </p>
+              <ul className="border-t border-outline-variant">
+                {standards.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-center gap-4 border-b border-outline-variant py-5"
+                  >
+                    <CheckIcon className="h-5 w-5 shrink-0 text-primary" />
+                    <span className="text-body-lg text-on-surface">{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
 
-        <section className="bg-primary py-32 text-center text-pure-white">
-          <div className="mx-auto max-w-3xl px-margin-mobile">
-            <h2 className="mb-8 font-serif text-[40px] font-bold leading-[1.1] tracking-[-0.02em] md:text-display-lg">
-              Standards, Not Slogans
-            </h2>
-            <p className="mb-12 font-sans text-body-lg text-pure-white/80">
-              We look for individuals who would rather verify one figure
-              thoroughly than publish ten without scrutiny. If that describes
-              your standard of work, we would like to hear from you.
-            </p>
-            <div className="flex flex-col justify-center gap-4 sm:flex-row">
-              <Link
-                href="/careers"
-                className="bg-pure-white px-8 py-4 font-sans text-label-md uppercase tracking-wide text-primary transition-colors hover:bg-secondary-fixed"
-              >
-                Explore Careers
-              </Link>
-              <Link
-                href="/careers#connect"
-                className="border border-pure-white/30 px-8 py-4 font-sans text-label-md uppercase tracking-wide transition-colors hover:bg-pure-white/10"
-              >
-                Contact Us
-              </Link>
-            </div>
-          </div>
-        </section>
+        <CtaBand
+          title="Standards, Not Slogans"
+          lead="We look for individuals who would rather verify one figure thoroughly than publish ten without scrutiny. If that describes your standard of work, we would like to hear from you."
+          primary={{ href: "/careers", label: "Explore Careers" }}
+          secondary={{ href: "/careers#connect", label: "Contact Us" }}
+        />
       </main>
       <SiteFooter />
     </>

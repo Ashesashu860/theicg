@@ -62,7 +62,7 @@ export function PortalSidebar() {
   const nav = (
     <>
       <div className="mb-8 mt-4 border-b border-outline-variant/30 px-6 pb-6">
-        <h1 className="font-serif text-headline-md font-bold text-primary">
+        <h1 className="text-headline-md font-bold text-primary">
           Consultant Portal
         </h1>
         <p className="mt-1 font-sans text-label-md uppercase tracking-widest text-on-surface-variant">

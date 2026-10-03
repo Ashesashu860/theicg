@@ -102,10 +102,7 @@ export function CareerRoleDetailModal({
             <p className="mb-2 font-sans text-label-md uppercase tracking-widest text-primary-container">
               {categoryName}
             </p>
-            <h2
-              id={titleId}
-              className="font-serif text-headline-md text-primary"
-            >
+            <h2 id={titleId} className="text-headline-md text-primary">
               {role.title}
             </h2>
           </div>
@@ -135,7 +132,7 @@ export function CareerRoleDetailModal({
           </button>
           <Link
             href={`/careers/apply?role=${encodeURIComponent(role.id)}`}
-            className="hover-btn-primary inline-flex items-center bg-primary-container px-8 py-3 font-sans text-label-md uppercase tracking-wider text-pure-white transition-all duration-300"
+            className="btn btn-primary"
           >
             Apply
             <ArrowForwardIcon className="ml-2 h-4 w-4" />

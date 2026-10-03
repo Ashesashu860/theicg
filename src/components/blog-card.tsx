@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowOutwardIcon } from "@/components/icons";
+import { ArrowForwardIcon } from "@/components/icons";
 import {
   excerptFromContent,
   resolvePublicBlogSlug,
@@ -20,37 +20,35 @@ export function BlogCard({ blog, meta }: BlogCardProps) {
   return (
     <Link
       href={`/blogs/${slug}`}
-      className="group flex h-full flex-col border border-outline-variant bg-pure-white transition-all duration-300 hover:border-primary-container"
+      className="card-hover group flex h-full flex-col border border-outline-variant bg-surface-container-lowest"
     >
       {canDisplayImageUrl(blog.imageUrl) ? (
-        <div className="relative h-48 overflow-hidden bg-surface-container">
+        <div className="relative aspect-[16/9] overflow-hidden bg-surface-container">
           <Image
             src={blog.imageUrl}
-            alt={blog.title}
+            alt=""
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
             sizes="(max-width: 768px) 100vw, 33vw"
           />
         </div>
       ) : null}
-      <div className="flex flex-grow flex-col p-6">
+      <div className="flex flex-grow flex-col p-6 md:p-7">
         {meta ? (
-          <span className="mb-3 block font-sans text-label-md uppercase tracking-widest text-on-surface-variant">
+          <span className="mb-3 block text-label-md uppercase text-on-surface-variant">
             {meta}
           </span>
         ) : null}
-        <h3 className="mb-4 font-serif text-headline-md text-primary transition-colors group-hover:text-primary-container">
+        <h3 className="mb-3 text-[21px] leading-snug text-primary">
           {blog.title}
         </h3>
-        <p className="mb-6 line-clamp-3 flex-grow font-sans text-body-md text-on-surface-variant">
+        <p className="mb-6 line-clamp-3 flex-grow text-body-md text-on-surface-variant">
           {excerptFromContent(blog.content)}
         </p>
-        <div className="flex items-center justify-between border-t border-outline-variant/50 pt-4">
-          <span className="font-sans text-sm font-semibold uppercase tracking-widest text-on-surface-variant">
-            Read Article
-          </span>
-          <ArrowOutwardIcon className="text-primary" />
-        </div>
+        <span className="mt-auto inline-flex items-center gap-2 border-t border-outline-variant pt-4 text-[14px] font-semibold text-primary">
+          Read article
+          <ArrowForwardIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </span>
       </div>
     </Link>
   );

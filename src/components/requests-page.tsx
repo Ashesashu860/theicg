@@ -215,7 +215,7 @@ export function RequestsPage() {
                   Client Requests
                 </span>
               </div>
-              <h2 className="font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
+              <h2 className="text-headline-lg-mobile text-primary md:text-headline-lg">
                 Prospective Engagements
               </h2>
               <p className="mt-2 max-w-2xl font-sans text-body-lg text-on-surface-variant">
@@ -258,7 +258,7 @@ export function RequestsPage() {
                 <p className="mb-2 font-sans text-label-md uppercase text-on-surface-variant">
                   {item.label}
                 </p>
-                <p className="font-serif text-headline-md text-primary">
+                <p className="text-headline-md text-primary">
                   {item.value}
                 </p>
               </div>
@@ -301,7 +301,7 @@ export function RequestsPage() {
                     className="group grid grid-cols-1 gap-4 p-4 transition-colors hover:bg-surface-container-low md:grid-cols-12 md:items-center"
                   >
                     <div className="md:col-span-3">
-                      <p className="font-serif text-[20px] text-primary">
+                      <p className="text-[20px] text-primary">
                         {item.name}
                       </p>
                       <p className="font-sans text-body-md text-on-surface-variant">

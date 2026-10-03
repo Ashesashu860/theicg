@@ -298,7 +298,7 @@ export function BlogFormPage({ mode, blogId }: BlogFormPageProps) {
               {mode === "edit" ? "Edit" : "Create"}
             </span>
           </div>
-          <h2 className="font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
+          <h2 className="text-headline-lg-mobile text-primary md:text-headline-lg">
             {mode === "edit" ? "Edit Blog" : "Create Blog"}
           </h2>
           <p className="mt-2 max-w-2xl font-sans text-body-lg text-on-surface-variant">

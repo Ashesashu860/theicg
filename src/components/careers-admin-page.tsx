@@ -639,7 +639,7 @@ export function CareersAdminPage() {
                 Careers
               </span>
             </div>
-            <h2 className="font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
+            <h2 className="text-headline-lg-mobile text-primary md:text-headline-lg">
               Careers
             </h2>
             <p className="mt-2 max-w-2xl font-sans text-body-lg text-on-surface-variant">
@@ -688,7 +688,7 @@ export function CareersAdminPage() {
               <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-surface-container text-on-surface-variant">
                 <WorkOffIcon />
               </div>
-              <h3 className="font-serif text-headline-md text-primary">
+              <h3 className="text-headline-md text-primary">
                 No career categories yet
               </h3>
               <p className="mx-auto mt-3 max-w-lg font-sans text-body-md text-on-surface-variant">
@@ -729,7 +729,7 @@ export function CareersAdminPage() {
                         className="flex min-w-0 flex-1 items-center justify-between gap-4 py-1 text-left transition-colors hover:text-primary"
                         aria-expanded={expanded}
                       >
-                        <span className="font-serif text-[22px] text-primary md:text-headline-md">
+                        <span className="text-[22px] text-primary md:text-headline-md">
                           {category.name}{" "}
                           <span className="font-sans text-body-md text-on-surface-variant">
                             ({categoryRoles.length})
@@ -792,7 +792,7 @@ export function CareersAdminPage() {
               {orphanRoles.length > 0 ? (
                 <div className="border border-outline-variant bg-pure-white">
                   <div className="px-4 py-4 md:px-6">
-                    <h3 className="font-serif text-[22px] text-primary md:text-headline-md">
+                    <h3 className="text-[22px] text-primary md:text-headline-md">
                       Uncategorized{" "}
                       <span className="font-sans text-body-md text-on-surface-variant">
                         ({orphanRoles.length})
@@ -825,7 +825,7 @@ export function CareersAdminPage() {
             <div className="flex items-start justify-between gap-4 border-b border-outline-variant px-6 py-5">
               <h2
                 id={categoryFormTitleId}
-                className="font-serif text-headline-md text-primary"
+                className="text-headline-md text-primary"
               >
                 {editingCategoryId ? "Edit Category" : "Add Category"}
               </h2>
@@ -902,7 +902,7 @@ export function CareersAdminPage() {
             <div className="flex items-start justify-between gap-4 border-b border-outline-variant px-6 py-5">
               <h2
                 id={roleFormTitleId}
-                className="font-serif text-headline-md text-primary"
+                className="text-headline-md text-primary"
               >
                 {editingRoleId ? "Edit Career Role" : "Add Career Role"}
               </h2>
@@ -1036,7 +1036,7 @@ export function CareersAdminPage() {
               </div>
               <h2
                 id={deleteCategoryTitleId}
-                className="font-serif text-headline-md text-primary"
+                className="text-headline-md text-primary"
               >
                 Delete category?
               </h2>
@@ -1090,7 +1090,7 @@ export function CareersAdminPage() {
               </div>
               <h2
                 id={deleteRoleTitleId}
-                className="font-serif text-headline-md text-primary"
+                className="text-headline-md text-primary"
               >
                 Delete career role?
               </h2>
