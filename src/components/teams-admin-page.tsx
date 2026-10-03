@@ -527,16 +527,15 @@ export function TeamsAdminPage() {
     const { status } = memberForm;
     const designation = designationNameById.get(designationId) || "";
 
-    if (
-      !fullName ||
-      !department ||
-      !designationId ||
-      !designation ||
-      !email ||
-      !phone ||
-      !status
-    ) {
-      const message = "All talent profile fields are required.";
+    if (!fullName || !department || !designationId || !designation || !status) {
+      const message = "Name, department, designation, and status are required.";
+      setValidationError(message);
+      toast.error(message);
+      return;
+    }
+
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      const message = "Enter a valid email address, or leave it blank.";
       setValidationError(message);
       toast.error(message);
       return;
@@ -822,9 +821,11 @@ export function TeamsAdminPage() {
                             <p className="font-sans text-body-lg font-semibold text-on-surface">
                               {member.fullName}
                             </p>
-                            <p className="mt-1 font-sans text-body-md text-on-surface-variant sm:hidden">
-                              {member.email}
-                            </p>
+                            {member.email || member.phone ? (
+                              <p className="mt-1 font-sans text-body-md text-on-surface-variant sm:hidden">
+                                {member.email || member.phone}
+                              </p>
+                            ) : null}
                           </div>
                         </div>
                       </td>
@@ -836,11 +837,13 @@ export function TeamsAdminPage() {
                       </td>
                       <td className="hidden px-6 py-4 sm:table-cell">
                         <p className="font-sans text-body-md text-secondary">
-                          {member.email}
+                          {member.email || "—"}
                         </p>
-                        <p className="font-sans text-label-md text-outline">
-                          {member.phone}
-                        </p>
+                        {member.phone ? (
+                          <p className="font-sans text-label-md text-outline">
+                            {member.phone}
+                          </p>
+                        ) : null}
                       </td>
                       <td className="px-6 py-4">
                         {member.status === "Active" ? (
@@ -1131,10 +1134,12 @@ export function TeamsAdminPage() {
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <label className="flex flex-col">
                   <span className="mb-1 font-sans text-xs font-semibold uppercase tracking-widest text-secondary">
-                    Email Address
+                    Email Address{" "}
+                    <span className="normal-case tracking-normal text-outline">
+                      (optional)
+                    </span>
                   </span>
                   <input
-                    required
                     type="email"
                     value={memberForm.email}
                     onChange={(event) =>
@@ -1150,10 +1155,12 @@ export function TeamsAdminPage() {
                 </label>
                 <label className="flex flex-col">
                   <span className="mb-1 font-sans text-xs font-semibold uppercase tracking-widest text-secondary">
-                    Phone Number
+                    Phone Number{" "}
+                    <span className="normal-case tracking-normal text-outline">
+                      (optional)
+                    </span>
                   </span>
                   <input
-                    required
                     type="tel"
                     value={memberForm.phone}
                     onChange={(event) =>
