@@ -31,9 +31,6 @@ export function HomePage({ capabilities, members }: HomePageProps) {
             <div className="absolute inset-0 bg-gradient-hero" />
           </div>
           <div className="relative z-10 mx-auto mt-20 max-w-container-max px-margin-mobile text-center md:px-margin-desktop">
-            <p className="animate-fade-up mb-4 font-sans text-label-md uppercase tracking-widest text-secondary-fixed">
-              The Great Minds. The Best Consultations.
-            </p>
             <h1 className="animate-fade-up mx-auto mb-6 max-w-4xl font-serif text-[32px] font-bold leading-[1.1] tracking-[-0.02em] text-pure-white md:text-display-lg">
               Great Minds. Best Consultations.
             </h1>

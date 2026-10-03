@@ -1,6 +1,8 @@
 import type { DocumentData } from "firebase-admin/firestore";
 import { ADMIN_COLLECTION, ADMIN_DOC_ID } from "@/lib/admin-firestore";
 import {
+  compareTeamMembersByOrder,
+  readTeamMemberOrder,
   TEAM_MEMBERS_COLLECTION,
   type PublicTeamMember,
 } from "@/lib/teams-data";
@@ -23,6 +25,7 @@ function mapPublicMember(id: string, data: DocumentData): PublicTeamMember {
     department: typeof data.department === "string" ? data.department : "",
     designation: typeof data.designation === "string" ? data.designation : "",
     imageUrl: typeof data.imageUrl === "string" ? data.imageUrl : "",
+    bio: typeof data.bio === "string" ? data.bio : "",
   };
 }
 
@@ -31,11 +34,22 @@ export async function listPublicTeamMembers(): Promise<PublicTeamMember[]> {
     return [];
   }
 
-  const snapshot = await adminDataCollection(TEAM_MEMBERS_COLLECTION)
-    .orderBy("fullName", "asc")
-    .get();
+  const snapshot = await adminDataCollection(TEAM_MEMBERS_COLLECTION).get();
 
   return snapshot.docs
-    .map((docSnap) => mapPublicMember(docSnap.id, docSnap.data()))
-    .filter((member) => member.fullName.trim().length > 0);
+    .map((docSnap) => {
+      const data = docSnap.data();
+      return {
+        member: mapPublicMember(docSnap.id, data),
+        order: readTeamMemberOrder(data.order),
+      };
+    })
+    .filter((entry) => entry.member.fullName.trim().length > 0)
+    .sort((a, b) =>
+      compareTeamMembersByOrder(
+        { order: a.order, fullName: a.member.fullName },
+        { order: b.order, fullName: b.member.fullName },
+      ),
+    )
+    .map((entry) => entry.member);
 }

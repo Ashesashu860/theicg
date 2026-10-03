@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "seed:capabilities": "npx tsx scripts/seed-capabilities.ts",
+    "seed:team-bios": "npx tsx scripts/seed-team-bios.ts",
+    "seed:team-order": "npx tsx scripts/seed-team-order.ts",
     "migrate:admin-data": "npx tsx scripts/migrate-to-admin-data.ts"
   },
   "dependencies": {

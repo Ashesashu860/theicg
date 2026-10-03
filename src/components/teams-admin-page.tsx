@@ -13,6 +13,7 @@ import {
   serverTimestamp,
   Timestamp,
   updateDoc,
+  writeBatch,
   type FirestoreError,
 } from "firebase/firestore";
 import { useAuth } from "@/components/auth-provider";
@@ -21,6 +22,7 @@ import {
   CloseIcon,
   DeleteIcon,
   EditIcon,
+  ExpandMoreIcon,
   GroupOffIcon,
 } from "@/components/icons";
 import { getNameInitial } from "@/components/user-avatar";
@@ -28,7 +30,9 @@ import { getFirebaseDb, isFirebaseConfigured } from "@/lib/firebase";
 import { canDisplayImageUrl, isBlobImageUrl } from "@/lib/image-url";
 import { deleteContentImage, uploadContentImage } from "@/lib/storage-client";
 import {
+  compareTeamMembersByOrder,
   isTeamMemberStatus,
+  readTeamMemberOrder,
   TEAM_STATUSES,
   teamDesignationsPath,
   teamMembersPath,
@@ -69,6 +73,7 @@ type MemberFormState = {
   phone: string;
   status: TeamMemberStatus;
   imageUrl: string;
+  bio: string;
 };
 
 const emptyMemberForm: MemberFormState = {
@@ -79,6 +84,7 @@ const emptyMemberForm: MemberFormState = {
   phone: "",
   status: "Active",
   imageUrl: "",
+  bio: "",
 };
 
 const inputClassName =
@@ -106,6 +112,7 @@ export function TeamsAdminPage() {
   const [memberFormOpen, setMemberFormOpen] = useState(false);
   const [editingMemberId, setEditingMemberId] = useState<string | null>(null);
   const [savingMember, setSavingMember] = useState(false);
+  const [movingMemberId, setMovingMemberId] = useState<string | null>(null);
   const [memberPendingDelete, setMemberPendingDelete] =
     useState<TeamMemberRecord | null>(null);
   const [deletingMemberId, setDeletingMemberId] = useState<string | null>(null);
@@ -194,7 +201,6 @@ export function TeamsAdminPage() {
 
     const membersQuery = query(
       collection(getFirebaseDb(), ...teamMembersPath()),
-      orderBy("fullName", "asc"),
     );
 
     const unsubscribe = onSnapshot(
@@ -209,13 +215,16 @@ export function TeamsAdminPage() {
             designationId: String(data.designationId || ""),
             designation: String(data.designation || ""),
             imageUrl: String(data.imageUrl || ""),
+            bio: String(data.bio || ""),
             email: String(data.email || ""),
             phone: String(data.phone || ""),
             status: isTeamMemberStatus(data.status) ? data.status : "Active",
+            order: readTeamMemberOrder(data.order),
             createdAt: toDate(data.createdAt),
             updatedAt: toDate(data.updatedAt),
           } satisfies TeamMemberRecord;
         });
+        next.sort(compareTeamMembersByOrder);
         setMembers(next);
         setMembersLoadedForUid(uid);
         setLiveError("");
@@ -367,6 +376,7 @@ export function TeamsAdminPage() {
       phone: member.phone,
       status: member.status,
       imageUrl: member.imageUrl,
+      bio: member.bio,
     });
     setActionError("");
     setValidationError("");
@@ -555,6 +565,18 @@ export function TeamsAdminPage() {
         imageUrl = await uploadContentImage(imageFile, "teams");
       }
 
+      const existingOrder = editingMemberId
+        ? members.find((member) => member.id === editingMemberId)?.order
+        : undefined;
+      const order =
+        typeof existingOrder === "number" &&
+        existingOrder < Number.MAX_SAFE_INTEGER
+          ? existingOrder
+          : members.reduce((max, member) => {
+              if (member.order >= Number.MAX_SAFE_INTEGER) return max;
+              return Math.max(max, member.order);
+            }, -1) + 1;
+
       const payload = {
         fullName,
         department,
@@ -564,6 +586,8 @@ export function TeamsAdminPage() {
         email,
         phone,
         status,
+        bio: memberForm.bio.trim(),
+        order,
         updatedAt: serverTimestamp(),
       };
 
@@ -592,6 +616,46 @@ export function TeamsAdminPage() {
       toast.error(message);
     } finally {
       setSavingMember(false);
+    }
+  }
+
+  async function moveMember(memberId: string, direction: -1 | 1) {
+    const index = members.findIndex((member) => member.id === memberId);
+    const nextIndex = index + direction;
+    const member = members[index];
+    const neighbor = members[nextIndex];
+    if (!member || !neighbor || movingMemberId) return;
+
+    let memberOrder = member.order;
+    let neighborOrder = neighbor.order;
+    if (memberOrder === neighborOrder) {
+      memberOrder = index;
+      neighborOrder = nextIndex;
+    }
+
+    setMovingMemberId(memberId);
+    setActionError("");
+
+    try {
+      const batch = writeBatch(getFirebaseDb());
+      batch.update(doc(getFirebaseDb(), ...teamMembersPath(), member.id), {
+        order: neighborOrder,
+        updatedAt: serverTimestamp(),
+      });
+      batch.update(doc(getFirebaseDb(), ...teamMembersPath(), neighbor.id), {
+        order: memberOrder,
+        updatedAt: serverTimestamp(),
+      });
+      await batch.commit();
+    } catch (moveError) {
+      const message =
+        moveError instanceof Error
+          ? moveError.message
+          : "Unable to reorder this team member. Please try again.";
+      setActionError(message);
+      toast.error(message);
+    } finally {
+      setMovingMemberId(null);
     }
   }
 
@@ -772,7 +836,7 @@ export function TeamsAdminPage() {
 
           {!loading && members.length > 0 ? (
             <div className="overflow-x-auto border border-outline-variant bg-pure-white">
-              <table className="w-full min-w-[720px] border-collapse text-left">
+              <table className="w-full min-w-[960px] border-collapse text-left">
                 <thead>
                   <tr className="border-b border-outline-variant bg-surface-container-low/50">
                     <th className="px-6 py-4 font-sans text-label-md uppercase tracking-widest text-secondary">
@@ -783,6 +847,9 @@ export function TeamsAdminPage() {
                     </th>
                     <th className="px-6 py-4 font-sans text-label-md uppercase tracking-widest text-secondary">
                       Designation
+                    </th>
+                    <th className="px-6 py-4 font-sans text-label-md uppercase tracking-widest text-secondary">
+                      Bio
                     </th>
                     <th className="hidden px-6 py-4 font-sans text-label-md uppercase tracking-widest text-secondary sm:table-cell">
                       Contact
@@ -796,7 +863,7 @@ export function TeamsAdminPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {members.map((member) => (
+                  {members.map((member, index) => (
                     <tr
                       key={member.id}
                       className="border-b border-outline-variant transition-colors last:border-b-0 hover:bg-surface-container-low"
@@ -835,6 +902,15 @@ export function TeamsAdminPage() {
                       <td className="px-6 py-4 font-sans text-body-md text-on-surface-variant">
                         {memberDesignationLabel(member)}
                       </td>
+                      <td className="max-w-sm px-6 py-4 font-sans text-body-md text-on-surface-variant">
+                        {member.bio.trim() ? (
+                          <p className="line-clamp-3" title={member.bio}>
+                            {member.bio}
+                          </p>
+                        ) : (
+                          "—"
+                        )}
+                      </td>
                       <td className="hidden px-6 py-4 sm:table-cell">
                         <p className="font-sans text-body-md text-secondary">
                           {member.email || "—"}
@@ -859,6 +935,27 @@ export function TeamsAdminPage() {
                         )}
                       </td>
                       <td className="px-6 py-4 text-right">
+                        <button
+                          type="button"
+                          onClick={() => void moveMember(member.id, -1)}
+                          disabled={index === 0 || movingMemberId !== null}
+                          className="mx-1 text-secondary transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+                          aria-label={`Move ${member.fullName} up`}
+                        >
+                          <ExpandMoreIcon className="rotate-180" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => void moveMember(member.id, 1)}
+                          disabled={
+                            index === members.length - 1 ||
+                            movingMemberId !== null
+                          }
+                          className="mx-1 text-secondary transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+                          aria-label={`Move ${member.fullName} down`}
+                        >
+                          <ExpandMoreIcon />
+                        </button>
                         <button
                           type="button"
                           onClick={() => openEditMemberModal(member)}
@@ -1130,6 +1227,28 @@ export function TeamsAdminPage() {
                   </select>
                 </label>
               </div>
+
+              <label className="flex flex-col">
+                <span className="mb-1 font-sans text-xs font-semibold uppercase tracking-widest text-secondary">
+                  Bio{" "}
+                  <span className="normal-case tracking-normal text-outline">
+                    (optional)
+                  </span>
+                </span>
+                <textarea
+                  rows={5}
+                  value={memberForm.bio}
+                  onChange={(event) =>
+                    setMemberForm((prev) => ({
+                      ...prev,
+                      bio: event.target.value,
+                    }))
+                  }
+                  disabled={savingMember}
+                  className={`${inputClassName} resize-y`}
+                  placeholder="Short biography shown on the public team card"
+                />
+              </label>
 
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <label className="flex flex-col">

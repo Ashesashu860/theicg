@@ -19,12 +19,28 @@ export type TeamMemberRecord = {
   designationId: string;
   designation: string;
   imageUrl: string;
+  bio: string;
   email: string;
   phone: string;
   status: TeamMemberStatus;
+  order: number;
   createdAt: Date | null;
   updatedAt: Date | null;
 };
+
+export function readTeamMemberOrder(value: unknown): number {
+  return typeof value === "number" && Number.isFinite(value)
+    ? value
+    : Number.MAX_SAFE_INTEGER;
+}
+
+export function compareTeamMembersByOrder(
+  a: { order: number; fullName: string },
+  b: { order: number; fullName: string },
+): number {
+  if (a.order !== b.order) return a.order - b.order;
+  return a.fullName.localeCompare(b.fullName, undefined, { sensitivity: "base" });
+}
 
 /** Public directory fields only — no email or phone. */
 export type PublicTeamMember = {
@@ -33,6 +49,7 @@ export type PublicTeamMember = {
   department: string;
   designation: string;
   imageUrl: string;
+  bio: string;
 };
 
 export const TEAM_DESIGNATIONS_COLLECTION = "teamDesignations";

@@ -91,8 +91,11 @@ service cloud.firestore {
           || request.resource.data.email.matches('.*@.*\\..*'))
         && request.resource.data.phone is string
         && request.resource.data.status in ['Active', 'On Leave']
+        && request.resource.data.order is int
         && (!('imageUrl' in request.resource.data)
-          || request.resource.data.imageUrl is string);
+          || request.resource.data.imageUrl is string)
+        && (!('bio' in request.resource.data)
+          || request.resource.data.bio is string);
     }
 
     match /admin/data/careerApplications/{id} {
