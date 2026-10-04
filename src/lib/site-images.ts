@@ -16,5 +16,9 @@ export const SITE_IMAGES = {
   /** Stone archway with India Gate beyond. */
   purposeHero: unsplash("photo-1662852742109-2c05a1274bf8"),
   /** A team in a working session. */
-  careersHero: unsplash("photo-1577962917302-cd874c4e31d2"),
+  careersHero: unsplash("photo-1556761175-5973dc0f32e7"),
+  /** Aerial highway beside water. */
+  capabilitiesHero: unsplash("photo-1705356395716-9357ed3156e9"),
+  /** Gateway of India, Mumbai. */
+  blogsHero: unsplash("photo-1523962543648-07f19c5590ee"),
 } as const;

@@ -4,6 +4,7 @@ import { PageHero } from "@/components/page-hero";
 import { SiteFooter } from "@/components/site-footer";
 import type { BlogRecord } from "@/lib/blogs-data";
 import type { CapabilityRecord } from "@/lib/capabilities-data";
+import { SITE_IMAGES } from "@/lib/site-images";
 
 type BlogsPageProps = {
   blogs: BlogRecord[];
@@ -28,7 +29,7 @@ export function BlogsPage({
     <>
       <main className="flex-grow">
         <PageHero
-          tone="cream"
+          imageSrc={SITE_IMAGES.blogsHero}
           eyebrow="Perspectives"
           title="Blogs"
           lead="Insights on knowledge, strategy, and smarter decisions across our capability areas."

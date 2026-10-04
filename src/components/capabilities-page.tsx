@@ -3,6 +3,7 @@ import { CtaBand } from "@/components/cta-band";
 import { PageHero } from "@/components/page-hero";
 import { SiteFooter } from "@/components/site-footer";
 import type { CapabilityRecord } from "@/lib/capabilities-data";
+import { SITE_IMAGES } from "@/lib/site-images";
 
 type CapabilitiesPageProps = {
   capabilities: CapabilityRecord[];
@@ -13,7 +14,7 @@ export function CapabilitiesPage({ capabilities }: CapabilitiesPageProps) {
     <>
       <main className="flex-grow">
         <PageHero
-          tone="cream"
+          imageSrc={SITE_IMAGES.capabilitiesHero}
           eyebrow="Expertise"
           title="Our Capabilities"
           lead="Bridging strategic clarity with technical excellence across critical infrastructure and digital domains."
