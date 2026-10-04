@@ -4,22 +4,18 @@ import {
   BusinessCenterIcon,
   GavelIcon,
   GroupsIcon,
+  SettingsApplicationsIcon,
 } from "@/components/icons";
 import { SectionHeading } from "@/components/section-heading";
-import {
-  homepagePrinciples,
-  type HomepagePrincipleId,
-} from "@/lib/icg-principles";
+import { icgPrinciples, type IcgPrincipleId } from "@/lib/icg-principles";
 
-const homepageLayout: Record<
-  HomepagePrincipleId,
-  { icon: typeof AssignmentIcon; featured: boolean }
-> = {
-  evidence: { icon: AssignmentIcon, featured: true },
-  adoption: { icon: BusinessCenterIcon, featured: false },
-  ambiguity: { icon: AccountTreeIcon, featured: false },
-  accountable: { icon: GavelIcon, featured: false },
-  practice: { icon: GroupsIcon, featured: false },
+const principleIcons: Record<IcgPrincipleId, typeof AssignmentIcon> = {
+  evidence: AssignmentIcon,
+  adoption: BusinessCenterIcon,
+  ambiguity: AccountTreeIcon,
+  execution: SettingsApplicationsIcon,
+  accountable: GavelIcon,
+  practice: GroupsIcon,
 };
 
 type IcgPrinciplesSectionProps = {
@@ -42,54 +38,26 @@ export function IcgPrinciplesSection({
           title="The ICG Principles"
         />
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {homepagePrinciples.map((principle) => {
-            const { icon: Icon, featured } = homepageLayout[principle.id];
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {icgPrinciples.map((principle) => {
+            const Icon = principleIcons[principle.id];
             return (
               <article
                 key={principle.id}
-                className={`flex min-h-[260px] flex-col justify-between border p-8 md:p-10 ${
-                  featured
-                    ? "border-navy bg-grid-navy text-cream md:col-span-2"
-                    : "card-hover border-outline-variant bg-surface-container-lowest"
-                }`}
+                className="card-hover flex flex-col border border-outline-variant bg-surface-container-lowest p-8 md:p-10"
               >
                 <div className="mb-10 flex items-center justify-between">
-                  <Icon
-                    className={`block h-7 w-7 ${
-                      featured ? "text-secondary-fixed" : "text-primary"
-                    }`}
-                  />
-                  <span
-                    className={`text-label-md ${
-                      featured
-                        ? "text-on-primary-container"
-                        : "text-on-surface-variant"
-                    }`}
-                  >
+                  <Icon className="block h-7 w-7 text-primary" />
+                  <span className="text-label-md text-on-surface-variant">
                     {principle.number}
                   </span>
                 </div>
-                <div>
-                  <h3
-                    className={`mb-3 ${
-                      featured
-                        ? "text-headline-lg-mobile text-cream md:text-[36px]"
-                        : "text-headline-md text-primary"
-                    }`}
-                  >
-                    {principle.title}
-                  </h3>
-                  <p
-                    className={`max-w-xl text-body-md ${
-                      featured
-                        ? "text-on-primary-container md:text-body-lg"
-                        : "text-on-surface-variant"
-                    }`}
-                  >
-                    {principle.short}
-                  </p>
-                </div>
+                <h3 className="mb-3 text-headline-md text-primary">
+                  {principle.title}
+                </h3>
+                <p className="text-body-md text-on-surface-variant">
+                  {principle.short}
+                </p>
               </article>
             );
           })}

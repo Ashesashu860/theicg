@@ -1,5 +1,6 @@
 import { SITE_IMAGES } from "@/lib/site-images";
 import { CtaBand } from "@/components/cta-band";
+import { EditorialList } from "@/components/editorial-list";
 import { CheckIcon } from "@/components/icons";
 import { PageHero } from "@/components/page-hero";
 import { SectionHeading } from "@/components/section-heading";
@@ -32,25 +33,17 @@ export function PurposePeoplePage() {
             id="purpose-principles-heading"
             eyebrow="How we work"
             title="The ICG Principles"
+            className="mb-14 md:mb-20"
           />
-          <div className="grid grid-cols-1 border-l border-t border-outline-variant md:grid-cols-2">
-            {icgPrinciples.map((principle) => (
-              <article
-                key={principle.id}
-                className="border-b border-r border-outline-variant bg-surface-container-lowest p-8 md:p-10"
-              >
-                <p className="mb-8 text-label-md text-on-surface-variant">
-                  {principle.number}
-                </p>
-                <h3 className="mb-3 text-headline-md text-primary">
-                  {principle.title}
-                </h3>
-                <p className="text-body-md text-on-surface-variant">
-                  {principle.full}
-                </p>
-              </article>
-            ))}
-          </div>
+          <EditorialList
+            columns={2}
+            items={icgPrinciples.map((principle) => ({
+              key: principle.id,
+              number: principle.number,
+              title: principle.title,
+              text: principle.full,
+            }))}
+          />
         </section>
 
         <section className="band-alt py-section-sm md:py-section-lg">

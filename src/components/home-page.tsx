@@ -137,7 +137,7 @@ export function HomePage({ capabilities, members, recentBlogs = [] }: HomePagePr
           </p>
         </FeatureSplit>
 
-        <CareersWhySection className="band" />
+        <CareersWhySection className="band" layout="editorial" />
 
         <IcgPrinciplesSection className="band-alt py-section-sm md:py-section-lg" />
 
