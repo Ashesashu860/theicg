@@ -4,13 +4,15 @@ import type { PublicTeamMember } from "@/lib/teams-data";
 
 type OurTeamSectionProps = {
   members: PublicTeamMember[];
+  /** Section band style, so pages can keep white/grey alternating. */
+  band?: "band" | "band-alt";
 };
 
-export function OurTeamSection({ members }: OurTeamSectionProps) {
+export function OurTeamSection({ members, band = "band-alt" }: OurTeamSectionProps) {
   return (
     <section
       id="our-team"
-      className="border-t border-outline-variant bg-cream py-section-sm md:py-section-lg"
+      className={`${band} py-section-sm md:py-section-lg`}
       aria-labelledby="our-team-heading"
     >
       <div className="mx-auto max-w-container-max px-margin-mobile md:px-margin-desktop">

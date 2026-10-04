@@ -22,8 +22,9 @@ const reasons = [
   },
 ] as const;
 
-export function CareersWhySection() {
+export function CareersWhySection({ className = "band" }: { className?: string }) {
   return (
+    <div className={className}>
     <section
       id="why-icg"
       className="mx-auto w-full max-w-container-max px-margin-mobile py-section-sm md:px-margin-desktop md:py-section-lg"
@@ -60,5 +61,6 @@ export function CareersWhySection() {
         })}
       </div>
     </section>
+    </div>
   );
 }

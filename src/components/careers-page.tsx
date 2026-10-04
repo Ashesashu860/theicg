@@ -1,3 +1,4 @@
+import { SITE_IMAGES } from "@/lib/site-images";
 import Link from "next/link";
 import { CareersCultureSection } from "@/components/careers-culture-section";
 import { CareersRolesSection } from "@/components/careers-roles-section";
@@ -23,7 +24,7 @@ export function CareersPage({ roles, categories }: CareersPageProps) {
         <PageHero
           eyebrow="Careers at ICG"
           title="Do work that gets built."
-          imageSrc="/images/careers-consulting.jpg"
+          imageSrc={SITE_IMAGES.careersHero}
           lead="Join engineers, researchers and specialists who carry advice through to delivery on programmes that matter. Grow fast, learn from practitioners, and own real outcomes."
           actions={
             <>
@@ -68,7 +69,9 @@ export function CareersPage({ roles, categories }: CareersPageProps) {
 
         <CareersWhySection />
 
-        <CareersRolesSection roles={roles} categories={categories} />
+        <div className="band-alt pt-section-sm md:pt-section-lg">
+          <CareersRolesSection roles={roles} categories={categories} />
+        </div>
 
         <CtaBand
           title="Ready to apply?"

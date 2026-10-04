@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export function CareersCultureSection() {
   return (
-    <section className="border-y border-outline-variant bg-surface-container-lowest">
+    <section className="band-alt">
       <div className="mx-auto max-w-container-max">
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="relative min-h-[360px] md:min-h-[520px]">

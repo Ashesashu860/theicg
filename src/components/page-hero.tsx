@@ -7,7 +7,7 @@ type PageHeroProps = {
   lead?: ReactNode;
   /** Buttons or links rendered under the lead. */
   actions?: ReactNode;
-  /** Optional photo, shown desaturated behind the navy panel. */
+  /** Optional full-bleed photo behind a navy gradient. */
   imageSrc?: string;
   /** Optional content for the right-hand column on desktop. */
   aside?: ReactNode;
@@ -38,19 +38,20 @@ export function PageHero({
       }`}
     >
       {navy && imageSrc ? (
-        <div className="absolute inset-y-0 right-0 hidden w-1/2 md:block">
+        <div className="absolute inset-0">
           <Image
             src={imageSrc}
             alt=""
             fill
             priority
-            className="object-cover opacity-35 grayscale"
-            sizes="50vw"
+            className="animate-hero-zoom object-cover"
+            sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/70 to-navy/10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-navy/25" />
+          <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy/60 to-transparent" />
         </div>
       ) : null}
-      {navy ? (
+      {navy && !imageSrc ? (
         <div className="grid-lines pointer-events-none absolute inset-0" />
       ) : null}
 

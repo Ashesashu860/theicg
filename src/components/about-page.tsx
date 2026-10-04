@@ -1,5 +1,6 @@
 import { AssignmentIcon, GroupsIcon, PsychologyIcon } from "@/components/icons";
-import { IcgLogo } from "@/components/icg-logo";
+import Image from "next/image";
+import { SITE_IMAGES } from "@/lib/site-images";
 import { CtaBand } from "@/components/cta-band";
 import { OurTeamSection } from "@/components/our-team-section";
 import { PageHero } from "@/components/page-hero";
@@ -41,8 +42,15 @@ export function AboutPage({ members }: AboutPageProps) {
           title="The Brightest Minds, in Service of the Nation"
           lead="ICG is a consulting practice built by engineers, researchers and specialists who have already built, deployed and operated real solutions in their fields. We direct that experience at India's public programmes, from policy design through to systems that run on the ground."
           aside={
-            <div className="bg-grid-navy ml-auto flex aspect-square w-full max-w-sm items-center justify-center text-cream">
-              <IcgLogo variant="full" className="h-3/4 w-3/4" />
+            <div className="relative ml-auto aspect-[4/5] w-full max-w-md overflow-hidden">
+              <Image
+                src={SITE_IMAGES.aboutHero}
+                alt="Aerial view of a highway running through an Indian city"
+                fill
+                priority
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 40vw"
+              />
             </div>
           }
         />

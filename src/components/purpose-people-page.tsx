@@ -1,3 +1,4 @@
+import { SITE_IMAGES } from "@/lib/site-images";
 import { CtaBand } from "@/components/cta-band";
 import { CheckIcon } from "@/components/icons";
 import { PageHero } from "@/components/page-hero";
@@ -18,7 +19,7 @@ export function PurposePeoplePage() {
         <PageHero
           eyebrow="Why we exist"
           title="Our Purpose"
-          imageSrc="/images/purpose-people-hero.jpg"
+          imageSrc={SITE_IMAGES.purposeHero}
           lead="To partner with government so that national priorities are served by practising expertise, advice that can be built, operated and sustained long after an engagement ends."
         />
 
@@ -52,7 +53,7 @@ export function PurposePeoplePage() {
           </div>
         </section>
 
-        <section className="border-t border-outline-variant bg-surface-container-low py-section-sm md:py-section-lg">
+        <section className="band-alt py-section-sm md:py-section-lg">
           <div className="mx-auto grid max-w-container-max grid-cols-1 gap-12 px-margin-mobile md:grid-cols-12 md:px-margin-desktop">
             <div className="md:col-span-5">
               <p className="eyebrow mb-4 text-on-surface-variant">Standards</p>

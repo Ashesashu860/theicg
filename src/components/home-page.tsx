@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { BlogCard } from "@/components/blog-card";
 import { CapabilityCard } from "@/components/capability-card";
+import { FeatureSplit } from "@/components/feature-split";
 import { CareersWhySection } from "@/components/careers-why-section";
 import { CtaBand } from "@/components/cta-band";
 import { ArrowForwardIcon, ChevronRightIcon } from "@/components/icons";
@@ -8,15 +10,18 @@ import { OurTeamSection } from "@/components/our-team-section";
 import { PageHero } from "@/components/page-hero";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
+import type { BlogRecord } from "@/lib/blogs-data";
 import type { CapabilityRecord } from "@/lib/capabilities-data";
+import { SITE_IMAGES } from "@/lib/site-images";
 import type { PublicTeamMember } from "@/lib/teams-data";
 
 type HomePageProps = {
   capabilities: CapabilityRecord[];
   members: PublicTeamMember[];
+  recentBlogs?: BlogRecord[];
 };
 
-export function HomePage({ capabilities, members }: HomePageProps) {
+export function HomePage({ capabilities, members, recentBlogs = [] }: HomePageProps) {
   return (
     <>
       <main>
@@ -24,7 +29,7 @@ export function HomePage({ capabilities, members }: HomePageProps) {
           size="large"
           eyebrow="ICG – IITians Consulting Group"
           title="Great Minds. Best Consultations."
-          imageSrc="/images/hero.jpg"
+          imageSrc={SITE_IMAGES.homeHero}
           lead={
             <>
               <p className="text-cream">
@@ -53,7 +58,7 @@ export function HomePage({ capabilities, members }: HomePageProps) {
 
         <section
           id="capabilities"
-          className="scroll-mt-20 border-b border-outline-variant py-section-sm md:py-section-lg"
+          className="band scroll-mt-20 py-section-sm md:py-section-lg"
           aria-labelledby="home-capabilities-heading"
         >
           <div className="mx-auto max-w-container-max px-margin-mobile md:px-margin-desktop">
@@ -114,11 +119,61 @@ export function HomePage({ capabilities, members }: HomePageProps) {
           </div>
         </section>
 
-        <CareersWhySection />
+        <FeatureSplit
+          imageSrc={SITE_IMAGES.homeFeature}
+          imageAlt="Water released through the spillway of a dam"
+          eyebrow="Who we are"
+          title="Practitioners first, consultants second."
+          link={{ href: "/about", label: "About ICG" }}
+        >
+          <p>
+            ICG is a consulting practice built by engineers, researchers and
+            specialists who have already built, deployed and operated real
+            solutions in their fields.
+          </p>
+          <p>
+            We direct that experience at India&apos;s public programmes, from
+            policy design through to systems that run on the ground.
+          </p>
+        </FeatureSplit>
 
-        <IcgPrinciplesSection className="border-t border-outline-variant bg-surface-container-low py-section-sm md:py-section-lg" />
+        <CareersWhySection className="band" />
 
-        <OurTeamSection members={members} />
+        <IcgPrinciplesSection className="band-alt py-section-sm md:py-section-lg" />
+
+        {recentBlogs.length > 0 ? (
+          <section
+            className="band py-section-sm md:py-section-lg"
+            aria-labelledby="home-insights-heading"
+          >
+            <div className="mx-auto max-w-container-max px-margin-mobile md:px-margin-desktop">
+              <SectionHeading
+                id="home-insights-heading"
+                eyebrow="Insights"
+                title="Latest thinking"
+                lead="Case studies and analysis from the ICG team."
+                action={
+                  <Link
+                    href="/blogs"
+                    className="hidden items-center gap-2 text-[14px] font-semibold text-primary underline-offset-4 hover:underline md:inline-flex"
+                  >
+                    All insights <ArrowForwardIcon className="h-4 w-4" />
+                  </Link>
+                }
+              />
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                {recentBlogs.map((blog) => (
+                  <BlogCard key={blog.id} blog={blog} />
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
+
+        <OurTeamSection
+          members={members}
+          band={recentBlogs.length > 0 ? "band-alt" : "band"}
+        />
 
         <CtaBand
           title="Bring us your hardest problem."

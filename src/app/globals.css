@@ -2,42 +2,43 @@
 @source not "../../docs";
 
 :root {
-  /* ICG brand: navy #0B1B33 on cream #F4F1EA. */
+  /* ICG brand: navy #0B1B33 on clean white, with a cool light-grey alternate band. */
   --navy: #0b1b33;
   --navy-800: #142a4a;
   --navy-700: #1f3a60;
-  --cream: #f4f1ea;
+  --cream: #ffffff; /* kept as a token name; now pure white */
+  --mist: #f3f5f8; /* alternate section background */
 
-  --background: var(--cream);
-  --foreground: #2b3445;
-  --surface: var(--cream);
-  --surface-dim: #d6cfc0;
-  --surface-bright: #faf8f3;
+  --background: #ffffff;
+  --foreground: #1f2937;
+  --surface: #ffffff;
+  --surface-dim: #d5dbe3;
+  --surface-bright: #ffffff;
   --surface-container-lowest: #ffffff;
-  --surface-container-low: #efebe2;
-  --surface-container: #e8e3d8;
-  --surface-container-high: #dfd9cc;
-  --surface-container-highest: #d6cfc0;
-  --surface-variant: #e8e3d8;
-  --on-surface: #2b3445;
-  --on-surface-variant: #5a6372;
+  --surface-container-low: var(--mist);
+  --surface-container: #eceff4;
+  --surface-container-high: #e3e7ed;
+  --surface-container-highest: #d5dbe3;
+  --surface-variant: #eceff4;
+  --on-surface: #1f2937;
+  --on-surface-variant: #4b5565;
   --inverse-surface: var(--navy);
-  --inverse-on-surface: var(--cream);
-  --outline: #8f8a7e;
-  --outline-variant: #dcd5c7;
+  --inverse-on-surface: #ffffff;
+  --outline: #8a94a3;
+  --outline-variant: #dde2e9;
   --surface-tint: var(--navy-700);
   --primary: var(--navy);
   --on-primary: #ffffff;
   --primary-container: var(--navy-700);
   --on-primary-container: #c3cad6;
   --inverse-primary: #9eabc0;
-  --secondary: #5a6372;
+  --secondary: #4b5565;
   --on-secondary: #ffffff;
-  --secondary-container: #e8e3d8;
+  --secondary-container: #eceff4;
   --on-secondary-container: var(--navy);
-  /* Restrained sand accent; used for rules and hovers on navy, never for text on cream. */
-  --secondary-fixed: #c8b48c;
-  --secondary-fixed-dim: #8a7650;
+  /* Cool steel accent; used for rules and labels on navy. */
+  --secondary-fixed: #9fb3cc;
+  --secondary-fixed-dim: #5f7590;
   --primary-fixed: #d5dbe5;
   --primary-fixed-dim: #9eabc0;
   --on-primary-fixed-variant: var(--navy-700);
@@ -46,7 +47,7 @@
   --error-container: #fde8e6;
   --on-error-container: #7a1a12;
   --success: #2f7d4f;
-  --off-white: var(--cream);
+  --off-white: #ffffff;
   --pure-white: #ffffff;
 }
 
@@ -96,6 +97,7 @@
   --color-navy-800: var(--navy-800);
   --color-navy-700: var(--navy-700);
   --color-cream: var(--cream);
+  --color-mist: var(--mist);
 
   --spacing-margin-mobile: 20px;
   --spacing-margin-desktop: 64px;
@@ -305,30 +307,42 @@ body {
   }
 
   .btn-light:hover:not(:disabled) {
-    background: #ffffff;
+    background: #e6ebf2;
   }
 
   .btn-outline-light {
-    border-color: rgb(244 241 234 / 0.4);
+    border-color: rgb(255 255 255 / 0.4);
     color: var(--cream);
   }
 
   .btn-outline-light:hover:not(:disabled) {
     border-color: var(--cream);
-    background: rgb(244 241 234 / 0.08);
+    background: rgb(255 255 255 / 0.08);
   }
 
   /* Faint square grid echoing the ICG mark; used on navy panels. */
   .bg-grid-navy,
   .grid-lines {
     background-image:
-      linear-gradient(to right, rgb(244 241 234 / 0.06) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(244 241 234 / 0.06) 1px, transparent 1px);
+      linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
     background-size: 64px 64px;
   }
 
   .bg-grid-navy {
     background-color: var(--navy);
+  }
+
+  /* Full-width page bands: alternate white and mist, always divided by a hairline. */
+  .band {
+    background: #ffffff;
+    border-top: 1px solid var(--outline-variant);
+  }
+
+  .band-alt {
+    background: var(--mist);
+    border-top: 1px solid var(--outline-variant);
+    border-bottom: 1px solid var(--outline-variant);
   }
 
   .card-hover {

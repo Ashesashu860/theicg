@@ -11,7 +11,7 @@ const companyLinks = [
 
 export function SiteFooter() {
   return (
-    <footer className="w-full border-t border-cream/10 bg-navy text-on-primary-container">
+    <footer className="w-full border-t border-white/15 bg-[#06101f] text-on-primary-container">
       <div className="mx-auto max-w-container-max px-margin-mobile md:px-margin-desktop">
         <div className="grid grid-cols-1 gap-12 py-16 md:grid-cols-12 md:py-20">
           <div className="md:col-span-5">

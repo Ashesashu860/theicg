@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { HomePage } from "@/components/home-page";
-import { listCapabilities } from "@/lib/capabilities-server";
+import { listCapabilities, listRecentBlogs } from "@/lib/capabilities-server";
 import { listPublicTeamMembers } from "@/lib/teams-server";
 
 export const dynamic = "force-dynamic";
@@ -12,10 +12,17 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const [capabilities, members] = await Promise.all([
+  const [capabilities, members, recentBlogs] = await Promise.all([
     listCapabilities(),
     listPublicTeamMembers(),
+    listRecentBlogs(3).catch(() => []),
   ]);
 
-  return <HomePage capabilities={capabilities} members={members} />;
+  return (
+    <HomePage
+      capabilities={capabilities}
+      members={members}
+      recentBlogs={recentBlogs}
+    />
+  );
 }
