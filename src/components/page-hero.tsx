@@ -51,8 +51,8 @@ export function PageHero({
           <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy/60 to-transparent" />
         </div>
       ) : null}
-      {navy && !imageSrc ? (
-        <div className="grid-lines pointer-events-none absolute inset-0" />
+      {navy ? (
+        <div className="navy-texture pointer-events-none absolute inset-0" />
       ) : null}
 
       <div
@@ -75,8 +75,8 @@ export function PageHero({
           <h1
             className={`animate-fade-up ${
               large
-                ? "text-[40px] leading-[1.05] tracking-[-0.035em] sm:text-[52px] md:text-[72px]"
-                : "text-[36px] leading-[1.08] tracking-[-0.03em] md:text-display-lg"
+                ? "text-[34px] leading-[1.08] tracking-[-0.03em] sm:text-[52px] sm:leading-[1.05] sm:tracking-[-0.035em] md:text-[72px]"
+                : "text-[32px] leading-[1.1] tracking-[-0.03em] sm:text-[40px] md:text-display-lg"
             } ${navy ? "text-cream" : "text-primary"}`}
             style={{ animationDelay: "60ms" }}
           >

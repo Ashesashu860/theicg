@@ -38,7 +38,7 @@ export function CareersPage({ roles, categories }: CareersPageProps) {
           }
         />
 
-        <section className="mx-auto w-full max-w-container-max px-margin-mobile py-section-sm md:px-margin-desktop md:py-section-lg">
+        <section className="mx-auto w-full max-w-container-max px-margin-mobile py-section-compact md:px-margin-desktop md:py-section-compact-lg">
           <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-12">
             <div className="md:col-span-5">
               <p className="eyebrow mb-4 text-on-surface-variant">

@@ -105,6 +105,9 @@
   --spacing-container-max: 1280px;
   --spacing-section-sm: 80px;
   --spacing-section-lg: 120px;
+  /* ~15% tighter, for sections with little content. */
+  --spacing-section-compact: 68px;
+  --spacing-section-compact-lg: 102px;
 
   --text-display-lg: 64px;
   --text-display-lg--line-height: 1.04;
@@ -320,16 +323,16 @@ body {
     background: rgb(255 255 255 / 0.08);
   }
 
-  /* Faint square grid echoing the ICG mark; used on navy panels. */
-  .bg-grid-navy,
-  .grid-lines {
-    background-image:
-      linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
-    background-size: 64px 64px;
+  /* Faint contour and survey lines, a nod to ICG's field work; used on navy areas. */
+  .bg-navy-texture,
+  .navy-texture {
+    background-image: url("/images/contour-lines.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
-  .bg-grid-navy {
+  .bg-navy-texture {
     background-color: var(--navy);
   }
 

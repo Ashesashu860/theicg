@@ -37,15 +37,15 @@ export function BlogsPage({
 
         <div className="mx-auto max-w-container-max px-margin-mobile py-section-sm md:px-margin-desktop">
           <nav
-            className="mb-10 flex flex-wrap gap-2"
+            className="-mx-margin-mobile mb-10 flex gap-2 overflow-x-auto px-margin-mobile pb-1 [-ms-overflow-style:none] [scrollbar-width:none] md:mx-0 md:flex-wrap md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden"
             aria-label="Filter by capability"
           >
             <Link
               href="/blogs"
               className={
                 activeCapabilityId === null
-                  ? "border border-navy bg-navy px-4 py-2 text-[14px] font-medium text-cream"
-                  : "border border-outline-variant bg-surface-container-lowest px-4 py-2 text-[14px] font-medium text-on-surface-variant transition-colors hover:border-navy hover:text-primary"
+                  ? "shrink-0 whitespace-nowrap border border-navy bg-navy px-4 py-2 text-[14px] font-medium text-cream"
+                  : "shrink-0 whitespace-nowrap border border-outline-variant bg-surface-container-lowest px-4 py-2 text-[14px] font-medium text-on-surface-variant transition-colors hover:border-navy hover:text-primary"
               }
             >
               All
@@ -56,8 +56,8 @@ export function BlogsPage({
                 href={`/blogs?capability=${capability.id}`}
                 className={
                   activeCapabilityId === capability.id
-                    ? "border border-navy bg-navy px-4 py-2 text-[14px] font-medium text-cream"
-                    : "border border-outline-variant bg-surface-container-lowest px-4 py-2 text-[14px] font-medium text-on-surface-variant transition-colors hover:border-navy hover:text-primary"
+                    ? "shrink-0 whitespace-nowrap border border-navy bg-navy px-4 py-2 text-[14px] font-medium text-cream"
+                    : "shrink-0 whitespace-nowrap border border-outline-variant bg-surface-container-lowest px-4 py-2 text-[14px] font-medium text-on-surface-variant transition-colors hover:border-navy hover:text-primary"
                 }
               >
                 {capability.name}

@@ -37,7 +37,7 @@ export function CareersWhySection({
     <div className={className}>
       <section
         id="why-icg"
-        className="mx-auto w-full max-w-container-max px-margin-mobile py-section-sm md:px-margin-desktop md:py-section-lg"
+        className="mx-auto w-full max-w-container-max px-margin-mobile py-section-compact md:px-margin-desktop md:py-section-compact-lg"
         aria-labelledby="why-icg-heading"
       >
         <SectionHeading

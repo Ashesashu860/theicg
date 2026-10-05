@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { BlogCard } from "@/components/blog-card";
 import { CapabilityCard } from "@/components/capability-card";
 import { FeatureSplit } from "@/components/feature-split";
+import { FeaturedInsights } from "@/components/featured-insights";
 import { CareersWhySection } from "@/components/careers-why-section";
 import { CtaBand } from "@/components/cta-band";
 import { ArrowForwardIcon, ChevronRightIcon } from "@/components/icons";
@@ -21,7 +21,16 @@ type HomePageProps = {
   recentBlogs?: BlogRecord[];
 };
 
-export function HomePage({ capabilities, members, recentBlogs = [] }: HomePageProps) {
+export function HomePage({
+  capabilities,
+  members,
+  recentBlogs = [],
+}: HomePageProps) {
+  // Sections after Capabilities alternate grey/white; the insights strip (when shown) takes the first grey.
+  const offset = recentBlogs.length > 0 ? 1 : 0;
+  const band = (index: number) =>
+    (index + offset) % 2 === 0 ? "band-alt" : "band";
+
   return (
     <>
       <main>
@@ -119,31 +128,9 @@ export function HomePage({ capabilities, members, recentBlogs = [] }: HomePagePr
           </div>
         </section>
 
-        <FeatureSplit
-          imageSrc={SITE_IMAGES.homeFeature}
-          imageAlt="Water released through the spillway of a dam"
-          eyebrow="Who we are"
-          title="Practitioners first, consultants second."
-          link={{ href: "/about", label: "About ICG" }}
-        >
-          <p>
-            ICG is a consulting practice built by engineers, researchers and
-            specialists who have already built, deployed and operated real
-            solutions in their fields.
-          </p>
-          <p>
-            We direct that experience at India&apos;s public programmes, from
-            policy design through to systems that run on the ground.
-          </p>
-        </FeatureSplit>
-
-        <CareersWhySection className="band" layout="editorial" />
-
-        <IcgPrinciplesSection className="band-alt py-section-sm md:py-section-lg" />
-
         {recentBlogs.length > 0 ? (
           <section
-            className="band py-section-sm md:py-section-lg"
+            className="band-alt py-section-sm md:py-section-lg"
             aria-labelledby="home-insights-heading"
           >
             <div className="mx-auto max-w-container-max px-margin-mobile md:px-margin-desktop">
@@ -161,19 +148,37 @@ export function HomePage({ capabilities, members, recentBlogs = [] }: HomePagePr
                   </Link>
                 }
               />
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                {recentBlogs.map((blog) => (
-                  <BlogCard key={blog.id} blog={blog} />
-                ))}
-              </div>
+              <FeaturedInsights blogs={recentBlogs} />
             </div>
           </section>
         ) : null}
 
-        <OurTeamSection
-          members={members}
-          band={recentBlogs.length > 0 ? "band-alt" : "band"}
+        <FeatureSplit
+          imageSrc={SITE_IMAGES.homeFeature}
+          imageAlt="Water released through the spillway of a dam"
+          eyebrow="Who we are"
+          title="Practitioners first, consultants second."
+          link={{ href: "/about", label: "About ICG" }}
+          className={band(0)}
+        >
+          <p>
+            ICG is a consulting practice built by engineers, researchers and
+            specialists who have already built, deployed and operated real
+            solutions in their fields.
+          </p>
+          <p>
+            We direct that experience at India&apos;s public programmes, from
+            policy design through to systems that run on the ground.
+          </p>
+        </FeatureSplit>
+
+        <CareersWhySection className={band(1)} layout="editorial" />
+
+        <IcgPrinciplesSection
+          className={`${band(2)} py-section-sm md:py-section-lg`}
         />
+
+        <OurTeamSection members={members} band={band(3)} />
 
         <CtaBand
           title="Bring us your hardest problem."

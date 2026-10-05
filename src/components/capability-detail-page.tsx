@@ -52,7 +52,7 @@ export function CapabilityDetailPage({
                   {capability.description}
                 </p>
               </div>
-              <div className="relative aspect-[3/2] overflow-hidden bg-grid-navy md:col-span-6">
+              <div className="relative aspect-[3/2] overflow-hidden bg-navy-texture md:col-span-6">
                 {canDisplayImageUrl(capability.imageUrl) ? (
                   <Image
                     src={capability.imageUrl}

@@ -100,8 +100,8 @@ export function AboutPage({ members }: AboutPageProps) {
           </div>
         </section>
 
-        <section className="bg-grid-navy text-cream">
-          <div className="mx-auto grid max-w-container-max grid-cols-1 gap-10 px-margin-mobile py-section-sm md:grid-cols-12 md:px-margin-desktop md:py-section-lg">
+        <section className="bg-navy-texture text-cream">
+          <div className="mx-auto grid max-w-container-max grid-cols-1 gap-10 px-margin-mobile py-section-compact md:grid-cols-12 md:px-margin-desktop md:py-section-compact-lg">
             <div className="md:col-span-5">
               <p className="eyebrow mb-4 text-secondary-fixed">Public sector</p>
               <h2 className="text-headline-lg-mobile text-cream md:text-headline-lg">
