@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { SITE_IMAGES } from "@/lib/site-images";
 
 export function CareersCultureSection() {
   return (
@@ -7,8 +8,8 @@ export function CareersCultureSection() {
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="relative min-h-[360px] md:min-h-[520px]">
             <Image
-              src="/images/careers-culture.jpg"
-              alt="Consultants collaborating around a digital dashboard in a modern office"
+              src={SITE_IMAGES.careersCulture}
+              alt="Team collaborating around a whiteboard"
               fill
               className="object-cover grayscale"
               sizes="(max-width: 768px) 100vw, 50vw"

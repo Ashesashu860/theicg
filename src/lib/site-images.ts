@@ -19,6 +19,8 @@ export const SITE_IMAGES = {
   careersHero: unsplash("photo-1556761175-5973dc0f32e7"),
   /** Aerial highway beside water. */
   capabilitiesHero: unsplash("photo-1705356395716-9357ed3156e9"),
-  /** Gateway of India, Mumbai. */
-  blogsHero: unsplash("photo-1523962543648-07f19c5590ee"),
+  /** Library interior with warm lights and tall shelves. */
+  blogsHero: unsplash("photo-1481627834876-b7833e8f5570"),
+  /** Team collaborating around a whiteboard (Careers culture section). */
+  careersCulture: unsplash("photo-1758873269035-aae0e1fd3422", 1400),
 } as const;

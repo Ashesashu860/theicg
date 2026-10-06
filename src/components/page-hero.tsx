@@ -47,8 +47,7 @@ export function PageHero({
             className="animate-hero-zoom object-cover"
             sizes="100vw"
           />
-          {/* Phones: even overlay, since text spans the full width. Wider: fade from navy on the text side. */}
-          <div className="absolute inset-0 bg-navy/80 md:bg-transparent md:bg-gradient-to-r md:from-navy md:via-navy/80 md:to-navy/25" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-navy/25" />
           <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy/60 to-transparent" />
         </div>
       ) : null}
