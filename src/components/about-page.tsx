@@ -1,5 +1,4 @@
 import { AssignmentIcon, GroupsIcon, PsychologyIcon } from "@/components/icons";
-import Image from "next/image";
 import { SITE_IMAGES } from "@/lib/site-images";
 import { CtaBand } from "@/components/cta-band";
 import { PageHero } from "@/components/page-hero";
@@ -31,22 +30,10 @@ export function AboutPage() {
     <>
       <main>
         <PageHero
-          tone="cream"
           eyebrow="About ICG"
           title="The Brightest Minds, in Service of the Nation"
           lead="ICG is a consulting practice built by engineers, researchers and specialists who have already built, deployed and operated real solutions in their fields. We direct that experience at India's public programmes, from policy design through to systems that run on the ground."
-          aside={
-            <div className="relative ml-auto aspect-[4/5] w-full max-w-md overflow-hidden">
-              <Image
-                src={SITE_IMAGES.aboutHero}
-                alt="Aerial view of a highway running through an Indian city"
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 40vw"
-              />
-            </div>
-          }
+          imageSrc={SITE_IMAGES.aboutHero}
         />
 
         <section className="mx-auto max-w-container-max px-margin-mobile py-section-sm md:px-margin-desktop md:py-section-lg">
