@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="48 48 94 94">
-  <rect x="48" y="48" width="94" height="94" fill="#144AA4" />
-  <rect x="50" y="50" width="40" height="40" fill="#ffffff" />
-  <rect x="100" y="100" width="40" height="40" fill="#ffffff" />
+  <rect x="48" y="48" width="94" height="94" fill="#0B1B33" />
+  <rect x="50" y="50" width="40" height="40" fill="#F4F1EA" />
+  <rect x="100" y="100" width="40" height="40" fill="#F4F1EA" />
   <path
-    fill="#ffffff"
+    fill="#F4F1EA"
     fill-rule="evenodd"
     d="M100 50h40v40h-40z M102 52h36v36h-36z"
   />
   <path
-    fill="#ffffff"
+    fill="#F4F1EA"
     fill-rule="evenodd"
     d="M50 100h40v40h-40z M52 102h36v36h-36z"
   />

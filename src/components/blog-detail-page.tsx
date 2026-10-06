@@ -41,7 +41,7 @@ export function BlogDetailPage({ blog, capability }: BlogDetailPageProps) {
 
   return (
     <>
-      <main className="bg-off-white pt-32">
+      <main className="pt-32 md:pt-40">
         <article className="mx-auto max-w-container-max px-margin-mobile pb-24 md:px-margin-desktop md:pb-32">
           <Link
             href={
@@ -49,33 +49,32 @@ export function BlogDetailPage({ blog, capability }: BlogDetailPageProps) {
                 ? `/capabilities/${capability.slug}`
                 : "/capabilities"
             }
-            className="mb-10 inline-flex items-center gap-2 font-sans text-label-md uppercase tracking-wider text-primary-container transition-colors hover:text-primary"
+            className="mb-10 inline-flex items-center gap-2 text-[14px] font-medium text-on-surface-variant transition-colors hover:text-primary"
           >
-            <ArrowBackIcon />
-            {capability?.name ? `Back to ${capability.name}` : "All Capabilities"}
+            <ArrowBackIcon className="h-4 w-4" />
+            {capability?.name
+              ? `Back to ${capability.name}`
+              : "All Capabilities"}
           </Link>
 
           <header className="mx-auto mb-12 max-w-3xl md:mb-16">
             {capability ? (
-              <div className="mb-6 flex items-center gap-4">
-                <div className="h-px w-12 bg-primary" />
-                <span className="font-sans text-label-md uppercase tracking-wider text-primary">
-                  {capability.name}
-                </span>
-              </div>
+              <p className="eyebrow mb-6 text-on-surface-variant">
+                {capability.name}
+              </p>
             ) : null}
-            <h1 className="mb-6 font-serif text-headline-lg-mobile font-bold tracking-[-0.02em] text-primary md:text-display-lg">
+            <h1 className="mb-6 text-[34px] leading-[1.1] tracking-[-0.03em] text-primary md:text-[52px]">
               {blog.title}
             </h1>
             {blog.createdAt ? (
-              <p className="font-sans text-label-md uppercase tracking-widest text-on-surface-variant">
+              <p className="border-t border-outline-variant pt-6 text-label-md uppercase text-on-surface-variant">
                 {formatBlogDate(blog.createdAt)}
               </p>
             ) : null}
           </header>
 
           {canDisplayImageUrl(blog.imageUrl) ? (
-            <div className="relative mx-auto mb-12 aspect-[2/1] max-w-4xl overflow-hidden border border-outline-variant/30 bg-surface-container md:mb-16">
+            <div className="relative mx-auto mb-12 aspect-[2/1] max-w-4xl overflow-hidden bg-surface-container md:mb-16">
               <Image
                 src={blog.imageUrl}
                 alt={blog.title}
@@ -95,7 +94,7 @@ export function BlogDetailPage({ blog, capability }: BlogDetailPageProps) {
                   dangerouslySetInnerHTML={{ __html: htmlContent }}
                 />
               ) : (
-                <p className="font-sans text-body-lg text-on-surface-variant">
+                <p className="text-body-lg text-on-surface-variant">
                   This article has no content yet.
                 </p>
               )
@@ -104,14 +103,14 @@ export function BlogDetailPage({ blog, capability }: BlogDetailPageProps) {
                 {paragraphs.map((paragraph, index) => (
                   <p
                     key={`${index}-${paragraph.slice(0, 24)}`}
-                    className="font-sans text-body-lg leading-relaxed text-on-surface-variant"
+                    className="text-body-lg leading-relaxed text-on-surface-variant"
                   >
                     {paragraph}
                   </p>
                 ))}
               </div>
             ) : (
-              <p className="font-sans text-body-lg text-on-surface-variant">
+              <p className="text-body-lg text-on-surface-variant">
                 This article has no content yet.
               </p>
             )}

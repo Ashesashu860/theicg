@@ -55,7 +55,7 @@ export function ContactForm() {
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         <div className="relative">
           <label
-            className="absolute -top-3.5 left-0 font-sans text-label-md uppercase tracking-wider text-outline"
+            className="absolute -top-3.5 left-0 text-label-md uppercase text-on-surface-variant"
             htmlFor="name"
           >
             Full Name
@@ -70,7 +70,7 @@ export function ContactForm() {
         </div>
         <div className="relative">
           <label
-            className="absolute -top-3.5 left-0 font-sans text-label-md uppercase tracking-wider text-outline"
+            className="absolute -top-3.5 left-0 text-label-md uppercase text-on-surface-variant"
             htmlFor="phone"
           >
             Phone Number
@@ -86,7 +86,7 @@ export function ContactForm() {
       </div>
       <div className="relative">
         <label
-          className="absolute -top-3.5 left-0 font-sans text-label-md uppercase tracking-wider text-outline"
+          className="absolute -top-3.5 left-0 text-label-md uppercase text-on-surface-variant"
           htmlFor="email"
         >
           Email Address
@@ -101,17 +101,19 @@ export function ContactForm() {
       </div>
 
       {error ? (
-        <p className="font-sans text-body-md text-error">{error}</p>
+        <p role="alert" className="text-body-md text-error">
+          {error}
+        </p>
       ) : null}
       {success ? (
-        <p className="font-sans text-body-md text-secondary">
+        <p role="status" className="text-body-md text-success">
           Thank you. Your details have been submitted successfully.
         </p>
       ) : null}
 
       <div className="flex justify-end pt-4">
         <button
-          className="hover-btn-primary w-full bg-primary-container px-10 py-3 font-sans text-label-md uppercase tracking-wider text-pure-white transition-all duration-300 disabled:opacity-70 md:w-auto"
+          className="btn btn-primary w-full md:w-auto"
           type="submit"
           disabled={submitting}
         >

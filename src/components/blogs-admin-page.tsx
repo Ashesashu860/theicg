@@ -225,7 +225,7 @@ export function BlogsAdminPage() {
                   Blogs
                 </span>
               </div>
-              <h2 className="font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
+              <h2 className="text-headline-lg-mobile text-primary md:text-headline-lg">
                 Manage Blogs
               </h2>
               <p className="mt-2 max-w-2xl font-sans text-body-lg text-on-surface-variant">
@@ -332,7 +332,7 @@ export function BlogsAdminPage() {
                       <div className="md:col-span-4">
                         <Link
                           href={`/blogs/${item.slug}`}
-                          className="font-serif text-[20px] text-primary hover:text-primary-container"
+                          className="text-[20px] text-primary hover:text-primary-container"
                         >
                           {item.title}
                         </Link>

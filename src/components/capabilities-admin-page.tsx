@@ -314,7 +314,7 @@ export function CapabilitiesAdminPage() {
               Capabilities
             </span>
           </div>
-          <h2 className="font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
+          <h2 className="text-headline-lg-mobile text-primary md:text-headline-lg">
             Manage Capabilities
           </h2>
           <p className="mt-2 max-w-2xl font-sans text-body-lg text-on-surface-variant">
@@ -330,7 +330,7 @@ export function CapabilitiesAdminPage() {
             onSubmit={(event) => void handleSubmit(event)}
             className="border border-outline-variant bg-pure-white p-6 md:p-8"
           >
-            <h3 className="mb-6 font-serif text-headline-md text-primary">
+            <h3 className="mb-6 text-headline-md text-primary">
               {editingId ? "Edit Capability" : "Add Capability"}
             </h3>
 
@@ -448,7 +448,7 @@ export function CapabilitiesAdminPage() {
 
           <div className="border border-outline-variant bg-pure-white">
             <div className="border-b border-outline-variant px-6 py-4">
-              <h3 className="font-serif text-headline-md text-primary">
+              <h3 className="text-headline-md text-primary">
                 All Capabilities
               </h3>
             </div>
@@ -488,7 +488,7 @@ export function CapabilitiesAdminPage() {
                       )}
                     </div>
                     <div className="md:col-span-6">
-                      <p className="font-serif text-[20px] text-primary">
+                      <p className="text-[20px] text-primary">
                         {item.name}
                       </p>
                       <p className="mt-1 line-clamp-2 font-sans text-body-md text-on-surface-variant">

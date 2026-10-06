@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BlogCard } from "@/components/blog-card";
-import {
-  ArrowBackIcon,
-  ArrowForwardIcon,
-} from "@/components/icons";
+import { CtaBand } from "@/components/cta-band";
+import { ArrowBackIcon, ArrowForwardIcon } from "@/components/icons";
+import { SectionHeading } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
 import type { BlogRecord } from "@/lib/blogs-data";
 import type { CapabilityRecord } from "@/lib/capabilities-data";
@@ -30,101 +29,82 @@ export function CapabilityDetailPage({
 }: CapabilityDetailPageProps) {
   return (
     <>
-      <main className="bg-off-white pt-32">
-        <div className="mx-auto max-w-container-max px-margin-mobile md:px-margin-desktop">
-          <Link
-            href="/capabilities"
-            className="mb-10 inline-flex items-center gap-2 font-sans text-label-md uppercase tracking-wider text-primary-container transition-colors hover:text-primary"
-          >
-            <ArrowBackIcon />
-            All Capabilities
-          </Link>
+      <main>
+        <section className="border-b border-outline-variant">
+          <div className="mx-auto max-w-container-max px-margin-mobile pb-16 pt-32 md:px-margin-desktop md:pb-20 md:pt-40">
+            <Link
+              href="/capabilities"
+              className="mb-10 inline-flex items-center gap-2 text-[14px] font-medium text-on-surface-variant transition-colors hover:text-primary"
+            >
+              <ArrowBackIcon className="h-4 w-4" />
+              All Capabilities
+            </Link>
 
-          <section className="mb-10 grid grid-cols-1 items-center gap-gutter border-b border-outline-variant pb-8 md:mb-12 md:grid-cols-12 md:pb-10">
-            <div className="md:col-span-6">
-              <div className="mb-6 flex items-center gap-4">
-                <div className="h-px w-12 bg-primary" />
-                <span className="font-sans text-label-md uppercase tracking-wider text-primary">
+            <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-12">
+              <div className="md:col-span-6">
+                <p className="eyebrow mb-6 text-on-surface-variant">
                   Capability
-                </span>
-              </div>
-              <h1 className="mb-6 font-serif text-headline-lg-mobile font-bold tracking-[-0.02em] text-primary md:text-display-lg">
-                {capability.name}
-              </h1>
-              <p className="max-w-xl border-l-2 border-primary-container py-2 pl-6 font-sans text-body-lg text-on-surface-variant">
-                {capability.description}
-              </p>
-            </div>
-            <div className="relative mt-10 aspect-[1.49] overflow-hidden border border-outline-variant/30 bg-surface-container md:col-span-6 md:mt-0">
-              {canDisplayImageUrl(capability.imageUrl) ? (
-                <Image
-                  src={capability.imageUrl}
-                  alt={capability.name}
-                  fill
-                  priority
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              ) : (
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/25 via-surface-container to-primary-container/40" />
-              )}
-            </div>
-          </section>
-
-          <section className="mb-24 md:mb-32">
-            <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-              <div>
-                <h2 className="mb-2 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
-                  Related Blogs
-                </h2>
-                <p className="max-w-2xl font-sans text-body-md text-on-surface-variant">
-                  Perspectives and practical reading tied to{" "}
-                  {capability.name.toLowerCase()}.
+                </p>
+                <h1 className="mb-6 text-[36px] leading-[1.08] tracking-[-0.03em] text-primary md:text-display-lg">
+                  {capability.name}
+                </h1>
+                <p className="max-w-xl text-body-lg text-on-surface-variant md:text-[20px] md:leading-[1.6]">
+                  {capability.description}
                 </p>
               </div>
-              <Link
-                href="/careers#connect"
-                className="inline-flex items-center gap-2 font-sans text-label-md uppercase tracking-widest text-primary transition-colors hover:text-primary-container"
-              >
-                Discuss this capability <ArrowForwardIcon />
-              </Link>
-            </div>
-
-            {blogs.length === 0 ? (
-              <p className="font-sans text-body-md text-on-surface-variant">
-                No related blogs published for this capability yet.
-              </p>
-            ) : (
-              <div className="grid grid-cols-1 gap-gutter md:grid-cols-3">
-                {blogs.map((blog) => (
-                  <BlogCard
-                    key={blog.id}
-                    blog={blog}
-                    meta={formatBlogDate(blog.createdAt)}
+              <div className="relative aspect-[3/2] overflow-hidden bg-navy-texture md:col-span-6">
+                {canDisplayImageUrl(capability.imageUrl) ? (
+                  <Image
+                    src={capability.imageUrl}
+                    alt=""
+                    fill
+                    priority
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
-                ))}
+                ) : null}
               </div>
-            )}
-          </section>
-        </div>
-
-        <section className="bg-primary py-24 text-center text-pure-white md:py-32">
-          <div className="mx-auto max-w-3xl px-margin-mobile">
-            <h2 className="mb-6 font-serif text-headline-lg-mobile md:text-headline-lg">
-              Ready to explore {capability.name}?
-            </h2>
-            <p className="mb-10 font-sans text-body-lg text-pure-white/80">
-              Tell us about your challenge. We will help you turn domain
-              expertise into a clear next step.
-            </p>
-            <Link
-              href="/careers#connect"
-              className="inline-flex bg-pure-white px-8 py-4 font-sans text-label-md uppercase tracking-widest text-primary transition-colors hover:bg-surface-variant"
-            >
-              Contact Us
-            </Link>
+            </div>
           </div>
         </section>
+
+        <section className="mx-auto max-w-container-max px-margin-mobile py-section-sm md:px-margin-desktop">
+          <SectionHeading
+            eyebrow="Perspectives"
+            title="Related Blogs"
+            lead={`Perspectives and practical reading tied to ${capability.name.toLowerCase()}.`}
+            action={
+              <Link
+                href="/careers#connect"
+                className="inline-flex items-center gap-2 text-[14px] font-semibold text-primary underline-offset-4 hover:underline"
+              >
+                Discuss this capability <ArrowForwardIcon className="h-4 w-4" />
+              </Link>
+            }
+          />
+
+          {blogs.length === 0 ? (
+            <p className="text-body-md text-on-surface-variant">
+              No related blogs published for this capability yet.
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {blogs.map((blog) => (
+                <BlogCard
+                  key={blog.id}
+                  blog={blog}
+                  meta={formatBlogDate(blog.createdAt)}
+                />
+              ))}
+            </div>
+          )}
+        </section>
+
+        <CtaBand
+          title={`Ready to explore ${capability.name}?`}
+          lead="Tell us about your challenge. We will help you turn domain expertise into a clear next step."
+          primary={{ href: "/careers#connect", label: "Contact Us" }}
+        />
       </main>
       <SiteFooter />
     </>

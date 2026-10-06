@@ -18,7 +18,7 @@ export function TeamMemberBio({ bio }: TeamMemberBioProps) {
   return (
     <div>
       <p
-        className={`font-sans text-body-md leading-relaxed text-on-surface-variant ${
+        className={`border-t border-outline-variant pt-5 text-body-md text-on-surface-variant ${
           needsToggle && !expanded ? "line-clamp-3" : ""
         }`}
       >
@@ -29,7 +29,7 @@ export function TeamMemberBio({ bio }: TeamMemberBioProps) {
           type="button"
           aria-expanded={expanded}
           onClick={() => setExpanded((value) => !value)}
-          className="mt-2 font-sans text-label-md uppercase tracking-widest text-primary transition-colors hover:text-primary-container"
+          className="mt-3 text-[14px] font-semibold text-primary underline-offset-4 hover:underline"
         >
           {expanded ? "View less" : "View more"}
         </button>

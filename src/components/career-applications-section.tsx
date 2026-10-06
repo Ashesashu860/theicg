@@ -193,7 +193,7 @@ export function CareerApplicationsSection() {
       <div className="flex flex-col gap-6 border-t border-outline-variant pt-10">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <h3 className="font-serif text-headline-md text-primary">
+            <h3 className="text-headline-md text-primary">
               Applications
             </h3>
             <p className="mt-2 max-w-2xl font-sans text-body-md text-on-surface-variant">
@@ -251,7 +251,7 @@ export function CareerApplicationsSection() {
                   className="grid grid-cols-1 gap-4 p-4 transition-colors hover:bg-surface-container-low md:grid-cols-12 md:items-center"
                 >
                   <div className="md:col-span-3">
-                    <p className="font-serif text-[20px] text-primary">
+                    <p className="text-[20px] text-primary">
                       {item.fullName || "—"}
                     </p>
                     <p className="font-sans text-body-md text-on-surface-variant">
@@ -335,7 +335,7 @@ export function CareerApplicationsSection() {
               <div>
                 <h2
                   id={coverLetterTitleId}
-                  className="font-serif text-headline-md text-primary"
+                  className="text-headline-md text-primary"
                 >
                   Cover Letter
                 </h2>

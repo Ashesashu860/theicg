@@ -1,16 +1,8 @@
-import {
-  AssignmentIcon,
-  GroupsIcon,
-  PsychologyIcon,
-} from "@/components/icons";
-import { IcgLogo } from "@/components/icg-logo";
-import { OurTeamSection } from "@/components/our-team-section";
+import { AssignmentIcon, GroupsIcon, PsychologyIcon } from "@/components/icons";
+import { SITE_IMAGES } from "@/lib/site-images";
+import { CtaBand } from "@/components/cta-band";
+import { PageHero } from "@/components/page-hero";
 import { SiteFooter } from "@/components/site-footer";
-import type { PublicTeamMember } from "@/lib/teams-data";
-
-type AboutPageProps = {
-  members: PublicTeamMember[];
-};
 
 const pillars = [
   {
@@ -33,100 +25,87 @@ const pillars = [
   },
 ] as const;
 
-export function AboutPage({ members }: AboutPageProps) {
+export function AboutPage() {
   return (
     <>
-      <main className="bg-off-white pt-24">
-        <div className="mx-auto max-w-container-max px-margin-mobile md:px-margin-desktop">
-          <section className="grid grid-cols-1 items-center gap-8 border-b border-outline-variant py-24 md:grid-cols-12 md:py-32">
-            <div className="animate-fade-up md:col-span-7">
-              <h1 className="mb-6 font-serif text-[40px] font-bold leading-[1.1] tracking-[-0.02em] text-primary md:text-display-lg">
-                The Brightest Minds, in Service of the Nation
-              </h1>
-              <p className="max-w-2xl font-sans text-body-lg text-on-surface-variant">
-                ICG is a consulting practice built by engineers, researchers and
-                specialists who have already built, deployed and operated real
-                solutions in their fields. We direct that experience at
-                India&apos;s public programmes, from policy design through to
-                systems that run on the ground.
-              </p>
-            </div>
-            <div
-              className="animate-fade-up flex justify-end md:col-span-5"
-              style={{ animationDelay: "120ms" }}
-            >
-              <div className="flex h-64 w-64 items-center justify-center bg-primary-container text-on-primary md:h-96 md:w-96">
-                <IcgLogo variant="full" className="h-48 w-48 md:h-72 md:w-72" />
-              </div>
-            </div>
-          </section>
+      <main>
+        <PageHero
+          eyebrow="About ICG"
+          title="The Brightest Minds, in Service of the Nation"
+          lead="ICG is a consulting practice built by engineers, researchers and specialists who have already built, deployed and operated real solutions in their fields. We direct that experience at India's public programmes, from policy design through to systems that run on the ground."
+          imageSrc={SITE_IMAGES.aboutHero}
+        />
 
-          <section className="py-24 md:py-32">
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
-              <div className="md:col-span-4">
-                <h2 className="sticky top-32 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
+        <section className="mx-auto max-w-container-max px-margin-mobile py-section-sm md:px-margin-desktop md:py-section-lg">
+          <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
+            <div className="md:col-span-5">
+              <div className="md:sticky md:top-32">
+                <p className="eyebrow mb-4 text-on-surface-variant">Our role</p>
+                <h2 className="text-headline-lg-mobile md:text-headline-lg">
                   Closing the Gap Between Policy and Delivery
                 </h2>
               </div>
-              <div className="md:col-span-8">
-                <p className="mb-8 font-sans text-body-lg text-on-surface-variant">
-                  India&apos;s public programmes are rarely short on ambition.
-                  Funding is committed, timelines are published, and intent is
-                  clear. What is often missing is the expertise to carry that
-                  intent through site conditions, procurement and the failure
-                  modes that only appear at scale. That is the distance ICG
-                  exists to close.
-                </p>
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {pillars.map((pillar) => {
-                    const Icon = pillar.icon;
+            </div>
+            <div className="md:col-span-7">
+              <p className="mb-12 text-body-lg text-on-surface-variant md:text-[20px] md:leading-[1.6]">
+                India&apos;s public programmes are rarely short on ambition.
+                Funding is committed, timelines are published, and intent is
+                clear. What is often missing is the expertise to carry that
+                intent through site conditions, procurement and the failure
+                modes that only appear at scale. That is the distance ICG exists
+                to close.
+              </p>
+              <ul className="border-t border-outline-variant">
+                {pillars.map((pillar) => {
+                  const Icon = pillar.icon;
 
-                    return (
-                      <div
-                        key={pillar.title}
-                        className="border border-outline-variant bg-surface-container-lowest p-6 transition-colors duration-300 hover:border-primary-container"
-                      >
-                        <Icon className="mb-4 h-8 w-8 text-secondary" />
-                        <h3 className="mb-2 font-sans text-label-md uppercase tracking-widest">
+                  return (
+                    <li
+                      key={pillar.title}
+                      className="grid grid-cols-[auto_1fr] gap-6 border-b border-outline-variant py-8"
+                    >
+                      <Icon className="mt-0.5 h-7 w-7 text-primary" />
+                      <div>
+                        <h3 className="mb-2 text-[20px] text-primary">
                           {pillar.title}
                         </h3>
-                        <p className="font-sans text-body-md text-on-surface-variant">
+                        <p className="text-body-md text-on-surface-variant">
                           {pillar.description}
                         </p>
                       </div>
-                    );
-                  })}
-                </div>
-              </div>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
-          </section>
+          </div>
+        </section>
 
-          <section className="grid grid-cols-1 items-center gap-8 border-b border-outline-variant py-24 md:grid-cols-12 md:py-32">
-            <div className="relative order-2 h-64 overflow-hidden bg-surface-variant md:order-1 md:col-span-5 md:col-start-1 md:h-96">
-              <div
-                className="absolute inset-0 opacity-80 mix-blend-multiply"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(circle at 20% 30%, #144aa4 0%, transparent 40%), radial-gradient(circle at 75% 60%, #94a3b855 0%, transparent 35%), linear-gradient(135deg, #f5f7fa 0%, #e2e8f0 100%)",
-                }}
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,#144aa422_1px,transparent_1px),linear-gradient(to_bottom,#144aa422_1px,transparent_1px)] bg-[size:48px_48px]" />
-            </div>
-            <div className="order-1 md:order-2 md:col-span-6 md:col-start-7">
-              <h2 className="mb-6 font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
+        <section className="band-alt">
+          <div className="mx-auto grid max-w-container-max grid-cols-1 gap-10 px-margin-mobile py-section-compact md:grid-cols-12 md:px-margin-desktop md:py-section-compact-lg">
+            <div className="md:col-span-5">
+              <p className="eyebrow mb-4 text-on-surface-variant">
+                Public sector
+              </p>
+              <h2 className="text-headline-lg-mobile md:text-headline-lg">
                 Working With Government
               </h2>
-              <p className="font-sans text-body-lg text-on-surface-variant">
-                ICG is an Indian firm built around public-sector work. We are
-                familiar with how departments scope, procure and govern
-                programmes, and with the realities of delivering against public
-                timelines, audit requirements and accountability.
-              </p>
             </div>
-          </section>
-        </div>
+            <p className="text-body-lg text-on-surface-variant md:col-span-6 md:col-start-7 md:text-[20px] md:leading-[1.6]">
+              ICG is an Indian firm built around public-sector work. We are
+              familiar with how departments scope, procure and govern
+              programmes, and with the realities of delivering against public
+              timelines, audit requirements and accountability.
+            </p>
+          </div>
+        </section>
 
-        <OurTeamSection members={members} />
+        <CtaBand
+          title="Work with ICG"
+          lead="Tell us about the programme you are delivering and where expert support would make the difference."
+          primary={{ href: "/careers#connect", label: "Contact Us" }}
+          secondary={{ href: "/capabilities", label: "Our Capabilities" }}
+        />
       </main>
       <SiteFooter />
     </>

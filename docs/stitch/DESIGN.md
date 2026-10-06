@@ -1,94 +1,36 @@
 ---
-name: Executive Perspective
+name: ICG Brand
 colors:
-  surface: '#f5f7fa'
-  surface-dim: '#c8d3e0'
-  surface-bright: '#f5f7fa'
-  surface-container-lowest: '#ffffff'
-  surface-container-low: '#f5f7fa'
-  surface-container: '#e2e8f0'
-  surface-container-high: '#d5dee9'
-  surface-container-highest: '#c8d3e0'
-  on-surface: '#475569'
-  on-surface-variant: '#64748b'
-  inverse-surface: '#334155'
-  inverse-on-surface: '#f5f7fa'
-  outline: '#94a3b8'
-  outline-variant: '#e2e8f0'
-  surface-tint: '#144aa4'
-  primary: '#0b2f6b'
+  navy: '#0b1b33'
+  navy-800: '#142a4a'
+  navy-700: '#1f3a60'
+  cream: '#f4f1ea'
+  primary: '#0b1b33'
   on-primary: '#ffffff'
-  primary-container: '#144aa4'
-  on-primary-container: '#d6e4f7'
-  inverse-primary: '#8fb0e0'
-  secondary: '#475569'
-  on-secondary: '#ffffff'
-  secondary-container: '#e2e8f0'
-  on-secondary-container: '#144aa4'
-  tertiary: '#481423'
-  on-tertiary: '#ffffff'
-  tertiary-container: '#632a38'
-  on-tertiary-container: '#df92a1'
-  error: '#dc2626'
-  on-error: '#ffffff'
-  error-container: '#fee2e2'
-  on-error-container: '#991b1b'
-  success: '#16a34a'
-  primary-fixed: '#c5d8f0'
-  primary-fixed-dim: '#8fb0e0'
-  on-primary-fixed: '#0b2f6b'
-  on-primary-fixed-variant: '#144aa4'
-  secondary-fixed: '#94a3b8'
-  secondary-fixed-dim: '#64748b'
-  on-secondary-fixed: '#334155'
-  on-secondary-fixed-variant: '#475569'
-  tertiary-fixed: '#ffd9df'
-  tertiary-fixed-dim: '#ffb1c0'
-  on-tertiary-fixed: '#390918'
-  on-tertiary-fixed-variant: '#6f3442'
-  background: '#f5f7fa'
-  on-background: '#475569'
-  surface-variant: '#e2e8f0'
-  off-white: '#F5F7FA'
-  pure-white: '#FFFFFF'
+  primary-container: '#1f3a60'
+  on-primary-container: '#c3cad6'
+  surface: '#f4f1ea'
+  surface-container-lowest: '#ffffff'
+  surface-container-low: '#efebe2'
+  surface-container: '#e8e3d8'
+  surface-container-high: '#dfd9cc'
+  surface-container-highest: '#d6cfc0'
+  on-surface: '#2b3445'
+  on-surface-variant: '#5a6372'
+  outline: '#8f8a7e'
+  outline-variant: '#dcd5c7'
+  secondary-fixed: '#c8b48c'
+  error: '#b42318'
+  success: '#2f7d4f'
 typography:
-  display-lg:
-    fontFamily: sourceSerif4
-    fontSize: 64px
-    fontWeight: '700'
-    lineHeight: '1.1'
-    letterSpacing: -0.02em
-  headline-lg:
-    fontFamily: sourceSerif4
-    fontSize: 48px
-    fontWeight: '600'
-    lineHeight: '1.2'
-  headline-lg-mobile:
-    fontFamily: sourceSerif4
-    fontSize: 32px
-    fontWeight: '600'
-    lineHeight: '1.2'
-  headline-md:
-    fontFamily: sourceSerif4
-    fontSize: 32px
-    fontWeight: '600'
-    lineHeight: '1.3'
-  body-lg:
-    fontFamily: hankenGrotesk
-    fontSize: 18px
-    fontWeight: '400'
-    lineHeight: '1.6'
-  body-md:
-    fontFamily: hankenGrotesk
-    fontSize: 16px
-    fontWeight: '400'
-    lineHeight: '1.5'
-  label-md:
-    fontFamily: hankenGrotesk
-    fontSize: 14px
-    fontWeight: '600'
-    lineHeight: '1.2'
-    letterSpacing: 0.05em
+  fontFamily: Inter
+  display-lg: { fontSize: 64px, fontWeight: '600', lineHeight: '1.04', letterSpacing: -0.035em }
+  headline-lg: { fontSize: 44px, fontWeight: '600', lineHeight: '1.1', letterSpacing: -0.03em }
+  headline-lg-mobile: { fontSize: 32px, fontWeight: '600', lineHeight: '1.15', letterSpacing: -0.025em }
+  headline-md: { fontSize: 26px, fontWeight: '600', lineHeight: '1.25', letterSpacing: -0.02em }
+  body-lg: { fontSize: 18px, fontWeight: '400', lineHeight: '1.65' }
+  body-md: { fontSize: 16px, fontWeight: '400', lineHeight: '1.6' }
+  label-md: { fontSize: 12px, fontWeight: '600', lineHeight: '1.3', letterSpacing: 0.12em }
 spacing:
   base: 8px
   container-max: 1280px
@@ -101,24 +43,25 @@ spacing:
 
 The design system embodies the "Professional Intellectual" persona—authoritative, visionary, and meticulously structured. It is designed for global decision-makers who value clarity over decoration. 
 
-The aesthetic is **Corporate Modern with Editorial influence**. It draws inspiration from high-end broadsheet journalism and luxury business publications. The style relies on high-contrast color pairings, precise typographic scales, and an expansive use of whitespace to signify prestige and focus. Visual interest is generated through the tension between a deep ICG Blue and crisp, functional layouts, rather than superfluous UI embellishments.
+The aesthetic is **Corporate Modern with Editorial influence**. It draws inspiration from high-end broadsheet journalism and luxury business publications. The style relies on high-contrast color pairings, precise typographic scales, and an expansive use of whitespace to signify prestige and focus. Visual interest is generated through the contrast between deep navy and warm cream, and crisp, functional layouts, rather than superfluous UI embellishments.
 
 ## Colors
 
-The palette is anchored by **ICG Blue (#144AA4)**, representing trust and clarity. Slate neutrals (`#F5F7FA`–`#475569`) provide structure; **Success (#16A34A)** and **Error (#DC2626)** are reserved for semantic states.
+The palette is two colours: **ICG Navy (#0B1B33)** and **Cream (#F4F1EA)**. Everything else is a tint of one of them.
 
-- **Primary:** Use for headers, primary navigation, and core brand moments (`#144AA4` / deeper navy `#0B2F6B`).
-- **Secondary:** Use slate accents for interactive states and secondary button fills (`#E2E8F0` / `#94A3B8`).
-- **Backgrounds:** Use pure white for high-density information and cool off-white (`#F5F7FA`) for editorial sections and long-form thought leadership.
-- **Typography:** Body text should utilize slate (`#475569`) to maintain high legibility while appearing softer than pure black.
+- **Navy:** headings, primary buttons, heroes, closing call-to-action bands and the footer. Navy panels carry a faint 64px square grid that echoes the ICG mark (`.bg-grid-navy`).
+- **Cream:** the page background. White (`surface-container-lowest`) is used for cards that sit on cream.
+- **Ink:** body copy is `#2B3445`, secondary copy `#5A6372`. Never pure black.
+- **Sand (#C8B48C):** a restrained accent for eyebrows and icons on navy only. Do not use it for text on cream.
+- **Success / Error:** reserved for form states.
 
 ## Typography
 
-This design system uses a traditional serif-on-sans pairing to signal both heritage and modernity. 
+**Inter** is used for everything, loaded through `next/font` (`--font-inter`). Hierarchy comes from size, weight (600 for headings) and tight negative tracking on large sizes, not from a second typeface.
 
-**Source Serif 4** serves as the primary headline face. It provides the "institutional" voice. Use it for H1-H3 levels. Display sizes should utilize tighter letter spacing to feel more curated.
-
-**Hanken Grotesk** is used for all functional and body elements. It is a clean, contemporary sans-serif that ensures high readability in data-heavy reports and dashboards. Labels and small metadata should be set in semi-bold with increased letter spacing and uppercase styling to provide clear hierarchy in navigation and tables.
+- Page titles use `display-lg`; section titles `headline-lg`; card titles 20–26px.
+- Eyebrows (`.eyebrow`) are 12px uppercase semibold with wide tracking and a short leading rule.
+- Buttons (`.btn` + `.btn-primary` / `.btn-outline` / `.btn-light` / `.btn-outline-light`) are 13px uppercase semibold, 48px tall, square corners.
 
 ## Layout & Spacing
 
@@ -133,10 +76,10 @@ The layout follows a **Fixed-Fluid Hybrid** model. Content is contained within a
 
 This design system avoids heavy drop shadows and skeuomorphism. Depth is achieved through **Tonal Layering** and **Line Work**.
 
-- **Surface Tiers:** Use the cool off-white (#F5F7FA) as a "base" layer, with pure white cards sitting on top to indicate interactivity.
+- **Surface Tiers:** Use cream (#F4F1EA) as the "base" layer, with pure white cards sitting on top to indicate interactivity.
 - **The "Ghost Border":** Rather than shadows, use thin (1px) borders in a slightly darker version of the background color to define containers.
-- **Elevation-by-Color:** Interactive states should be signaled by a color shift to Primary ICG Blue or a subtle scale-up (102%) rather than a shadow increase.
-- **Glassmorphism:** Reserved exclusively for sticky navigation bars to maintain context of the content beneath, using a subtle backdrop blur (12px).
+- **Elevation-by-Color:** Interactive states should be signaled by a color shift to navy or a subtle scale-up (102%) rather than a shadow increase.
+- **Glassmorphism:** Not used; the header is a solid cream bar.
 
 ## Shapes
 
@@ -146,9 +89,9 @@ The use of 90-degree angles conveys precision, discipline, and corporate rigor. 
 
 ## Components
 
-- **Buttons:** Primary buttons are solid ICG Blue (#144AA4) with white text, 0px radius. Secondary buttons use a light slate fill (#E2E8F0) or a 1px border. The hover state for primary buttons should reveal a thin 4px bottom-accent of slate (#94A3B8).
-- **Input Fields:** Minimalist design with only a bottom border (2px) that turns ICG Blue on focus. Labels should be small-cap Hanken Grotesk.
-- **Cards:** Cards should have no shadow and a 1px border. On hover, the border thickness increases to 2px or changes to the Primary Blue color.
-- **Lists:** Use custom "Check" icons in Success green (#16A34A) to highlight value propositions. Bullet points are replaced with thin horizontal rules between items.
-- **Breadcrumbs & Labels:** Use Hanken Grotesk in uppercase with 0.05em letter spacing for a "metadata" look.
+- **Buttons:** Primary buttons are solid navy with cream text, 0px radius; secondary buttons are a 1px navy outline. On navy, use the cream (`btn-light`) and outline-light variants.
+- **Input Fields:** Minimalist design with only a bottom border (2px) that turns navy on focus. Labels use the uppercase label style.
+- **Cards:** Cards should have no shadow and a 1px border. On hover, the border changes to navy (`.card-hover`).
+- **Lists:** Use navy check icons to highlight value propositions. Bullet points are replaced with thin horizontal rules between items.
+- **Breadcrumbs & Labels:** Use Inter in uppercase with wide letter spacing for a "metadata" look.
 - **Photography:** Use black-and-white or high-contrast, desaturated color photography. Subject matter should focus on global infrastructure, abstract architectural patterns, or candid "in-the-room" leadership moments.

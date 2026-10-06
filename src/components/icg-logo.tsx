@@ -61,7 +61,9 @@ export function IcgLogo({
       <text
         x="100"
         y="180"
-        fontFamily="Georgia, 'Times New Roman', serif"
+        fontFamily="var(--font-inter), Inter, system-ui, sans-serif"
+        fontWeight="600"
+        letterSpacing="-1"
         fontSize="36"
         textAnchor="middle"
         fill="currentColor"

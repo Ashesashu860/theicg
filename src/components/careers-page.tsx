@@ -1,9 +1,11 @@
-import Image from "next/image";
+import { SITE_IMAGES } from "@/lib/site-images";
 import Link from "next/link";
 import { CareersCultureSection } from "@/components/careers-culture-section";
 import { CareersRolesSection } from "@/components/careers-roles-section";
 import { CareersWhySection } from "@/components/careers-why-section";
 import { ContactForm } from "@/components/contact-form";
+import { CtaBand } from "@/components/cta-band";
+import { PageHero } from "@/components/page-hero";
 import { SiteFooter } from "@/components/site-footer";
 import type {
   CareerCategoryRecord,
@@ -18,57 +20,42 @@ type CareersPageProps = {
 export function CareersPage({ roles, categories }: CareersPageProps) {
   return (
     <>
-      <main className="flex min-h-screen flex-grow flex-col bg-surface pt-20">
-        <section className="relative flex h-[80vh] min-h-[600px] items-center">
-          <div className="absolute inset-0 z-0 overflow-hidden">
-            <Image
-              src="/images/careers-hero.jpg"
-              alt="Low-angle view of a modern glass office tower reaching into a clear sky"
-              fill
-              priority
-              className="scale-[1.04] object-cover blur-[2px] saturate-[1.05]"
-              sizes="100vw"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-surface/90 via-surface/70 to-transparent" />
-          </div>
-          <div className="relative z-10 mx-auto w-full max-w-container-max px-margin-mobile md:px-margin-desktop">
-            <div className="max-w-2xl">
-              <h1 className="mb-6 font-serif text-headline-lg-mobile font-bold leading-[1.1] tracking-[-0.02em] text-primary md:text-display-lg">
-                Join a Rocketship.
-              </h1>
-              <p className="mb-10 max-w-lg font-sans text-body-lg text-on-surface-variant">
-                Accelerate your career with the world&apos;s most ambitious
-                strategic architects. We don&apos;t just advise; we build the
-                future of global enterprise.
-              </p>
-              <Link
-                href="#open-roles"
-                className="hover-accent-bottom inline-block bg-primary px-8 py-4 font-sans text-label-md uppercase tracking-wider text-on-primary shadow-sm"
-              >
-                <span>View Open Roles</span>
+      <main className="flex flex-grow flex-col">
+        <PageHero
+          eyebrow="Careers at ICG"
+          title="Do work that gets built."
+          imageSrc={SITE_IMAGES.careersHero}
+          lead="Join engineers, researchers and specialists who carry advice through to delivery on programmes that matter. Grow fast, learn from practitioners, and own real outcomes."
+          actions={
+            <>
+              <Link href="#open-roles" className="btn btn-light">
+                View Open Roles
               </Link>
-            </div>
-          </div>
-        </section>
+              <Link href="/careers/apply" className="btn btn-outline-light">
+                Apply Now
+              </Link>
+            </>
+          }
+        />
 
-        <section className="mx-auto max-w-container-max px-margin-mobile py-section-sm md:px-margin-desktop md:py-section-lg">
-          <div className="grid grid-cols-1 items-start gap-gutter md:grid-cols-12">
-            <div className="border-t border-primary pt-4 md:col-span-4 md:col-start-2">
-              <h2 className="mb-4 font-sans text-label-md uppercase tracking-wider text-secondary">
+        <section className="mx-auto w-full max-w-container-max px-margin-mobile py-section-compact md:px-margin-desktop md:py-section-compact-lg">
+          <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-12">
+            <div className="md:col-span-5">
+              <p className="eyebrow mb-4 text-on-surface-variant">
                 The Mandate
-              </h2>
-              <p className="font-serif text-headline-lg-mobile leading-tight text-primary md:text-headline-md">
-                High growth. High impact. Elite talent.
               </p>
+              <h2 className="text-headline-lg-mobile md:text-headline-lg">
+                High growth. High impact. Elite talent.
+              </h2>
             </div>
-            <div className="md:col-span-6 md:col-start-7">
-              <p className="mb-6 font-sans text-body-lg text-on-surface-variant">
+            <div className="md:col-span-6 md:col-start-7 md:pt-10">
+              <p className="mb-6 text-body-lg text-on-surface-variant">
                 At ICG, we operate at the intersection of audacious vision and
                 rigorous execution. Our culture is deliberately designed for
                 those who seek to compress a decade of career growth into a few
                 transformative years.
               </p>
-              <p className="font-sans text-body-lg text-on-surface-variant">
+              <p className="text-body-lg text-on-surface-variant">
                 We reject complacency. Here, meritocracy rules, and the best
                 ideas win, regardless of tenure. If you are prepared to be
                 challenged, to learn relentlessly, and to leave an indelible
@@ -82,30 +69,27 @@ export function CareersPage({ roles, categories }: CareersPageProps) {
 
         <CareersWhySection />
 
-        <CareersRolesSection roles={roles} categories={categories} />
+        <div className="band-alt pt-section-sm md:pt-section-lg">
+          <CareersRolesSection roles={roles} categories={categories} />
+        </div>
 
-        <section className="bg-primary px-margin-mobile py-section-sm text-center md:px-margin-desktop">
-          <h2 className="mb-8 font-serif text-headline-lg-mobile font-bold tracking-[-0.02em] text-on-primary md:text-display-lg">
-            Ready for Launch?
-          </h2>
-          <Link
-            href="/careers/apply"
-            className="inline-block border-2 border-transparent bg-pure-white px-10 py-5 font-sans text-label-md uppercase tracking-wider text-primary transition-colors hover:border-surface-tint hover:bg-surface-container-lowest"
-          >
-            Start Your Application
-          </Link>
-        </section>
+        <CtaBand
+          title="Ready to apply?"
+          lead="Tell us about yourself and the work you want to do."
+          primary={{ href: "/careers/apply", label: "Start Your Application" }}
+        />
 
         <section
           id="connect"
-          className="mx-auto w-full max-w-container-max px-margin-mobile py-section-sm md:px-margin-desktop md:py-section-lg"
+          className="mx-auto w-full max-w-container-max scroll-mt-20 px-margin-mobile py-section-sm md:px-margin-desktop md:py-section-lg"
         >
-          <div className="mx-auto max-w-4xl border border-outline-variant bg-pure-white p-8 md:p-16">
-            <div className="mb-10 text-center">
-              <h2 className="mb-3 font-serif text-headline-md text-primary">
+          <div className="mx-auto max-w-4xl border border-outline-variant bg-surface-container-lowest p-8 md:p-16">
+            <div className="mb-12">
+              <p className="eyebrow mb-4 text-on-surface-variant">Contact</p>
+              <h2 className="mb-3 text-headline-lg-mobile md:text-headline-lg">
                 Connect With Us
               </h2>
-              <p className="font-sans text-body-md text-on-surface-variant">
+              <p className="text-body-lg text-on-surface-variant">
                 Register your interest to stay informed about upcoming
                 opportunities and firm news.
               </p>

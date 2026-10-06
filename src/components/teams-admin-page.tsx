@@ -697,7 +697,7 @@ export function TeamsAdminPage() {
       <header className="border-b border-outline-variant bg-surface px-margin-mobile py-12 md:px-margin-desktop">
         <div className="mx-auto flex max-w-container-max flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="font-serif text-headline-lg-mobile text-primary md:text-headline-lg">
+            <h2 className="text-headline-lg-mobile text-primary md:text-headline-lg">
               Teams
             </h2>
             <p className="mt-2 max-w-2xl font-sans text-body-lg text-on-surface-variant">
@@ -746,7 +746,7 @@ export function TeamsAdminPage() {
               <div className="mb-4 text-outline-variant">
                 <GroupOffIcon />
               </div>
-              <h3 className="font-serif text-headline-md text-primary">
+              <h3 className="text-headline-md text-primary">
                 No designations yet
               </h3>
               <p className="mx-auto mt-2 max-w-md font-sans text-body-lg text-on-surface-variant">
@@ -765,7 +765,7 @@ export function TeamsAdminPage() {
           {!loading && designations.length > 0 ? (
             <div className="border border-outline-variant bg-pure-white">
               <div className="border-b border-outline-variant px-6 py-4">
-                <h3 className="font-serif text-[22px] text-primary md:text-headline-md">
+                <h3 className="text-[22px] text-primary md:text-headline-md">
                   Designations
                 </h3>
               </div>
@@ -817,7 +817,7 @@ export function TeamsAdminPage() {
               <div className="mb-4 text-outline-variant">
                 <GroupOffIcon />
               </div>
-              <h3 className="font-serif text-headline-md text-primary">
+              <h3 className="text-headline-md text-primary">
                 No Team Members Found
               </h3>
               <p className="mx-auto mt-2 max-w-md font-sans text-body-lg text-on-surface-variant">
@@ -1006,7 +1006,7 @@ export function TeamsAdminPage() {
             </button>
             <h3
               id={designationFormTitleId}
-              className="mb-6 border-b border-outline-variant pb-4 font-serif text-headline-md text-primary"
+              className="mb-6 border-b border-outline-variant pb-4 text-headline-md text-primary"
             >
               {editingDesignationId ? "Edit Designation" : "New Designation"}
             </h3>
@@ -1079,7 +1079,7 @@ export function TeamsAdminPage() {
             </button>
             <h3
               id={memberFormTitleId}
-              className="mb-6 border-b border-outline-variant pb-4 font-serif text-headline-md text-primary"
+              className="mb-6 border-b border-outline-variant pb-4 text-headline-md text-primary"
             >
               {editingMemberId ? "Edit Talent Profile" : "New Talent Profile"}
             </h3>
@@ -1344,7 +1344,7 @@ export function TeamsAdminPage() {
               </div>
               <h2
                 id={deleteDesignationTitleId}
-                className="font-serif text-headline-md text-primary"
+                className="text-headline-md text-primary"
               >
                 Delete designation?
               </h2>
@@ -1398,7 +1398,7 @@ export function TeamsAdminPage() {
               </div>
               <h2
                 id={deleteMemberTitleId}
-                className="font-serif text-headline-md text-primary"
+                className="text-headline-md text-primary"
               >
                 Delete team member?
               </h2>

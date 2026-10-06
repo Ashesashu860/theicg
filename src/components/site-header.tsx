@@ -98,9 +98,9 @@ export function SiteHeader() {
       {accountOpen ? (
         <div
           role="menu"
-          className="absolute right-0 mt-2 min-w-48 border border-outline-variant bg-surface py-2 shadow-sm"
+          className="absolute right-0 mt-2 min-w-56 border border-outline-variant bg-surface-container-lowest py-2 shadow-[0_12px_32px_-12px_rgb(11_27_51/0.25)]"
         >
-          <div className="border-b border-outline-variant/30 px-4 py-2">
+          <div className="border-b border-outline-variant px-4 py-2">
             <p className="truncate font-sans text-sm font-semibold text-primary">
               {displayName}
             </p>
@@ -113,7 +113,7 @@ export function SiteHeader() {
           <Link
             href="/portal/requests"
             role="menuitem"
-            className="block w-full px-4 py-2.5 text-left font-sans text-label-md uppercase tracking-widest text-on-surface-variant transition-colors hover:bg-surface-container-low hover:text-primary"
+            className="block w-full px-4 py-2.5 text-left text-[14px] font-medium text-on-surface-variant transition-colors hover:bg-surface-container-low hover:text-primary"
             onClick={() => setAccountOpen(false)}
           >
             Portal
@@ -121,7 +121,7 @@ export function SiteHeader() {
           <button
             type="button"
             role="menuitem"
-            className="block w-full px-4 py-2.5 text-left font-sans text-label-md uppercase tracking-widest text-on-surface-variant transition-colors hover:bg-surface-container-low hover:text-primary"
+            className="block w-full px-4 py-2.5 text-left text-[14px] font-medium text-on-surface-variant transition-colors hover:bg-surface-container-low hover:text-primary"
             onClick={logout}
           >
             Sign out
@@ -132,27 +132,37 @@ export function SiteHeader() {
   ) : null;
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-outline-variant/30 bg-surface/80 backdrop-blur-md">
-      <div className="mx-auto flex h-20 max-w-container-max items-center justify-between px-margin-mobile md:px-margin-desktop">
-        <Link href="/" className="flex items-center gap-2 text-primary">
+    <header className="fixed top-0 z-50 w-full border-b border-outline-variant bg-cream">
+      <div className="mx-auto flex h-20 max-w-container-max items-center justify-between gap-6 px-margin-mobile md:px-margin-desktop">
+        <Link
+          href="/"
+          className="flex items-center gap-3 text-primary"
+          aria-label="ICG – IITians Consulting Group, home"
+        >
           <IcgLogo variant="mark" className="h-8 w-8" />
-          <span className="hidden font-serif text-headline-md font-bold tracking-tighter md:block">
-            ICG
+          <span className="flex flex-col leading-none">
+            <span className="text-[20px] font-bold tracking-[-0.03em]">
+              ICG
+            </span>
+            <span className="mt-1 hidden text-[10px] font-medium uppercase tracking-[0.16em] text-on-surface-variant sm:block">
+              IITians Consulting Group
+            </span>
           </span>
         </Link>
 
-        <nav className="hidden gap-8 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
           {links.map((link) => {
             const active = isNavActive(link.href);
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={
+                aria-current={active ? "page" : undefined}
+                className={`relative py-2 text-[14px] font-medium transition-colors duration-200 after:absolute after:inset-x-0 after:-bottom-px after:h-px after:origin-left after:bg-navy after:transition-transform after:duration-300 hover:text-primary ${
                   active
-                    ? "border-b-2 border-secondary pb-1 font-sans text-label-md font-bold uppercase tracking-widest text-secondary transition-colors duration-300 hover:text-primary"
-                    : "font-sans text-label-md uppercase tracking-widest text-on-surface-variant transition-colors duration-300 hover:text-primary"
-                }
+                    ? "text-primary after:scale-x-100"
+                    : "text-on-surface-variant after:scale-x-0 hover:after:scale-x-100"
+                }`}
               >
                 {link.label}
               </Link>
@@ -163,13 +173,13 @@ export function SiteHeader() {
         <div className="flex items-center gap-4">
           <Link
             href="/careers#connect"
-            className="hidden items-center justify-center border border-primary px-6 py-2 font-sans text-label-md uppercase tracking-widest text-primary transition-colors hover:bg-primary hover:text-pure-white md:inline-flex"
+            className="btn btn-primary hidden min-h-0 px-5 py-3 lg:inline-flex"
           >
             Contact Us
           </Link>
           <button
             type="button"
-            className="text-primary md:hidden"
+            className="p-1 text-primary lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -184,20 +194,19 @@ export function SiteHeader() {
       {open ? (
         <div
           id="mobile-nav"
-          className="border-t border-outline-variant/30 bg-surface px-margin-mobile py-6 md:hidden"
+          className="border-t border-outline-variant bg-cream px-margin-mobile pb-8 pt-2 lg:hidden"
         >
-          <nav className="flex flex-col gap-4" aria-label="Mobile">
+          <nav className="flex flex-col" aria-label="Mobile">
             {links.map((link) => {
               const active = isNavActive(link.href);
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={
-                    active
-                      ? "font-sans text-label-md font-bold uppercase tracking-widest text-secondary"
-                      : "font-sans text-label-md uppercase tracking-widest text-on-surface-variant"
-                  }
+                  aria-current={active ? "page" : undefined}
+                  className={`border-b border-outline-variant py-4 text-[17px] font-medium ${
+                    active ? "text-primary" : "text-on-surface-variant"
+                  }`}
                   onClick={() => setOpen(false)}
                 >
                   {link.label}
@@ -206,7 +215,7 @@ export function SiteHeader() {
             })}
             <Link
               href="/careers#connect"
-              className="inline-flex w-fit items-center justify-center border border-primary px-6 py-3 font-sans text-label-md uppercase tracking-widest text-primary"
+              className="btn btn-primary mt-6 w-full"
               onClick={() => setOpen(false)}
             >
               Contact Us

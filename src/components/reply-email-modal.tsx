@@ -116,7 +116,7 @@ export function ReplyEmailModal({ request, onClose }: ReplyEmailModalProps) {
         <div className="border-b border-outline-variant px-6 py-5">
           <h2
             id={titleId}
-            className="font-serif text-headline-md text-primary"
+            className="text-headline-md text-primary"
           >
             Reply to inquiry
           </h2>
