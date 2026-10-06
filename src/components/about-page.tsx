@@ -2,14 +2,8 @@ import { AssignmentIcon, GroupsIcon, PsychologyIcon } from "@/components/icons";
 import Image from "next/image";
 import { SITE_IMAGES } from "@/lib/site-images";
 import { CtaBand } from "@/components/cta-band";
-import { OurTeamSection } from "@/components/our-team-section";
 import { PageHero } from "@/components/page-hero";
 import { SiteFooter } from "@/components/site-footer";
-import type { PublicTeamMember } from "@/lib/teams-data";
-
-type AboutPageProps = {
-  members: PublicTeamMember[];
-};
 
 const pillars = [
   {
@@ -32,7 +26,7 @@ const pillars = [
   },
 ] as const;
 
-export function AboutPage({ members }: AboutPageProps) {
+export function AboutPage() {
   return (
     <>
       <main>
@@ -100,15 +94,17 @@ export function AboutPage({ members }: AboutPageProps) {
           </div>
         </section>
 
-        <section className="bg-navy-texture text-cream">
+        <section className="band-alt">
           <div className="mx-auto grid max-w-container-max grid-cols-1 gap-10 px-margin-mobile py-section-compact md:grid-cols-12 md:px-margin-desktop md:py-section-compact-lg">
             <div className="md:col-span-5">
-              <p className="eyebrow mb-4 text-secondary-fixed">Public sector</p>
-              <h2 className="text-headline-lg-mobile text-cream md:text-headline-lg">
+              <p className="eyebrow mb-4 text-on-surface-variant">
+                Public sector
+              </p>
+              <h2 className="text-headline-lg-mobile md:text-headline-lg">
                 Working With Government
               </h2>
             </div>
-            <p className="text-body-lg text-on-primary-container md:col-span-6 md:col-start-7 md:text-[20px] md:leading-[1.6]">
+            <p className="text-body-lg text-on-surface-variant md:col-span-6 md:col-start-7 md:text-[20px] md:leading-[1.6]">
               ICG is an Indian firm built around public-sector work. We are
               familiar with how departments scope, procure and govern
               programmes, and with the realities of delivering against public
@@ -116,8 +112,6 @@ export function AboutPage({ members }: AboutPageProps) {
             </p>
           </div>
         </section>
-
-        <OurTeamSection members={members} />
 
         <CtaBand
           title="Work with ICG"

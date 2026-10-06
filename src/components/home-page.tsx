@@ -6,26 +6,19 @@ import { CareersWhySection } from "@/components/careers-why-section";
 import { CtaBand } from "@/components/cta-band";
 import { ArrowForwardIcon, ChevronRightIcon } from "@/components/icons";
 import { IcgPrinciplesSection } from "@/components/icg-principles-section";
-import { OurTeamSection } from "@/components/our-team-section";
 import { PageHero } from "@/components/page-hero";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
 import type { BlogRecord } from "@/lib/blogs-data";
 import type { CapabilityRecord } from "@/lib/capabilities-data";
 import { SITE_IMAGES } from "@/lib/site-images";
-import type { PublicTeamMember } from "@/lib/teams-data";
 
 type HomePageProps = {
   capabilities: CapabilityRecord[];
-  members: PublicTeamMember[];
   recentBlogs?: BlogRecord[];
 };
 
-export function HomePage({
-  capabilities,
-  members,
-  recentBlogs = [],
-}: HomePageProps) {
+export function HomePage({ capabilities, recentBlogs = [] }: HomePageProps) {
   // Sections after Capabilities alternate grey/white; the insights strip (when shown) takes the first grey.
   const offset = recentBlogs.length > 0 ? 1 : 0;
   const band = (index: number) =>
@@ -177,8 +170,6 @@ export function HomePage({
         <IcgPrinciplesSection
           className={`${band(2)} py-section-sm md:py-section-lg`}
         />
-
-        <OurTeamSection members={members} band={band(3)} />
 
         <CtaBand
           title="Bring us your hardest problem."
